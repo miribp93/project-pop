@@ -2,10 +2,11 @@ package com.guaguaupop.guaguaupop.controller;
 
 import com.guaguaupop.guaguaupop.dto.*;
 import com.guaguaupop.guaguaupop.entity.User;
+import com.guaguaupop.guaguaupop.exception.EmailAlreadyExistsException;
+import com.guaguaupop.guaguaupop.exception.NewUserWithDifferentPasswordsException;
 import com.guaguaupop.guaguaupop.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +17,20 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    //private final ProductService productService;
-    //private final ProductoDTOConverter productoDTOConverter;
     private final UserDTOConverter userDTOConverter;
 
     @PostMapping("/register")
-    public ResponseEntity<CreateUserDTO> createUser(@RequestBody CreateUserDTO userDTO) {
-        return ResponseEntity.ok(userDTOConverter
-                .convertUserToCreateUserDTO(this.userService.createUser(userDTO)));
+    public ResponseEntity<?> createUser(@RequestBody CreateUserDTO createUserDTO) {
+        try {
+            User user = userService.createUser(createUserDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        } catch (EmailAlreadyExistsException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (NewUserWithDifferentPasswordsException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @GetMapping("/profile")
@@ -33,7 +40,7 @@ public class UserController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteUser(@AuthenticationPrincipal User user) {
-        this.userService.delete(user);
+        this.userService.deleteById(user.getIdUser());
         return ResponseEntity.noContent().build();
     }
 

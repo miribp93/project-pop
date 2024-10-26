@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 public class GetSimpleUserDTO {
 
+    private Long idUser;
     private String username;
     private byte[] profilePhoto;
 }

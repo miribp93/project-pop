@@ -7,9 +7,12 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.java.Log;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.util.Date;
 
 @Component
@@ -27,16 +30,18 @@ public class JwtTokenUtil{
     private Integer jwtExpirationTime;
 
     //Generar TOKEN
-    public String generateToken (Authentication auth){
-        User user = (User) auth.getPrincipal();
+
+    public String generateToken(Authentication auth) {
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
         Date tokenExpirationDate = new Date(System.currentTimeMillis() + (jwtExpirationTime * 1000));
+        Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
         return Jwts.builder()
-                .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
+                .signWith(key, SignatureAlgorithm.HS512)
                 .setHeaderParam("type", TOKEN_TYPE)
-                .setSubject(Long.toString(user.getIdUser()))
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(tokenExpirationDate)
-                .claim("username", user.getUsername())
+                .claim("username", userDetails.getUsername())
                 .compact();
     }
 
@@ -53,7 +58,7 @@ public class JwtTokenUtil{
     public boolean validateToken(String authToken) {
 
         try {
-            Jwts.parser().setSigningKey(jwtSecret.getBytes()).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes())).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException ex) {
             log.info("Error en la firma del token JWT: " + ex.getMessage());

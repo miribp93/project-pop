@@ -1,6 +1,7 @@
 package com.guaguaupop.guaguaupop.exception;
 
 import jakarta.validation.ConstraintViolationException;
+import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -73,23 +74,27 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     // Excepciones de base de datos
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<ApiErrorResponseJSON> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) {
-        System.out.println(e.getErrorCode());
+    @ExceptionHandler(PSQLException.class)
+    public ResponseEntity<ApiErrorResponseJSON> handlePSQLException(PSQLException e) {
+        System.out.println(e.getSQLState());
         Map<String, String> message = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        if(e.getErrorCode() == 1062 && e.getMessage().contains("unique_email")) {
-            message.put("email_duplicate", "El email ya está registrado.");
+
+        if (e.getSQLState().equals("23505") && e.getMessage().contains("unique_email")) {
+            message.put("email_duplicate", "Este email ya está registrado. Por favor, use uno diferente.");
             status = HttpStatus.CONFLICT;
-        } else if(e.getErrorCode() == 1062) {
-            message.put("username_duplicate", "El nombre de usuario ya existe, prueba otro distinto.");
+        } else if (e.getSQLState().equals("23505") && e.getMessage().contains("unique_username")) {
+            message.put("username_duplicate", "Este nombre de usuario ya existe. Por favor, elija otro.");
             status = HttpStatus.CONFLICT;
         } else {
-            message.put("internal_server_error","Error del servidor, intentelo más tarde.");
+            message.put("internal_server_error", "Error del servidor. Por favor, inténtelo más tarde.");
         }
+
         ApiErrorResponseJSON apiErrorResponseJSON = new ApiErrorResponseJSON(status, message);
         return ResponseEntity.status(status).body(apiErrorResponseJSON);
     }
+
+
 
     @ExceptionHandler(DataBaseConnectionException.class)
     public ResponseEntity<ApiErrorResponse> handleDataBaseConnectionException(DataBaseConnectionException e) {

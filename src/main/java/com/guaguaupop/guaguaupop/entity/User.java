@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 
 @Builder
 @Data
-@Getter
-@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,11 +30,11 @@ public class User implements UserDetails {
     @Column(nullable = false, updatable = false)
     private Long idUser;
 
-    @Column(name = "username", unique = true)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
+    @Column(name = "password", nullable = false)
     private String password;
-    private String password2;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -47,13 +45,13 @@ public class User implements UserDetails {
     @Column(name = "lastName2", nullable = false)
     private String lastName2;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "phone", nullable = false, length = 15)
+    @Column(name = "phone", length = 15)
     private Integer phone;
 
-    @Column(name = "street", nullable = false)
+    @Column(name = "street")
     private String street;
 
     @Column(name = "city", nullable = false)
@@ -61,7 +59,7 @@ public class User implements UserDetails {
 
     @Column(name = "postalCode", nullable = false)
     @Pattern(regexp = "\\d{5}", message = "El código postal debe tener 5 dígitos")
-    private Integer postalCode;
+    private String postalCode;
 
     @Lob
     @Column
@@ -72,11 +70,24 @@ public class User implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private Set<UserRole> userRole;
+    @CollectionTable(name = "userRoles", joinColumns = @JoinColumn(name = "idUser"))
+    @Column(name = "role")
+    private Set<UserRole> userRoles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return userRole.stream().map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name())).collect(Collectors.toList());
+        return userRoles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+                .collect(Collectors.toList());
+    }
+
+    public static class UserBuilder {
+        private Set<UserRole> userRoles;
+
+        public UserBuilder userRoles(Set<UserRole> userRoles) {
+            this.userRoles = userRoles;
+            return this;
+        }
     }
 
     @CreatedDate
@@ -86,16 +97,6 @@ public class User implements UserDetails {
     private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
 
     //
-
-    @Override
-    public String getPassword() {
-        return "";
-    }
-
-    @Override
-    public String getUsername() {
-        return "";
-    }
 
     @Override
     public boolean isAccountNonExpired() {
