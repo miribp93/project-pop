@@ -2,6 +2,7 @@ package com.guaguaupop.guaguaupop.security.jwt;
 
 import com.guaguaupop.guaguaupop.entity.User;
 import com.guaguaupop.guaguaupop.exception.InvalidTokenException;
+import com.guaguaupop.guaguaupop.service.CustomUserDetails;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -30,35 +31,43 @@ public class JwtTokenUtil{
     private Integer jwtExpirationTime;
 
     //Generar TOKEN
-
     public String generateToken(Authentication auth) {
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
         Date tokenExpirationDate = new Date(System.currentTimeMillis() + (jwtExpirationTime * 1000));
         Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
         return Jwts.builder()
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setHeaderParam("type", TOKEN_TYPE)
-                .setSubject(userDetails.getUsername())
+                .setSubject(Long.toString(userDetails.getIdUser()))  // Almacenar userId
                 .setIssuedAt(new Date())
                 .setExpiration(tokenExpirationDate)
-                .claim("username", userDetails.getUsername())
                 .compact();
     }
 
+
+
+
     //Obtener username del token
-    public Long getUserIdFromJWT(String token){
+    public Long getUserIdFromJWT(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
+                .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)))
                 .parseClaimsJws(token)
                 .getBody();
         return Long.parseLong(claims.getSubject());
     }
 
+   /* public Long getUserIdFromJWT(String token){
+        Claims claims = Jwts.parser()
+                .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
+                .parseClaimsJws(token)
+                .getBody();
+        return Long.parseLong(claims.getSubject());
+    }*/
+
     //Validar TOKEN
     public boolean validateToken(String authToken) {
-
         try {
-            Jwts.parser().setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes())).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8))).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException ex) {
             log.info("Error en la firma del token JWT: " + ex.getMessage());
@@ -75,7 +84,7 @@ public class JwtTokenUtil{
         } catch (IllegalArgumentException ex) {
             log.info("JWT claims vacío");
             throw new InvalidTokenException("JWT claims vacío, vuelve a iniciar sesión.");
-        }
-    }
+
+        }}
 
 }

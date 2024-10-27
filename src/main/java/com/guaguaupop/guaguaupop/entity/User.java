@@ -142,13 +142,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Ad> products;
-
-
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }*/
+*/
 
 
 }

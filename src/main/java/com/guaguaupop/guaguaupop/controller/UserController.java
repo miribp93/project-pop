@@ -4,11 +4,13 @@ import com.guaguaupop.guaguaupop.dto.*;
 import com.guaguaupop.guaguaupop.entity.User;
 import com.guaguaupop.guaguaupop.exception.EmailAlreadyExistsException;
 import com.guaguaupop.guaguaupop.exception.NewUserWithDifferentPasswordsException;
+import com.guaguaupop.guaguaupop.service.CustomUserDetails;
 import com.guaguaupop.guaguaupop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,9 +36,19 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<GetUserDTOAdmin> me(@AuthenticationPrincipal User user) {
+    public ResponseEntity<GetUserDTOAdmin> me(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        // Verifica que userDetails no sea nulo
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        // Convertir CustomUserDetails a User
+        User user = userService.findById(userDetails.getIdUser())
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
         return ResponseEntity.ok(userDTOConverter.convertUserToGetUserDTOProfile(user));
     }
+
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteUser(@AuthenticationPrincipal User user) {

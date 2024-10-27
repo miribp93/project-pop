@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 public class UserDTOConverter {
 
     public CreateUserDTO convertUserToCreateUserDTO(User user){
+
         return CreateUserDTO.builder()
                 .username(user.getUsername())
                 .name(user.getName())
@@ -18,17 +19,21 @@ public class UserDTOConverter {
                 .street(user.getStreet())
                 .phone(user.getPhone())
                 .profilePhoto(user.getProfilePhoto()).build();
-
     }
 
     public GetSimpleUserDTO convertUserToGetUserDTO(User user){
+
         return GetSimpleUserDTO.builder()
                 .username(user.getUsername())
                 .profilePhoto(user.getProfilePhoto()).build();
-
     }
 
     public GetUserDTOAdmin convertUserToGetUserDTOProfile(User user){
+
+        if (user == null) {
+            throw new IllegalArgumentException("El usuario no puede ser nulo");
+        }
+
         return GetUserDTOAdmin.builder()
                 .username(user.getUsername())
                 .name(user.getName())

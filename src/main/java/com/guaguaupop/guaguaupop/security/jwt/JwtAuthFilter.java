@@ -1,6 +1,7 @@
 package com.guaguaupop.guaguaupop.security.jwt;
 
 import com.guaguaupop.guaguaupop.exception.AuthorizationException;
+import com.guaguaupop.guaguaupop.service.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.guaguaupop.guaguaupop.service.CustomUserDetailsService;
 import java.io.IOException;
+import static com.guaguaupop.guaguaupop.security.jwt.JwtTokenUtil.TOKEN_HEADER;
+import static com.guaguaupop.guaguaupop.security.jwt.JwtTokenUtil.TOKEN_PREFIX;
 
 @RequiredArgsConstructor
 @Component
@@ -29,40 +32,31 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
         try {
             String token = getTokenFromRequest(request);
-
             if (StringUtils.hasText(token) && jwtTokenUtil.validateToken(token)) {
-
                 Long idUser = jwtTokenUtil.getUserIdFromJWT(token);
-
-                User user = (User) customUserDetailsService.loadUserById(idUser);
+                CustomUserDetails userDetails = (CustomUserDetails) customUserDetailsService.loadUserById(idUser);
                 UsernamePasswordAuthenticationToken authentication
-                        = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-
+                        = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetails(request));
-
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-
-        }catch(CannotCreateTransactionException e){
+        } catch (CannotCreateTransactionException e) {
             log.info("No se pudo crear la transacción: " + e.getMessage());
             AuthorizationException.handleAuthorizationException(response, e, HttpStatus.UNAUTHORIZED);
         }
-
-
         filterChain.doFilter(request, response);
     }
 
-    public String getTokenFromRequest(HttpServletRequest request){
 
-        String bearerToken = request.getHeader(JwtTokenUtil.TOKEN_HEADER);
-
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith((JwtTokenUtil.TOKEN_PREFIX))){
-            return bearerToken.substring(JwtTokenUtil.TOKEN_PREFIX.length(), bearerToken.length());
+    public String getTokenFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader(TOKEN_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(TOKEN_PREFIX)) {
+            return bearerToken.substring(TOKEN_PREFIX.length() + 1);
         }
         return null;
     }
+
 
 }
