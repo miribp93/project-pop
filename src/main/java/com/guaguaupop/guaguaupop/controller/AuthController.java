@@ -2,6 +2,9 @@ package com.guaguaupop.guaguaupop.controller;
 
 import com.guaguaupop.guaguaupop.dto.LoginUserDTO;
 import com.guaguaupop.guaguaupop.entity.User;
+import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
+import com.guaguaupop.guaguaupop.exception.UsernameAlreadyExistsException;
+import com.guaguaupop.guaguaupop.repository.UserRepository;
 import com.guaguaupop.guaguaupop.security.jwt.JwtTokenUtil;
 import com.guaguaupop.guaguaupop.security.jwt.JwtUserResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLOutput;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +31,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
+    private final UserRepository userRepository;
 
     @PostMapping("/login")
     public JwtUserResponse login(@Validated @RequestBody LoginUserDTO loginUserDTO) {
@@ -52,8 +58,13 @@ public class AuthController {
                     .token(jwtToken)
                     .build();
         } catch (BadCredentialsException e) {
-            log.error("Error de credenciales: {}", e.getMessage());
-            throw e;
+            if (userRepository.existsByUsername(loginUserDTO.getUsername())) {
+                log.error("Error de credenciales: {}", e.getMessage());
+                throw e;
+            } else {
+                log.error("El usuario no existe: {}", loginUserDTO.getUsername());
+                throw new UserNotExistsException();
+            }
         } catch (Exception e) {
             log.error("Error durante el login: {}", e.getMessage());
             throw e;

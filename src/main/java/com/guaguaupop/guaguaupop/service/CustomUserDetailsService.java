@@ -25,6 +25,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userService.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id));
 
-        return new CustomUserDetails(user.getIdUser(), user.getUsername(), user.getPassword(), user.getAuthorities());
+        return new CustomUserDetails(
+                user.getIdUser(),
+                user.getUsername(),
+                user.getPassword(),
+                user.getAuthorities());
     }
 }

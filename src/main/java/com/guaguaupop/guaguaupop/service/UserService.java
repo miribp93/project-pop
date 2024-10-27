@@ -8,9 +8,9 @@ import com.guaguaupop.guaguaupop.exception.UsernameAlreadyExistsException;
 import com.guaguaupop.guaguaupop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Collections;
 import java.util.Optional;
 
@@ -19,14 +19,70 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService extends BaseService<User, Long, UserRepository> {
 
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    //Buscar usuario por username
     public Optional<User> findUserByUsername(String username) {
+
         return userRepository.findByUsername(username);
     }
 
+
+    public boolean existsById(Long id) {
+        return userRepository.existsById(id);
+    }
+
+
+    //ASIGNAR ROLE A USUARIO
+    public void assignRoleToUser(Long userId, UserRole role) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        user.getUserRoles().add(role);
+        userRepository.save(user);
+    }
+
+
+    //CREAR AL MANAGER
+    public User registerManager(CreateUserDTO createUserDTO) {
+        if (createUserDTO.getPassword().equals(createUserDTO.getPassword2())) {
+
+            log.info("Datos del usuario a registrar: {}", createUserDTO);
+
+            if (userRepository.existsByEmail(createUserDTO.getEmail())) {
+                throw new EmailAlreadyExistsException();
+            }
+
+            if(userRepository.existsByUsername(createUserDTO.getUsername())){
+                throw new UsernameAlreadyExistsException();
+            }
+
+            User user = User.builder()
+                    .username(createUserDTO.getUsername())
+                    .password(passwordEncoder.encode(createUserDTO.getPassword()))
+                    .name(createUserDTO.getName())
+                    .lastName1(createUserDTO.getLastName1())
+                    .lastName2(createUserDTO.getLastName2())
+                    .email(createUserDTO.getEmail())
+                    .phone(createUserDTO.getPhone())
+                    .street(createUserDTO.getStreet())
+                    .city(createUserDTO.getCity())
+                    .postalCode(createUserDTO.getPostalCode())
+                    .profilePhoto(createUserDTO.getProfilePhoto())
+                    .userRoles(Collections.singleton(UserRole.MANAGER))  // Asignar rol por defecto
+                    .build();
+
+            User savedUser = save(user);
+            log.info("Usuario registrado con éxito: {}", savedUser);
+            return savedUser;
+        } else {
+            throw new NewUserWithDifferentPasswordsException();
+        }
+    }
+
+
     public User save(CreateUserDTO userDTO) {
+
         User user = User.builder()
                 .username(userDTO.getUsername())
                 .password(passwordEncoder.encode(userDTO.getPassword()))
@@ -44,30 +100,32 @@ public class UserService extends BaseService<User, Long, UserRepository> {
         return save(user);
     }
 
-    public User createUser(CreateUserDTO createUserDto) {
-        if (createUserDto.getPassword().equals(createUserDto.getPassword2())) {
+    public User createUser(CreateUserDTO createUserDTO) {
 
-            log.info("Datos del usuario a registrar: {}", createUserDto);
+        if (createUserDTO.getPassword().equals(createUserDTO.getPassword2())) {
 
-            if (userRepository.existsByEmail(createUserDto.getEmail())) {
+            log.info("Datos del usuario a registrar: {}", createUserDTO);
+
+            if (userRepository.existsByEmail(createUserDTO.getEmail())) {
                 throw new EmailAlreadyExistsException();
             }
 
-            if(userRepository.existsByUsername(createUserDto.getUsername())){
+            if(userRepository.existsByUsername(createUserDTO.getUsername())){
                 throw new UsernameAlreadyExistsException();
             }
+
             User user = User.builder()
-                    .username(createUserDto.getUsername())
-                    .password(passwordEncoder.encode(createUserDto.getPassword()))
-                    .name(createUserDto.getName())
-                    .lastName1(createUserDto.getLastName1())
-                    .lastName2(createUserDto.getLastName2())
-                    .email(createUserDto.getEmail())
-                    .phone(createUserDto.getPhone())
-                    .street(createUserDto.getStreet())
-                    .city(createUserDto.getCity())
-                    .postalCode(createUserDto.getPostalCode())
-                    .profilePhoto(createUserDto.getProfilePhoto())
+                    .username(createUserDTO.getUsername())
+                    .password(passwordEncoder.encode(createUserDTO.getPassword()))
+                    .name(createUserDTO.getName())
+                    .lastName1(createUserDTO.getLastName1())
+                    .lastName2(createUserDTO.getLastName2())
+                    .email(createUserDTO.getEmail())
+                    .phone(createUserDTO.getPhone())
+                    .street(createUserDTO.getStreet())
+                    .city(createUserDTO.getCity())
+                    .postalCode(createUserDTO.getPostalCode())
+                    .profilePhoto(createUserDTO.getProfilePhoto())
                     .userRoles(Collections.singleton(UserRole.USER))  // Asignar rol por defecto
                     .build();
 
@@ -79,17 +137,23 @@ public class UserService extends BaseService<User, Long, UserRepository> {
         }
     }
 
+
     public User newUser(User newUser) {
+
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         return userRepository.save(newUser);
     }
 
+
     @Override
     public void deleteById(Long id) {
+
         userRepository.deleteById(id);
     }
 
+
     public Optional<User> getUser(Long id) {
+
         return userRepository.findById(id);
     }
 }

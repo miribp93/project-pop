@@ -25,6 +25,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    //LOGIN
+
+    @ExceptionHandler(UserNotExistsException.class)
+    public ResponseEntity<String> handleUserNotExistsException(UserNotExistsException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleGlobalException(Exception e) {
+        return new ResponseEntity<>("Error durante el login: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     /*// Excepciones de producto
     @ExceptionHandler({ProductoNotFoundException.class})
     public ResponseEntity<ApiErrorResponse> handleNotFound(Exception ex) {
