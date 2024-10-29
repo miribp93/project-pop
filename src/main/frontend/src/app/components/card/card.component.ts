@@ -1,23 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Anuncio } from '../../interfaces/anuncio.interfaces';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
+
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
+import { MATERIAL_MODULES } from '../../material/material/material.component';
 
 @Component({
   selector: 'productos-prod-card',
   templateUrl: './card.component.html',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatIconModule,
-    RouterModule,
+    MATERIAL_MODULES,
     CommonModule,
-    MatButtonModule,
+    RouterModule,
   ],
-  styles: [],
+  styleUrl: './card.component.css',
 })
 export class CardComponent implements OnInit {
   @Input()

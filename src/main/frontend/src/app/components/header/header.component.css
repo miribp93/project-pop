@@ -1,30 +1,77 @@
-.spacer {
-  flex: 1 1 auto; /* Espaciador flexible para empujar los elementos a los extremos */
-}
-
 .top-bar {
-  height: 64px; /* Ajusta el alto de la barra superior */
-  background-color: #aad5dc;
-  display: flex; /* Cambiar a flexbox para centrar elementos */
-  align-items: center; /* Centra verticalmente los elementos */
-}
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color:rgb(195, 253, 188);
+  padding: 10px 100px;
 
-.logo {
-  width: 200px; /* Ajusta el ancho del logo según sea necesario */
-  height: auto; /* Mantiene la proporción de la imagen */
-  margin-right: 16px; /* Espacio a la derecha del logo */
+
+
 }
 
 .nav-bar {
-  justify-content: left; /* Centra los botones del menú de navegación */
-  background-color: #aad5dc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Permite que los botones se envuelvan cuando hay poco espacio */
+  gap: 20px; /* Espacio entre las dos barras de herramientas */
+  background-color:rgb(195, 253, 188);
 }
 
-mat-toolbar {
-  padding: 0 16px; /* Ajusta el espaciado interno del toolbar */
+.spacer {
+  flex: 1;
 }
 
-button[mat-button] {
-  margin: 0 10px; /* Espaciado entre los botones del menú */
-  font-size: 16px; /* Ajusta el tamaño de la fuente en los botones */
+button {
+  margin: 5px;
 }
+
+/* Logo */
+.logo {
+  height: 150px;
+  padding-top: 50px;
+  padding-bottom: 10px
+
+}
+
+.search-field {
+
+  border-radius: 15px;
+
+}
+
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .nav-bar {
+    flex-direction: column; /* Cambia la dirección a vertical */
+    align-items: center; /* Centra los botones */
+  }
+
+  .top-bar {
+    flex-direction: column; /* Coloca los elementos del top bar uno debajo del otro */
+    text-align: center;
+  }
+
+  .logo {
+    margin-bottom: 10px; /* Añade espacio entre el logo y los botones */
+  }
+
+  button {
+    width: 100%; /* Los botones ocupan todo el ancho disponible en pantallas pequeñas */
+    max-width: 300px; /* Fija un ancho máximo para evitar que se estiren demasiado */
+  }
+}
+
+
+
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 600px) {
+  .search-field {
+    width: 100%; /* En pantallas pequeñas, ocupa todo el ancho disponible */
+    margin: 8px 0; /* Añadir márgenes para una mejor visualización */
+  }
+}
+

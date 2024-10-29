@@ -1,0 +1,12 @@
+
+
+.payment-card {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color:rgb(195, 253, 188);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+.full-width {
+  width: 80%;
+}

@@ -1,19 +1,17 @@
-<mat-card *ngIf="prod; else noProduct" class="mt-3">
-  <mat-card-header>
-    <mat-card-title>{{ prod.tipo_anuncio }}</mat-card-title>
+
+  <mat-card *ngIf="prod; else noProduct" class="example-card" appearance="outlined" [routerLink]="['/product', prod.id]">
+  <mat-card-header class="m-2">
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title></mat-card-title>
     <mat-card-subtitle>{{ prod.nombre }}</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
-    <p>{{ prod.descripcion }}</p>
-    <p>{{ prod.img }}</p>
-    <p>{{ prod.precio | currency:'EUR':'symbol' }}</p>
+
+  <mat-card-content class="mt-3-">
+    <img mat-card-image src="mia.jpg" alt="Fotos productos" >
+    <p class="mt-3">{{ prod.precio | currency:'EUR':'symbol' }}</p>
   </mat-card-content>
   <mat-card-footer class="text-center m-3">
-    <button    mat-stroked-button
-    color="primary"  [routerLink]="['/anonces', prod.id]">
-      <mat-icon>more_horiz</mat-icon>
-      Ver mas
-    </button>
+
   </mat-card-footer>
 </mat-card>
 

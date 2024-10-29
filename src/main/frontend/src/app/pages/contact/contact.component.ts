@@ -1,22 +1,26 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-contact',
   standalone: true,
   imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
     ReactiveFormsModule,
+    FormsModule,
+    MATERIAL_MODULES,
   ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css'
 })
 export class ContactComponent {
+nombre: any;
+comentario: any;
+direccion: any;
+telefono: any;
+apellido: any;
 
 
 

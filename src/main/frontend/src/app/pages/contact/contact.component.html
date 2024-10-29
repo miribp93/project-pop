@@ -1,33 +1,55 @@
 <div class="contact-form text-center container ">
-  <h2>Formulario de Contacto</h2>
-  <form id="contactForm">
+
+  <mat-card class="form-card">
+    <h2>Formulario de Contacto</h2>
+    <form id="contactForm">
+
       <div class="form-group">
-          <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" name="nombre" required>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre</mat-label>
+          <input matInput type="text" id="nombre" name="nombre" [(ngModel)]="nombre" required>
+        </mat-form-field>
       </div>
       <div class="form-group">
-          <label for="apellido">Apellido:</label>
-          <input type="text" id="apellido" name="apellido" required>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Apellido</mat-label>
+          <input matInput type="text" id="nombre" name="nombre" [(ngModel)]="apellido" required>
+        </mat-form-field>
       </div>
       <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="text" id="email" name="email" [(ngModel)]="nombre" required>
+        </mat-form-field>
+      </div>
+
+
+
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Telefono</mat-label>
+          <input matInput type="text" id="telefono" name="telefono" [(ngModel)]="telefono" required>
+        </mat-form-field>
       </div>
       <div class="form-group">
-          <label for="telefono">Teléfono:</label>
-          <input type="tel" id="telefono" name="telefono">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Direccion</mat-label>
+          <input matInput type="text" id="direccion" name="direccion" [(ngModel)]="direccion" required>
+        </mat-form-field>
       </div>
+
       <div class="form-group">
-          <label for="direccion">Dirección:</label>
-          <input type="text" id="direccion" name="direccion">
-      </div>
-      <div class="form-group">
-          <label for="comentario">Comentario:</label>
-          <textarea id="comentario" name="comentario" rows="4" required></textarea>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Comentario</mat-label>
+          <input matInput type="text-area" id="comentario" name="comentario" [(ngModel)]="comentario" required>
+
+        </mat-form-field>
       </div>
       <div class="form-actions">
-          <button type="submit">Enviar</button>
-          <button type="reset">Cancelar</button>
+        <button mat-raised-button color="primary" type="submit">Enviar</button>
+        <button mat-raised-button color="warn" type="reset">Cancelar</button>
       </div>
-  </form>
-</div>
+
+
+    </form>
+  </mat-card>
