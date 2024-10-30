@@ -1,0 +1,28 @@
+<div class="container text-center">
+  <mat-card class="payment-card">
+  <h2>Pago</h2>
+
+    <form id="contactForm">
+
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre</mat-label>
+          <input matInput type="text" id="nombre" name="nombre" [(ngModel)]="nombre" required>
+        </mat-form-field>
+      </div>
+
+
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Dirección</mat-label>
+          <input matInput type="text" id="dir" name="dir" [(ngModel)]="dir" required>
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="submit">Pagar</button>
+        <button mat-button type="reset">Cancelar</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

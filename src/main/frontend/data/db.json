@@ -1,0 +1,211 @@
+{
+  "anuncios": [
+    {
+      "id": 1,
+      "nombre": "Collar Antipulgas",
+      "descripcion": "Collar resistente al agua que protege contra pulgas y garrapatas por hasta 8 meses.",
+      "tipo_animal": "Perro",
+      "tipo_anuncio": "Producto",
+      "precio": 25.99,
+      "img": "https://example.com/collar-antipulgas.jpg"
+    },
+    {
+      "id": 2,
+      "nombre": "Rascador de Cartón",
+      "descripcion": "Rascador para gatos hecho de cartón reciclado, ideal para afilar sus garras.",
+      "tipo_animal": "Gato",
+      "tipo_anuncio": "Producto",
+      "precio": 12.50,
+      "img": "https://example.com/rascador-carton.jpg"
+    },
+    {
+      "id": 3,
+      "nombre": "Jaula para Hámster",
+      "descripcion": "Jaula espaciosa con túneles y rueda para hámsters activos.",
+      "tipo_animal": "Hámster",
+      "tipo_anuncio": "Producto",
+      "precio": 35.75,
+      "img": "https://example.com/jaula-hamster.jpg"
+    },
+    {
+      "id": 4,
+      "nombre": "Comida para Peces Tropicales",
+      "descripcion": "Mezcla de alimentos premium con alto contenido de proteínas para peces tropicales.",
+      "tipo_animal": "Pez",
+      "tipo_anuncio": "Producto",
+      "precio": 9.99,
+      "img": "https://example.com/comida-peces.jpg"
+    },
+    {
+      "id": 5,
+      "nombre": "Ropa Impermeable",
+      "descripcion": "Capa impermeable para perros pequeños, ideal para días lluviosos.",
+      "tipo_animal": "Perro",
+      "tipo_anuncio": "Producto",
+      "precio": 18.30,
+      "img": "https://example.com/ropa-impermeable.jpg"
+    },
+    {
+      "id": 6,
+      "nombre": "Cama Suave para Gato",
+      "descripcion": "Cama acolchonada para gatos, con revestimiento suave y antideslizante.",
+      "tipo_animal": "Gato",
+      "tipo_anuncio": "Producto",
+      "precio": 22.15,
+      "img": "https://example.com/cama-gato.jpg"
+    },
+    {
+      "id": 7,
+      "nombre": "Juguete Mordedor",
+      "descripcion": "Mordedor de goma duradero, perfecto para cachorros en fase de dentición.",
+      "tipo_animal": "Perro",
+      "tipo_anuncio": "Producto",
+      "precio": 8.99,
+      "img": "https://example.com/juguete-mordedor.jpg"
+    },
+    {
+      "id": 8,
+      "nombre": "Transportadora de Viaje",
+      "descripcion": "Transportadora rígida para gatos y perros pequeños, con ventilación y fácil de limpiar.",
+      "tipo_animal": "Gato",
+      "tipo_anuncio": "Producto",
+      "precio": 40.60,
+      "img": "https://example.com/transportadora-viaje.jpg"
+    },
+    {
+      "id": 9,
+      "nombre": "Alimento para Conejo",
+      "descripcion": "Mezcla balanceada de heno y pellets nutritivos para conejos.",
+      "tipo_animal": "Conejo",
+      "tipo_anuncio": "Producto",
+      "precio": 14.80,
+      "img": "https://example.com/alimento-conejo.jpg"
+    },
+    {
+      "id": 10,
+      "nombre": "Filtro para Acuario",
+      "descripcion": "Filtro de carbón activado para acuarios de hasta 100 litros.",
+      "tipo_animal": "Pez",
+      "tipo_anuncio": "Producto",
+      "precio": 25.00,
+      "img": "https://example.com/filtro-acuario.jpg"
+    },
+    {
+      "id": 21,
+      "nombre": "Jaula para Aves Pequeñas",
+      "descripcion": "Jaula espaciosa para canarios y otras aves pequeñas.",
+      "tipo_animal": "Aves",
+      "tipo_anuncio": "Producto",
+      "precio": 45.99,
+      "img": "https://example.com/jaula-aves.jpg"
+    },
+    {
+      "id": 22,
+      "nombre": "Lámpara UV para Reptiles",
+      "descripcion": "Lámpara UV para terrarios, ideal para reptiles que necesitan calor y luz ultravioleta.",
+      "tipo_animal": "Reptiles",
+      "tipo_anuncio": "Producto",
+      "precio": 30.50,
+      "img": "https://example.com/lampara-uv-reptiles.jpg"
+    },
+    {
+      "id": 23,
+      "nombre": "Alimento para Iguanas",
+      "descripcion": "Alimento balanceado con alto contenido de fibra para iguanas.",
+      "tipo_animal": "Reptiles",
+      "tipo_anuncio": "Producto",
+      "precio": 18.20,
+      "img": "https://example.com/alimento-iguanas.jpg"
+    },
+    {
+      "id": 24,
+      "nombre": "Cueva para Serpientes",
+      "descripcion": "Refugio natural para serpientes, ideal para su terrario.",
+      "tipo_animal": "Reptiles",
+      "tipo_anuncio": "Producto",
+      "precio": 22.00,
+      "img": "https://example.com/cueva-serpientes.jpg"
+    },
+    {
+      "id": 25,
+      "nombre": "Terrario para Camaleones",
+      "descripcion": "Terrario de vidrio con ventilación, perfecto para camaleones.",
+      "tipo_animal": "Reptiles",
+      "tipo_anuncio": "Producto",
+      "precio": 150.00,
+      "img": "https://example.com/terrario-camaleones.jpg"
+    },
+    {
+      "id": 26,
+      "nombre": "Alimento para Tortugas Exóticas",
+      "descripcion": "Alimento especial para tortugas de tierra y especies exóticas.",
+      "tipo_animal": "Animales Exóticos",
+      "tipo_anuncio": "Producto",
+      "precio": 12.75,
+      "img": "https://example.com/alimento-tortugas-exoticas.jpg"
+    },
+    {
+      "id": 27,
+      "nombre": "Jaula para Hurones",
+      "descripcion": "Jaula de múltiples niveles diseñada para hurones y otros mamíferos exóticos.",
+      "tipo_animal": "Animales Exóticos",
+      "tipo_anuncio": "Producto",
+      "precio": 89.99,
+      "img": "https://example.com/jaula-hurones.jpg"
+    },
+    {
+      "id": 28,
+      "nombre": "Escondite para Roedores Exóticos",
+      "descripcion": "Pequeño refugio natural para roedores exóticos, ideal para su bienestar.",
+      "tipo_animal": "Animales Exóticos",
+      "tipo_anuncio": "Producto",
+      "precio": 15.99,
+      "img": "https://example.com/escondite-roedores.jpg"
+    },
+    {
+      "id": 29,
+      "nombre": "Alimento para Aves Exóticas",
+      "descripcion": "Alimento premium para especies de aves exóticas con alto contenido de nutrientes.",
+      "tipo_animal": "Animales Exóticos",
+      "tipo_anuncio": "Producto",
+      "precio": 25.50,
+      "img": "https://example.com/alimento-aves-exoticas.jpg"
+    },
+    {
+      "id": 30,
+      "nombre": "Caja de Transporte para Hurones",
+      "descripcion": "Caja de transporte segura y cómoda para hurones en viajes cortos.",
+      "tipo_animal": "Animales Exóticos",
+      "tipo_anuncio": "Producto",
+      "precio": 35.20,
+      "img": "https://example.com/transporte-hurones.jpg"
+    },
+    {
+      "id": 31,
+      "nombre": "Alimento para Animales de Granja",
+      "descripcion": "Alimento completo para animales de granja como gallinas, patos y caballos miniatura.",
+      "tipo_animal": "Otros",
+      "tipo_anuncio": "Producto",
+      "precio": 28.40,
+      "img": "https://example.com/alimento-granja.jpg"
+    },
+    {
+      "id": 32,
+      "nombre": "Corte de Uñas para Conejos",
+      "descripcion": "Servicio de corte de uñas especializado para conejos y pequeños roedores.",
+      "tipo_animal": "Otros",
+      "tipo_anuncio": "Servicio",
+      "precio": 12.00,
+      "img": "https://example.com/corte-unas-conejos.jpg"
+    },
+    {
+      "id": 33,
+      "nombre": "cuerno unicorno",
+      "descripcion": "cuerno magico.",
+      "tipo_animal": "Exoticos",
+      "tipo_anuncio": "Producto",
+      "precio": 12.00,
+      "img": "https://example.com/corte-unas-conejos.jpg"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+
+
+<div class="anuncios-container text-center row g-4 pt-2">
+  <h2>Anuncios de {{ categoria }}</h2>
+  <div *ngIf="anuncios.length === 0">No hay anuncios disponibles para esta categoría.</div>
+
+  <div *ngFor="let anuncio of anuncios" class=" col-12 col-sm-6 col-md-4 col-lg-3">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ anuncio.nombre }}</mat-card-title>
+        <mat-card-subtitle>{{ anuncio.tipo_animal }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ anuncio.descripcion }}</p>
+        <p>Precio: {{ anuncio.precio | currency: 'EUR': 'symbol' }}</p>
+        <img [src]="anuncio.img" alt="{{ anuncio.nombre }}" />
+      </mat-card-content>
+      <mat-card-footer class="text-center m-3">
+        <button mat-stroked-button [routerLink]="['/anonces', anuncio.id]">
+          <mat-icon>more_horiz</mat-icon>
+          Más
+        </button>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>

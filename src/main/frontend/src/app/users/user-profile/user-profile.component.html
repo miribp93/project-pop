@@ -1,0 +1,40 @@
+<mat-toolbar color="primary" class="top-bar">
+  <img src="chango2.png" alt="Chango" class="logo" routerLink="/">
+  <span class="spacer"></span>
+  <button mat-raised-button color="accent" routerLink="/home">LogOut</button>
+  <!-- Aqui funcion para logout -->
+</mat-toolbar>
+
+<main class="container">
+
+
+  <div class="user-info">
+    <h3>Datos del Usuario</h3>
+    <p><strong>Nombre:</strong> Juan Pérez</p>
+    <p><strong>Email:</strong> juan.perez.com</p>
+    <p><strong>Teléfono:</strong> +54 9 11 1234 5678</p>
+
+    <button  mat-raised-button color="accent m-2">Modificar Datos</button>
+    <!-- posible opcion es que lleve al campo registro y cambiamos el boron de registrar a modificar dependiendo de donde venga -->
+    <button  mat-raised-button color="warn m-2">Baja cuenta</button>
+    <!-- con un metodo de eliminar en el typescript -->
+  </div>
+
+
+  <div class="ads-section">
+    <h3>Mis Anuncios</h3>
+
+    Aqui crear un mat-card con un cun bucle for que muestre los anuncios del Usuario
+    <ul>
+      <li>Anuncio 1</li>
+      <li>Anuncio 2</li>
+      <li>Anuncio 3</li>
+
+
+    </ul>
+    <button mat-raised-button color="primary m-2">Agregar Anuncio</button>
+    <button  mat-raised-button color="succes m-2">Modificar Anuncio</button>
+    <button  mat-raised-button color="warn m-2">Eliminar Anuncio</button>
+  </div>
+
+</main>

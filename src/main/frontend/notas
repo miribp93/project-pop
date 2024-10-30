@@ -1,0 +1,10 @@
+Backend:
+
+La installacion y configuracion esta en el video 195
+
+-instalar el json-server "npm install --save-dev json-serve"
+-modificar el package.json
+-arrancar el servidor con "npm run backend"
+
+
+-Para que se pueda conenctar al servidor se crea un provider en app.config con un httpclient, esto hace que pueda usarse en toda la aplicacion,

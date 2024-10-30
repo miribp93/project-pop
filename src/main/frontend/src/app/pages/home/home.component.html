@@ -1,0 +1,18 @@
+<h2 class="text-center container ">Todos los Productos y Servicios</h2>
+<mat-divider></mat-divider>
+
+<div class="row g-4 pt-2">
+
+  <div *ngFor="let producto of paginatedProd" class="col-12 col-sm-6 col-md-4 col-lg-custom">
+    <productos-prod-card [prod]="producto"></productos-prod-card>
+  </div>
+</div>
+
+
+<mat-paginator [length]="totalLength"
+               [pageSize]="pageSize"
+               [pageIndex]="pageIndex"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="onPageChange($event)"
+               aria-label="Select page">
+</mat-paginator>

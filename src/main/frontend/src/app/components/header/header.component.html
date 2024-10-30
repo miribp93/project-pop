@@ -1,0 +1,37 @@
+<header>
+  <mat-toolbar color="primary" class="top-bar">
+    <img src="chango2.png" alt="Chango" class="logo" routerLink="/">
+    <span class="spacer"></span>
+
+
+    <!-- <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Buscar</mat-label>
+      <input matInput placeholder="Buscar">
+    </mat-form-field>
+    <span class="spacer"></span> -->
+
+    <button mat-raised-button routerLink="login">LogIn</button>
+    <button mat-raised-button routerLink="registrar">Registrar</button>
+
+
+  </mat-toolbar>
+
+  <mat-toolbar color="primary" class="nav-bar">
+    <button mat-button [matMenuTriggerFor]="servicesMenu">Todos los Servicios</button>
+
+    <mat-menu #servicesMenu="matMenu">
+      <button mat-menu-item routerLink="/anuncios/perro">Perro</button>
+      <button mat-menu-item routerLink="/anuncios/gato">Gato</button>
+      <button mat-menu-item routerLink="/anuncios/aves">Aves</button>
+      <button mat-menu-item routerLink="/anuncios/reptiles">Reptiles</button>
+      <button mat-menu-item routerLink="/anuncios/exoticos">Animales exóticos</button>
+      <button mat-menu-item routerLink="/anuncios/otros">Otros animales</button>
+    </mat-menu>
+
+    <button mat-button routerLink="/anuncios/producto">Productos</button>
+    <button mat-button routerLink="/anuncios/servicio">Servicios</button>
+    <button mat-button routerLink="/about">Acerca de nosotros</button>
+    <button mat-button routerLink="/contacto">Contáctanos</button>
+  </mat-toolbar>
+
+</header>
