@@ -3,12 +3,14 @@ package com.guaguaupop.guaguaupop.controller;
 import com.guaguaupop.guaguaupop.dto.LoginUserDTO;
 import com.guaguaupop.guaguaupop.entity.User;
 import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
-import com.guaguaupop.guaguaupop.exception.UsernameAlreadyExistsException;
 import com.guaguaupop.guaguaupop.repository.UserRepository;
 import com.guaguaupop.guaguaupop.security.jwt.JwtTokenUtil;
 import com.guaguaupop.guaguaupop.security.jwt.JwtUserResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLOutput;
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +33,8 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
 
+
+    //AUTENTICARSE PARA LOGIN
     @PostMapping("/login")
     public JwtUserResponse login(@Validated @RequestBody LoginUserDTO loginUserDTO) {
         log.info("Datos recibidos en login: {}", loginUserDTO);
@@ -40,12 +42,14 @@ public class AuthController {
         log.info("Contraseña: {}", loginUserDTO.getPassword());
 
         try {
+
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginUserDTO.getUsername(),
                             loginUserDTO.getPassword()
                     )
             );
+
             log.info("Autenticación exitosa para el usuario: {}", loginUserDTO.getUsername());
             SecurityContextHolder.getContext().setAuthentication(auth);
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
@@ -54,56 +58,43 @@ public class AuthController {
             log.info("Token JWT generado: {}", jwtToken);
             return JwtUserResponse.jwtUserResponseBuilder()
                     .username(userDetails.getUsername())
-                    .profilePhoto(null)  // Ajusta según necesites para obtener la foto de perfil
                     .token(jwtToken)
                     .build();
+
         } catch (BadCredentialsException e) {
+
             if (userRepository.existsByUsername(loginUserDTO.getUsername())) {
+
                 log.error("Error de credenciales: {}", e.getMessage());
                 throw e;
+
             } else {
+
                 log.error("El usuario no existe: {}", loginUserDTO.getUsername());
                 throw new UserNotExistsException();
             }
+
         } catch (Exception e) {
+
             log.error("Error durante el login: {}", e.getMessage());
             throw e;
         }
     }
 
 
+    //CERRAR SESIÓN
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
 
-    /*public JwtUserResponse login(@Validated @RequestBody LoginUserDTO loginUserDTO) {
-
-
-        Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginUserDTO.getUsername(),
-                        loginUserDTO.getPassword()
-                )
-        );
-
-        log.info("Autenticación exitosa para el usuario: {}", loginUserDTO.getUsername());
-
-        SecurityContextHolder.getContext().setAuthentication(auth);
-
-        User user = (User) auth.getPrincipal();
-
-        String jwtToken = jwtTokenUtil.generateToken(auth);
-
-        return convertUserEntityAndTokenToJwtUserResponse(user, jwtToken);
-    }*/
-
-
-
-
+        return ResponseEntity.ok("Sesión cerrada correctamente.");
+    }
 
 
     private JwtUserResponse convertUserEntityAndTokenToJwtUserResponse(User user, String jwtToken) {
+
         return JwtUserResponse.jwtUserResponseBuilder()
                 .idUser(user.getIdUser())
                 .username(user.getUsername())
-                .profilePhoto(user.getProfilePhoto())
                 .token(jwtToken)
                 .build();
     }

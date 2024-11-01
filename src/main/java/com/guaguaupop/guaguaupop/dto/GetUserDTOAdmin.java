@@ -18,5 +18,4 @@ public class GetUserDTOAdmin {
     private String street;
     private String city;
     private String postalCode;
-    private byte[] profilePhoto;
 }

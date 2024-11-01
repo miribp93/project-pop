@@ -19,6 +19,4 @@ public class CustomUserDetails implements UserDetails {
         this.password = password;
         this.authorities = authorities;
     }
-
-
 }

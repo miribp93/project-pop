@@ -3,6 +3,7 @@ package com.guaguaupop.guaguaupop.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -60,8 +61,8 @@ public class User implements UserDetails {
     @Pattern(regexp = "\\d{5}", message = "El código postal debe tener 5 dígitos")
     private String postalCode;
 
-    @Lob
-    @Column
+
+    @Column(name = "profile_photo", columnDefinition = "BYTEA")
     private byte[] profilePhoto;
 
     @OneToMany(mappedBy = "user")

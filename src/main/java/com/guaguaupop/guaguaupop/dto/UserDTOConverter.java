@@ -17,15 +17,13 @@ public class UserDTOConverter {
                 .city(user.getCity())
                 .postalCode(user.getPostalCode())
                 .street(user.getStreet())
-                .phone(user.getPhone())
-                .profilePhoto(user.getProfilePhoto()).build();
+                .phone(user.getPhone()).build();
     }
 
     public GetSimpleUserDTO convertUserToGetUserDTO(User user){
 
         return GetSimpleUserDTO.builder()
-                .username(user.getUsername())
-                .profilePhoto(user.getProfilePhoto()).build();
+                .username(user.getUsername()).build();
     }
 
     public GetUserDTOAdmin convertUserToGetUserDTOProfile(User user){
@@ -43,7 +41,6 @@ public class UserDTOConverter {
                 .city(user.getCity())
                 .postalCode(user.getPostalCode())
                 .street(user.getStreet())
-                .phone(user.getPhone())
-                .profilePhoto(user.getProfilePhoto()).build();
+                .phone(user.getPhone()).build();
     }
 }

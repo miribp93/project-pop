@@ -2,13 +2,12 @@ package com.guaguaupop.guaguaupop.dto;
 
 import lombok.*;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class GetSimpleUserDTO {
+public class GetProfilePhotoDTO {
 
-    private Long idUser;
-    private String username;
+    private byte [] profilePhoto;
 }

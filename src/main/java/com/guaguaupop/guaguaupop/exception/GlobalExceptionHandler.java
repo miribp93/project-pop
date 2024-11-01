@@ -1,4 +1,4 @@
-package com.guaguaupop.guaguaupop.exception;
+/*package com.guaguaupop.guaguaupop.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import org.postgresql.util.PSQLException;
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>("Error durante el login: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    /*// Excepciones de producto
+     Excepciones de producto
     @ExceptionHandler({ProductoNotFoundException.class})
     public ResponseEntity<ApiErrorResponse> handleNotFound(Exception ex) {
         ApiErrorResponse apiErrorResponse = new ApiErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleNotAccess(Exception ex) {
         ApiErrorResponse apiErrorResponse = new ApiErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiErrorResponse);
-    }*/
+    }
 
     // Excepciones de validacion
     @ExceptionHandler({ConstraintViolationException.class})
@@ -106,8 +106,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(status).body(apiErrorResponseJSON);
     }
 
-
-
     @ExceptionHandler(DataBaseConnectionException.class)
     public ResponseEntity<ApiErrorResponse> handleDataBaseConnectionException(DataBaseConnectionException e) {
         ApiErrorResponse apiErrorResponse = new ApiErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, e.getMessage());
@@ -120,3 +118,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiErrorResponse);
     }
 }
+*/

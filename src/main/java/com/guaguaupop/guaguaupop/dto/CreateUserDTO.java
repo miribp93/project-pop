@@ -34,6 +34,5 @@ public class CreateUserDTO {
     @NotBlank(message = "El código postal es obligatorio.")
     @Pattern(regexp = "\\d{5}", message = "El código postal debe tener 5 dígitos.")
     private String postalCode;
-    private byte[] profilePhoto;
     private Set<String> roles;
 }
