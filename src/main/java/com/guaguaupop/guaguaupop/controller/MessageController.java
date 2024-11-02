@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @AllArgsConstructor
-@RequestMapping("/message")
+@RequestMapping("/api/message")
 public class MessageController {
 }

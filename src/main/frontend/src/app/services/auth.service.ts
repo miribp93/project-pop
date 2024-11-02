@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private apiUrl = 'https://tu-backend.com/api'; // URL base del backend
+  //private apiUrl = 'https://tu-backend.com/api'; // URL base del backend
 
   constructor(private http: HttpClient) {}
 
@@ -16,13 +16,13 @@ export class AuthService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { usuario, password };
 
-    return this.http.post<any>(`${this.apiUrl}/login`, body, { headers });
+    return this.http.post<any>(`/auth/login`, body, { headers });
   }
 
   // Método para registrar un nuevo usuario
   register(userData: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(`${this.apiUrl}/register`, userData, { headers });
+    return this.http.post<any>(`/api/user/register`, userData, { headers });
   }
 
   isAuthenticated(): boolean {
