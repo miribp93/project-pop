@@ -10,6 +10,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/registro/registro.component';
 import { PayComponent } from './components/pay/pay.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { AdminDashboardComponent } from './users/admin-dashboard/admin-dashboard.component';
 
 
 
@@ -27,11 +28,12 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
        { path: 'about', component: AboutComponent },
        { path: 'contacto', component: ContactComponent },
        { path: 'login', component: LoginComponent },
-       { path: 'registrar', component: RegisterComponent },
-       { path: 'pago', component: PayComponent },
+       { path: 'register', component: RegisterComponent },
+       { path: 'pay', component: PayComponent },
 
      ]
 
    },
-   {path: 'profile', component: UserProfileComponent}
+   {path: 'profile', component: UserProfileComponent},
+   {path: 'admin', component: AdminDashboardComponent}
  ];

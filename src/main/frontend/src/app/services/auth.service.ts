@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from '../interfaces/user.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
 
@@ -19,17 +20,21 @@ export class AuthService {
     return this.http.post<any>(`/auth/login`, body, { headers });
   }
 
+  findAll(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl)
+  }
+
   // Método para registrar un nuevo usuario
   register(userData: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(`/api/user/register`, userData, { headers });
   }
 
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
+  update(user: User): Observable<User> {
+    return this.http.put<any>(this.apiUrl, user);
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
+  delete(): Observable<User[]> {
+    return this.http.delete<any>(`${this.apiUrl}/:name`)
   }
 }

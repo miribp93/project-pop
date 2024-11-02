@@ -26,9 +26,9 @@ export class UserProfileComponent  {
   constructor(private dataService: DataService) {}
 
   usuario = { //Cargar los datos del usuario
-    nombre: 'Juan Pérez',
-    email: 'juan.perez@example.com',
-    telefono: '+54 9 11 1234 5678'
+    nombre: 'Lucas Pagani',
+    email: 'lucaspagani@hotmail.com',
+    telefono: '+54 622941582'
   };
 
   modificarAnuncio(){

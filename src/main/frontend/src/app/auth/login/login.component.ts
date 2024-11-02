@@ -26,8 +26,8 @@ export class LoginComponent {
   constructor(private AuthService: AuthService, private router: Router) {}
 
   // Método para manejar el inicio de sesión
-  onLogin(): void {
-    this.AuthService.login(this.usuario, this.password).subscribe(
+ onLogin(): void {
+   /*  this.AuthService.login(this.usuario, this.password).subscribe(
       response => {
         // Redirigir si el login es exitoso
         this.router.navigate(['/home']);
@@ -37,6 +37,6 @@ export class LoginComponent {
         console.error('Error en el inicio de sesión', error);
         alert('Usuario o contraseña incorrectos');
       }
-    );
+    );*/
   }
 }

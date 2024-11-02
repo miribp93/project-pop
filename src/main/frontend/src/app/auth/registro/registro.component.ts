@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component,  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MATERIAL_MODULES } from '../../material/material/material.component';
-
 
 @Component({
   selector: 'app-registro',
@@ -21,19 +20,19 @@ export class RegisterComponent {
     private router: Router
   ) {
     this.registerForm = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido1: ['', Validators.required],
-      apellido2: [''],
+      name: ['', Validators.required],
+      last_name1: ['', Validators.required],
+      last_name2: [''],
       email: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // 10 dígitos numéricos
-      direccion: ['', Validators.required],
-      ciudad: ['', Validators.required],
-      municipio: ['', Validators.required],
-      codigoPostal: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]], // 5 dígitos numéricos
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
+      street: ['', Validators.required],
+      city: ['', Validators.required],
+      postal_code: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      password1: ['', Validators.required],
+      password2: ['', Validators.required],
+      username: ['', Validators.required],
     }, {
-      validator: this.matchPasswords('password', 'password1')
+      validator: this.matchPasswords('password', 'password2')
     });
   }
 
@@ -58,7 +57,7 @@ export class RegisterComponent {
     }
 
     const userData = this.registerForm.value;
-    this.authService.register(userData).subscribe(
+   /* this.authService.register(userData).subscribe(
       response => {
         alert('Registro exitoso');
         this.router.navigate(['/login']);
@@ -67,7 +66,7 @@ export class RegisterComponent {
         console.error('Error en el registro', error);
         alert('Error al registrar el usuario');
       }
-    );
+    );*/
   }
 
   // Métodos auxiliares para facilitar el acceso a los controles desde la plantilla
