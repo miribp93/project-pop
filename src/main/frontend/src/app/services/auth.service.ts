@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   findAll(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl)
+    return this.http.get<User[]>(`/user`)
   }
 
   // Método para registrar un nuevo usuario
@@ -30,11 +30,12 @@ export class AuthService {
     return this.http.post<any>(`/api/user/register`, userData, { headers });
   }
 
+  //Actualizar datos personales ususario
   update(user: User): Observable<User> {
-    return this.http.put<any>(this.apiUrl, user);
+    return this.http.put<any>(`/api/user/update`);
   }
 
   delete(): Observable<User[]> {
-    return this.http.delete<any>(`${this.apiUrl}/:name`)
+    return this.http.delete<any>(`/api/user/delete/:id`)
   }
 }
