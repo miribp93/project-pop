@@ -29,7 +29,7 @@ constructor(private AuthService : AuthService){}
       (user) => {
         console.log('Datos recibidos:', user);
         this.users = user;
-        this.totalLength = this.users.length; // Total de productos
+        this.totalLength = this.users.length;
   },
   (error) => console.error('Error en la carga de datos:', error)
 );
