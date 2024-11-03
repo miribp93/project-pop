@@ -52,7 +52,7 @@ export class productComponent implements OnInit {
 
   comprar(){
     //this.router.navigateByUrl('login')// crear un condicional que si esta logeado vaya directamente a la plataforma de pago sino redirige al login
-    this.router.navigateByUrl('pago')
+    this.router.navigateByUrl('pay')
 }
 }
 

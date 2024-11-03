@@ -60,6 +60,6 @@ export class AnoncesComponent implements OnInit {
   }
 
   comprar(){
-    this.router.navigateByUrl('contacto')
+    this.router.navigateByUrl('home')
 }
 }
