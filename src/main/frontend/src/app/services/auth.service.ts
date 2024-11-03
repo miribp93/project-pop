@@ -8,7 +8,6 @@ import { User } from '../interfaces/user.interface';
 })
 export class AuthService {
 
-  //private apiUrl = 'https://tu-backend.com/api'; // URL base del backend
 
   constructor(private http: HttpClient) {}
 
@@ -20,21 +19,41 @@ export class AuthService {
     return this.http.post<any>(`/auth/login`, body, { headers });
   }
 
-  findAll(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl)
+  logout(): void {
+    this.http.post<any>('/auth/logout', {}).subscribe(
+      () => {
+        localStorage.removeItem('token');
+      },
+      (error) => {
+        console.error('Error en el logout:', error);
+
+      }
+    );
   }
 
-  // Método para registrar un nuevo usuario
+
+  findAll(): Observable<User[]> {
+    return this.http.get<User[]>(`/api/user`)
+  }
+
+
   register(userData: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(`/api/user/register`, userData, { headers });
   }
 
-  update(user: User): Observable<User> {
-    return this.http.put<any>(this.apiUrl, user);
+  update(user: User): Observable<User[]> {
+    return this.http.put<any>( '/api/user', user);
   }
 
   delete(): Observable<User[]> {
-    return this.http.delete<any>(`${this.apiUrl}/:name`)
+    return this.http.delete<any>(`/:id`)
   }
+
+  // Ver perfil get
+  // Asignar roles post
+  // Subir foto de perfil post
+  // Cerrar sesión post
+
+
 }

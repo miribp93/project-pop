@@ -1,4 +1,4 @@
-import { Component,  } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -57,16 +57,17 @@ export class RegisterComponent {
     }
 
     const userData = this.registerForm.value;
-   /* this.authService.register(userData).subscribe(
+
+    this.authService.register(userData).subscribe(
       response => {
         alert('Registro exitoso');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/login']); // Redirige al inicio de sesión tras el registro
       },
       error => {
         console.error('Error en el registro', error);
-        alert('Error al registrar el usuario');
+        alert('Error al registrar el usuario'); // Muestra un mensaje de error
       }
-    );*/
+    );
   }
 
   // Métodos auxiliares para facilitar el acceso a los controles desde la plantilla

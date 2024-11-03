@@ -12,7 +12,6 @@ import { AuthService } from '../../services/auth.service';
   imports: [
     CommonModule,
     FormsModule,
-
     MATERIAL_MODULES
   ],
   templateUrl: './login.component.html',
@@ -23,20 +22,28 @@ export class LoginComponent {
   usuario: string = '';
   password: string = '';
 
-  constructor(private AuthService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  // Método para manejar el inicio de sesión
- onLogin(): void {
-   /*  this.AuthService.login(this.usuario, this.password).subscribe(
+
+  onLogin(): void {
+    this.authService.login(this.usuario, this.password).subscribe(
       response => {
-        // Redirigir si el login es exitoso
-        this.router.navigate(['/home']);
+        // Verificar si la respuesta contiene un token o algún indicador de éxito
+        if (response && response.token) {
+          // Almacenar el token en localStorage o sessionStorage
+          localStorage.setItem('token', response.token);
+
+          // Redirigir a la página de inicio o a la ruta deseada
+          this.router.navigate(['/home']);
+        } else {
+          alert('Inicio de sesión exitoso, pero no se recibió un token.');
+        }
       },
       error => {
-        // Manejo de errores
+        // Manejo de errores (por ejemplo, credenciales incorrectas)
         console.error('Error en el inicio de sesión', error);
         alert('Usuario o contraseña incorrectos');
       }
-    );*/
+    );
   }
 }
