@@ -38,7 +38,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/user/register", "/user/register-manager", "/auth/login").permitAll()
+                        .requestMatchers("/api/user/register", "/api/user/register-manager", "/auth/login").permitAll()
                         //.requestMatchers("/user/profile-photo").authenticated()
                         .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))

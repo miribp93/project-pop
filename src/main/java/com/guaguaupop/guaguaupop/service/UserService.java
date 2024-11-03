@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -194,4 +195,11 @@ public class UserService extends BaseService<User, Long, UserRepository> {
                 .orElseThrow(UserNotExistsException::new);
         return new GetProfilePhotoDTO(user.getProfilePhoto());
     }
+
+    // LISTAR TODOS LOS USUARIOS EN VISTA ADMIN
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
 }

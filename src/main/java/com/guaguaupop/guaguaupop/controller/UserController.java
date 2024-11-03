@@ -17,6 +17,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -152,6 +154,7 @@ public class UserController {
         }
     }
 
+    // GET FOTO DE PERFIL
     @GetMapping("/profile-photo")
     public ResponseEntity<?> getProfilePhoto(@AuthenticationPrincipal CustomUserDetails userDetails) {
         if (userDetails == null) {
@@ -174,6 +177,17 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener la foto de perfil: " + e.getMessage());
         }
+    }
+
+    // LISTAR USUARIOS EN VISTA ADMIN
+    @PreAuthorize("hasRole('ADMINISTRATOR') or hasRole('MANAGER')")
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.findAll();
+        if (users.isEmpty()) {
+            return ResponseEntity.noContent().build(); // Devuelve 204 si no hay usuarios
+        }
+        return ResponseEntity.ok(users); // Devuelve 200 con la lista de usuarios
     }
 }
 
