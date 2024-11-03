@@ -35,6 +35,4 @@ constructor(private AuthService : AuthService){}
 );
 
   }
-
-
 }

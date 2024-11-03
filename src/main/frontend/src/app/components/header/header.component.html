@@ -13,6 +13,7 @@
     <button mat-raised-button routerLink="login">LogIn</button>
     <button mat-raised-button routerLink="register">Registrar</button>
     <button mat-raised-button routerLink="profile">Mi Perfil</button>
+    <button mat-raised-button routerLink="admin">Administrador</button>
 
 
 
@@ -22,16 +23,16 @@
     <button mat-button [matMenuTriggerFor]="servicesMenu">Todos los Servicios</button>
 
     <mat-menu #servicesMenu="matMenu">
-      <button mat-menu-item routerLink="/anuncios/perro">Perro</button>
-      <button mat-menu-item routerLink="/anuncios/gato">Gato</button>
-      <button mat-menu-item routerLink="/anuncios/aves">Aves</button>
-      <button mat-menu-item routerLink="/anuncios/reptiles">Reptiles</button>
-      <button mat-menu-item routerLink="/anuncios/exoticos">Animales exóticos</button>
-      <button mat-menu-item routerLink="/anuncios/otros">Otros animales</button>
+      <button mat-menu-item routerLink="/anonces/perro">Perro</button>
+      <button mat-menu-item routerLink="/anonces/gato">Gato</button>
+      <button mat-menu-item routerLink="/anonces/aves">Aves</button>
+      <button mat-menu-item routerLink="/anonces/reptiles">Reptiles</button>
+      <button mat-menu-item routerLink="/anonces/exoticos">Animales exóticos</button>
+      <button mat-menu-item routerLink="/anonces/otros">Otros animales</button>
     </mat-menu>
 
-    <button mat-button routerLink="/anuncios/producto">Productos</button>
-    <button mat-button routerLink="/anuncios/servicio">Servicios</button>
+    <button mat-button routerLink="/anonces/producto">Productos</button>
+    <button mat-button routerLink="/anonces/servicio">Servicios</button>
     <button mat-button routerLink="/about">Acerca de nosotros</button>
     <button mat-button routerLink="/contacto">Contáctanos</button>
   </mat-toolbar>
