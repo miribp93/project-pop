@@ -7,14 +7,14 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nombre</mat-label>
         <input matInput formControlName="name" required>
-        <mat-error *ngIf="f.name.errors?.required">Nombre es requerido</mat-error>
+        <mat-error *ngIf="f['name'].errors?.['required']">Nombre es requerido</mat-error>
       </mat-form-field>
 
       <!-- Campo Primer Apellido -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Primer Apellido</mat-label>
         <input matInput formControlName="last_name1" required>
-        <mat-error *ngIf="f.last_name1.errors?.required">Primer apellido es requerido</mat-error>
+        <mat-error *ngIf="f['last_name1'].errors?.['required']">Primer apellido es requerido</mat-error>
       </mat-form-field>
 
       <!-- Campo Segundo Apellido -->
@@ -27,61 +27,61 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" required>
-        <mat-error *ngIf="f.email.errors?.required">Email es requerido</mat-error>
-        <mat-error *ngIf="f.email.errors?.email">Formato de email inválido</mat-error>
+        <mat-error *ngIf="f['email'].errors?.['required']">Email es requerido</mat-error>
+        <mat-error *ngIf="f['email'].errors?.['email']">Formato de email inválido</mat-error>
       </mat-form-field>
 
       <!-- Teléfono con validación de 9 dígitos -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Teléfono</mat-label>
         <input matInput formControlName="phone" required>
-        <mat-error *ngIf="f.phone.errors?.required">Teléfono es requerido</mat-error>
-        <mat-error *ngIf="f.phone.errors?.pattern">Debe contener 9 dígitos</mat-error>
+        <mat-error *ngIf="f['phone'].errors?.['required']">Teléfono es requerido</mat-error>
+        <mat-error *ngIf="f['phone'].errors?.['pattern']">Debe contener al menos 9 dígitos</mat-error>
       </mat-form-field>
 
       <!-- Dirección -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Dirección</mat-label>
         <input matInput formControlName="street" required>
-        <mat-error *ngIf="f.street.errors?.required">Dirección es requerida</mat-error>
+        <mat-error *ngIf="f['street'].errors?.['required']">Dirección es requerida</mat-error>
       </mat-form-field>
 
       <!-- Campo Ciudad -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Ciudad</mat-label>
         <input matInput formControlName="city" required>
-        <mat-error *ngIf="f.city.errors?.required">Ciudad es requerida</mat-error>
+        <mat-error *ngIf="f['city'].errors?.['required']">Ciudad es requerida</mat-error>
       </mat-form-field>
 
       <!-- Código postal con validación de 5 dígitos -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Código Postal</mat-label>
         <input matInput formControlName="postal_code" required>
-        <mat-error *ngIf="f.postal_code.errors?.required">Código Postal es requerido</mat-error>
-        <mat-error *ngIf="f.postal_code.errors?.pattern">Debe contener 5 dígitos</mat-error>
+        <mat-error *ngIf="f['postal_code'].errors?.['required']">Código Postal es requerido</mat-error>
+        <mat-error *ngIf="f['postal_code'].errors?.['pattern']">Debe contener 5 dígitos</mat-error>
       </mat-form-field>
 
       <!-- Contraseña con validación de longitud mínima -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Contraseña</mat-label>
         <input matInput type="password" formControlName="password" required>
-        <mat-error *ngIf="f.password.errors?.required">Contraseña es requerida</mat-error>
-        <mat-error *ngIf="f.password.errors?.minlength">Debe tener al menos 6 caracteres</mat-error>
+        <mat-error *ngIf="f['password'].errors?.['required']">Contraseña es requerida</mat-error>
+        <mat-error *ngIf="f['password'].errors?.['minlength']">Debe tener al menos 6 caracteres</mat-error>
       </mat-form-field>
 
       <!-- Confirmación de contraseña con validación personalizada -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Confirmar Contraseña</mat-label>
         <input matInput type="password" formControlName="password2" required>
-        <mat-error *ngIf="f.password2.errors?.required">Confirmar contraseña es requerida</mat-error>
-        <mat-error *ngIf="f.password2.errors?.mustMatch">Las contraseñas no coinciden</mat-error>
+        <mat-error *ngIf="f['password2'].errors?.['required']">Confirmar contraseña es requerida</mat-error>
+        <mat-error *ngIf="f['password2'].errors?.['mustMatch']">Las contraseñas no coinciden</mat-error>
       </mat-form-field>
 
       <!-- Nombre de usuario -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nombre de Usuario</mat-label>
         <input matInput formControlName="username" required>
-        <mat-error *ngIf="f.username.errors?.required">Nombre de usuario es requerido</mat-error>
+        <mat-error *ngIf="f['username'].errors?.['required']">Nombre de usuario es requerido</mat-error>
       </mat-form-field>
 
       <div class="form-actions">

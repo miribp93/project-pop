@@ -19,7 +19,6 @@ export class AuthService {
     return this.http.post<any>(`/auth/login`, body, { headers });
   }
 
-<<<<<<< HEAD
   logout(): void {
     this.http.post<any>('/auth/logout', {}).subscribe(
       () => {
@@ -30,10 +29,6 @@ export class AuthService {
 
       }
     );
-=======
-  findAll(): Observable<User[]> {
-    return this.http.get<User[]>(`/user`)
->>>>>>> 2f363a8cebb28f0ca9e777ded353ddb1a4fbf825
   }
 
 
@@ -47,22 +42,12 @@ export class AuthService {
     return this.http.post<any>(`/api/user/register`, userData, { headers });
   }
 
-<<<<<<< HEAD
   update(user: User): Observable<User[]> {
     return this.http.put<any>( '/api/user', user);
   }
 
   delete(): Observable<User[]> {
     return this.http.delete<any>(`/:id`)
-=======
-  //Actualizar datos personales ususario
-  update(user: User): Observable<User> {
-    return this.http.put<any>(`/api/user/update`);
-  }
-
-  delete(): Observable<User[]> {
-    return this.http.delete<any>(`/api/user/delete/:id`)
->>>>>>> 2f363a8cebb28f0ca9e777ded353ddb1a4fbf825
   }
 
   // Ver perfil get

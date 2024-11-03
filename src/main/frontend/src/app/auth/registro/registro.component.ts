@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModul
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [ReactiveFormsModule, MATERIAL_MODULES],
+  imports: [ReactiveFormsModule, MATERIAL_MODULES, CommonModule],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css'],
 })
@@ -24,11 +25,11 @@ export class RegisterComponent {
       last_name1: ['', Validators.required],
       last_name2: [''],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{9,}$')]], // Permite al menos 9 dígitos
       street: ['', Validators.required],
       city: ['', Validators.required],
       postal_code: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]], // Ajustado a 8 caracteres
       password2: ['', Validators.required],
       username: ['', Validators.required],
     }, {
@@ -42,10 +43,19 @@ export class RegisterComponent {
       const passControl = formGroup.get(password);
       const confirmPassControl = formGroup.get(confirmPassword);
 
-      if (passControl && confirmPassControl && passControl.value !== confirmPassControl.value) {
+      if (!passControl || !confirmPassControl) {
+        return;
+      }
+
+      if (confirmPassControl.errors && !confirmPassControl.errors['mustMatch']) {
+        // Retorna si ya tiene otros errores de validación
+        return;
+      }
+
+      if (passControl.value !== confirmPassControl.value) {
         confirmPassControl.setErrors({ mustMatch: true });
       } else {
-        confirmPassControl?.setErrors(null);
+        confirmPassControl.setErrors(null); // Limpiar errores cuando coinciden
       }
     };
   }
@@ -65,7 +75,8 @@ export class RegisterComponent {
       },
       error => {
         console.error('Error en el registro', error);
-        alert('Error al registrar el usuario'); // Muestra un mensaje de error
+        const errorMsg = error.error?.message || 'Error al registrar el usuario';
+        alert(errorMsg);
       }
     );
   }
