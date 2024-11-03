@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../interfaces/user.interface';
 import { AuthService } from '../../services/auth.service';
 import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [
-    MATERIAL_MODULES
+    MATERIAL_MODULES,
+    CommonModule
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
