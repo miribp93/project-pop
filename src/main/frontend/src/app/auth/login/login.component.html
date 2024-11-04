@@ -16,8 +16,11 @@
           <input matInput type="password" id="password" name="password" [(ngModel)]="password" required>
         </mat-form-field>
       </div>
+      <div class="forgot-password">
+        <a (click)="onForgotPassword()" class="forgot-password-link">¿Olvidó su contraseña?</a>
+      </div>
 
-      <div class="form-actions">
+      <div class="form-actions mt-3">
         <button mat-raised-button color="primary" type="submit">Entrar</button>
         <button mat-raised-button color="warn" type="button" >Cancelar</button>
       </div>

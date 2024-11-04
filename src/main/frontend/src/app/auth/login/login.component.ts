@@ -26,6 +26,7 @@ export class LoginComponent {
 
 
   onLogin(): void {
+
     this.authService.login(this.usuario, this.password).subscribe(
       response => {
         // Verificar si la respuesta contiene un token o algún indicador de éxito
@@ -45,5 +46,10 @@ export class LoginComponent {
         alert('Usuario o contraseña incorrectos');
       }
     );
+  }
+
+  onForgotPassword(): void {
+
+    this.router.navigate(['/forgot-password']);
   }
 }

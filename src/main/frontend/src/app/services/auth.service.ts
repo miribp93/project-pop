@@ -8,6 +8,12 @@ import { User } from '../interfaces/user.interface';
   providedIn: 'root',
 })
 export class AuthService {
+
+  //Metodo para solicitar de nuevo la contraseña
+  resetPassword(email: string): Observable<any> {
+    return this.http.post('/api/auth/forgot-password', { email });
+  }
+
   //Metodo para subir foto
   uploadPhoto(photoData: FormData): Observable<{ photoUrl: string }> {
     return this.http.post<{ photoUrl: string }>('/api/user/upload-photo', photoData);
