@@ -17,6 +17,8 @@ import { MATERIAL_MODULES } from '../../material/material/material.component';
 export class UserProfileComponent implements OnInit {
   usuario: User | null = null; // Datos del usuario
   anuncios: any[] = []; // Anuncios del usuario
+  selectedFile?: File; // Archivo seleccionado para la foto de perfil
+  photoPreview?: string | ArrayBuffer | null; // Vista previa de la foto
 
   constructor(
     private authService: AuthService,
@@ -25,6 +27,7 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     // Cargar datos del usuario
     this.authService.getCurrentUser().subscribe(
       (user) => (this.usuario = user),
@@ -35,22 +38,23 @@ export class UserProfileComponent implements OnInit {
     this.loadAnuncios();
   }
 
+  //Cargar todos los anuncios del usuario, actualmente usa data service, modificarr luego por backend
   loadAnuncios(): void {
-    // Aquí deberías implementar la lógica para cargar los anuncios del usuario
-    // Puedes usar el `DataService` o algún servicio específico para anuncios
+
     this.dataService.getAnuncios().subscribe(
       (anuncios) => (this.anuncios = anuncios),
       (error) => console.error('Error al cargar anuncios:', error)
     );
   }
 
+  // Modifica datos y Redirige al formulario de registro en modo edición
   modificarDatos(): void {
-    // Redirige al formulario de registro en modo edición
-    this.router.navigate(['/register'], { queryParams: { editMode: true } });
+        this.router.navigate(['/register'], { queryParams: { editMode: true } });
   }
 
+  //Elimina Cuenta
   deleteUser(): void {
-    // Lógica para borrar usuario
+    // Lógica para borrar usuario - dar de baja cuenta
     this.authService.delete(this.usuario!.id_user.toString()).subscribe(
       () => {
         alert('Cuenta eliminada con éxito');
@@ -60,13 +64,46 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
+  //Cierra sesión
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']); // Redirigir al login tras logout
   }
 
+    // Método para manejar la selección de archivo
+    onFileSelected(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files[0]) {
+        this.selectedFile = input.files[0];
+
+        // Vista previa de la imagen seleccionada
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.photoPreview = reader.result;
+        };
+        reader.readAsDataURL(this.selectedFile);
+      }
+    }
+
+     // Método para subir la foto al backend
+  uploadPhoto(): void {
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('photo', this.selectedFile);
+
+      // Llamada al servicio para subir la foto
+      this.authService.uploadPhoto(formData).subscribe(
+        (response) => {
+          alert('Foto subida con éxito');
+          this.usuario!.profile_photo = response.photoUrl; // Actualiza la URL de la foto del usuario
+        },
+        (error) => console.error('Error al subir la foto:', error)
+      );
+    }
+  }
+
   // FATA POR CREAR
-  /*
+
   crearAnuncio(): void {
     // Lógica para crear un anuncio
     console.log('Crear anuncio');
@@ -78,11 +115,9 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-borrarAnuncio(anuncioId: number): void {
+eliminarAnuncio(anuncioId: number): void {
     // Lógica para borrar el anuncio específico
-    this.dataService.deleteAnuncio(anuncioId).subscribe(
-      () => this.loadAnuncios(), // Recargar anuncios tras eliminar
-      error => console.error('Error al eliminar anuncio:', error)
-    );
-  }*/
+   console.log("Anuncio borrado")
+
+  }
 }

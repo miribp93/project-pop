@@ -1,4 +1,6 @@
 export interface User {
+  photo: string;
+  isBlocked: any;
   id_user: number;
   city: string;
   email: string;

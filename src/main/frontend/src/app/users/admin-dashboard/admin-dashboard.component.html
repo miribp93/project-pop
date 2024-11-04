@@ -1,8 +1,8 @@
 <mat-toolbar color="primary" class="top-bar">
   <img src="chango2.png" alt="Chango" class="logo" routerLink="/">
   <span class="spacer"></span>
-  <button mat-raised-button color="accent" routerLink="/home">LogOut</button>
-  <!-- Aqui funcion para logout -->
+  <button mat-raised-button color="accent" (click)="logout()">LogOut</button>
+
 </mat-toolbar>
 
 <h2 class="text-center mt-3">Perfil Administrador</h2>
@@ -14,5 +14,17 @@
 
   <div *ngFor="let user of users" class="col-12 col-sm-6 col-md-4 col-lg-custom">
   {{user.name}} - {{user.last_name1}}
+  <div>
+
+    <button mat-raised-button color="primary" (click)="toggleBlockUser(user)">
+      {{ user.isBlocked ? 'Desbloquear' : 'Bloquear' }}
+    </button>
+    <button mat-raised-button color="warn" (click)="deleteUser(user.id_user)">
+      Eliminar Usuario
+    </button>
   </div>
+
+  </div>
+
+
 </div>

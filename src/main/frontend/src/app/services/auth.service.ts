@@ -8,6 +8,16 @@ import { User } from '../interfaces/user.interface';
   providedIn: 'root',
 })
 export class AuthService {
+  //Metodo para subir foto
+  uploadPhoto(photoData: FormData): Observable<{ photoUrl: string }> {
+    return this.http.post<{ photoUrl: string }>('/api/user/upload-photo', photoData);
+  }
+
+
+  //Metodo que indica si el usuario esta bloqueado o no
+  updateUserStatus(userId: number, isBlocked: boolean): Observable<void> {
+       return this.http.put<void>(`/api/users/${userId}/status`, { isBlocked });
+  }
   constructor(private http: HttpClient) {}
 
   // Método para autenticar usuario
