@@ -32,8 +32,12 @@ export class AuthService {
   login(username: string, password: string): Observable<UserSession> {
     const body = { username, password };
 
-    return this.http.post<any>(`/auth/login`, body, { headers }).pipe(
-      catchError(this.handleError)
+    return this.http.post<any>(`/auth/login`, body).pipe(
+      tap(data => {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('username', username);
+      })
+      
     );
   }
 
@@ -74,10 +78,23 @@ export class AuthService {
 
   // Obtener datos del usuario autenticado
   getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`/api/user/current`).pipe(
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+      // Maneja el caso donde el token no está presente
+      console.error('Token no encontrado en localStorage');
+      return throwError(() => new Error('Token no encontrado'));
+    }
+  
+    // Crea el objeto de HttpHeaders con el token
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+    return this.http.get<User>('/api/user/profile', { headers }).pipe(
       catchError(this.handleError)
     );
+    
   }
+  
   
 
    /*login(usuario: string, password: string): Observable<any> {
