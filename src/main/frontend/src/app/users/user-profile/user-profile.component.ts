@@ -29,10 +29,11 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
 
     // Cargar datos del usuario
-    this.authService.getCurrentUser().subscribe(
+    /*this.authService.getCurrentUser().subscribe(
       (user) => (this.usuario = user),
       (error) => console.error('Error al cargar usuario:', error)
-    );
+    );*/
+    this.authService.getCurrentUser();
 
     // Cargar anuncios del usuario
     this.loadAnuncios();

@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpErrorResponse,
-} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError, tap } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { User } from '../interfaces/user.interface';
+import { User, UserLogin, UserSession } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -27,29 +23,16 @@ export class AuthService {
 
   //Metodo que indica si el usuario esta bloqueado o no
   updateUserStatus(userId: number, isBlocked: boolean): Observable<void> {
-    return this.http.put<void>(`/api/users/${userId}/status`, { isBlocked });
+       return this.http.put<void>(`/api/users/${userId}/status`, { isBlocked });
   }
   constructor(private http: HttpClient) {}
 
   // Método para autenticar usuario
-  login(usuario: string, password: string): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = { usuario, password };
+  // Mientras se pueda, evitar el objeto any y usar una interfaz declarando el objeto que esperas
+  login(username: string, password: string): Observable<UserSession> {
+    const body = { username, password };
 
     return this.http.post<any>(`/auth/login`, body, { headers }).pipe(
-      map((response) => {
-        const token = response.token;
-        if (token) {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem(
-            'userdata',
-            JSON.stringify({
-              username: response.username,
-            })
-          );
-        }
-        return token;
-      }),
       catchError(this.handleError)
     );
   }
@@ -91,10 +74,21 @@ export class AuthService {
 
   // Obtener datos del usuario autenticado
   getCurrentUser(): Observable<User> {
-    return this.http
-      .get<User>(`/api/user/current`)
-      .pipe(catchError(this.handleError));
+    return this.http.get<User>(`/api/user/current`).pipe(
+      catchError(this.handleError)
+    );
   }
+  
+
+   /*login(usuario: string, password: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = { usuario, password };
+
+    return this.http.post<any>(`/auth/login`, body, { headers }).pipe.(
+      localStorage.setItem('token', respo)
+      catchError(this.handleError)
+    );
+  }*/
 
   //Eliminar usuario
   delete(id: string): Observable<any> {

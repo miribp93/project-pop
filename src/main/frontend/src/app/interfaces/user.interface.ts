@@ -17,3 +17,13 @@ export interface User {
   street: string;
   username: string;
 }
+
+export interface UserLogin {
+  username: string;
+  password: string;
+}
+
+export interface UserSession {
+  username: string;
+  token: string;
+}
