@@ -37,7 +37,7 @@ export class AuthService {
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', username);
       })
-      
+
     );
   }
 
@@ -79,23 +79,23 @@ export class AuthService {
   // Obtener datos del usuario autenticado
   getCurrentUser(): Observable<User> {
     const token = localStorage.getItem('token');
-    
+
     if (!token) {
       // Maneja el caso donde el token no está presente
       console.error('Token no encontrado en localStorage');
       return throwError(() => new Error('Token no encontrado'));
     }
-  
+
     // Crea el objeto de HttpHeaders con el token
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
+
     return this.http.get<User>('/api/user/profile', { headers }).pipe(
       catchError(this.handleError)
     );
-    
+
   }
-  
-  
+
+
 
    /*login(usuario: string, password: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
