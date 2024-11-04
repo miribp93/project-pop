@@ -8,7 +8,10 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [ReactiveFormsModule, MATERIAL_MODULES, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    MATERIAL_MODULES,
+    CommonModule],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css'],
 })
@@ -71,7 +74,7 @@ export class RegisterComponent {
     this.authService.register(userData).subscribe(
       response => {
         alert('Registro exitoso');
-        this.router.navigate(['/login']); // Redirige al inicio de sesión tras el registro
+        this.router.navigate(['/login']); // Redirige al inicio de sesión tras el registro, si lo implementamos antes del pago hay que redirigir a la pagina de pay
       },
       error => {
         console.error('Error en el registro', error);

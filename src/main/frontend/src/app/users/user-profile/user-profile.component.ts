@@ -1,46 +1,88 @@
-import { Component } from '@angular/core';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
-import { CardComponent } from '../../components/card/card.component';
-import { RouterModule } from '@angular/router';
+import { User } from '../../interfaces/user.interface';
 import { CommonModule } from '@angular/common';
+import { MATERIAL_MODULES } from '../../material/material/material.component';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [
-    RouterModule,
-    CommonModule,
-    CardComponent,
-    MATERIAL_MODULES
-  ],
+  imports: [RouterModule, CommonModule, MATERIAL_MODULES],
   providers: [DataService],
   templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.css'
+  styleUrls: ['./user-profile.component.css'],
 })
-export class UserProfileComponent  {
+export class UserProfileComponent implements OnInit {
+  usuario: User | null = null; // Datos del usuario
+  anuncios: any[] = []; // Anuncios del usuario
 
-  //La logica consiste en poder mostrar datos usuario y datos anuncios del usuario, modificar perfil, modificar anuncios y elminar aunucios
+  constructor(
+    private authService: AuthService,
+    private dataService: DataService,
+    private router: Router
+  ) {}
 
+  ngOnInit(): void {
+    // Cargar datos del usuario
+    this.authService.getCurrentUser().subscribe(
+      (user) => (this.usuario = user),
+      (error) => console.error('Error al cargar usuario:', error)
+    );
 
-  constructor(private dataService: DataService) {}
-
-  usuario = { //Cargar los datos del usuario
-    nombre: 'Lucas Pagani',
-    email: 'lucaspagani@hotmail.com',
-    telefono: '+54 622941582'
-  };
-
-  modificarAnuncio(){
-
+    // Cargar anuncios del usuario
+    this.loadAnuncios();
   }
 
-  crearAnuncio() {
-    // Lógica para crear un nuevo anuncio
+  loadAnuncios(): void {
+    // Aquí deberías implementar la lógica para cargar los anuncios del usuario
+    // Puedes usar el `DataService` o algún servicio específico para anuncios
+    this.dataService.getAnuncios().subscribe(
+      (anuncios) => (this.anuncios = anuncios),
+      (error) => console.error('Error al cargar anuncios:', error)
+    );
   }
 
-  borrarAnuncio() {
-    // Lógica para borrar un anuncio
+  modificarDatos(): void {
+    // Redirige al formulario de registro en modo edición
+    this.router.navigate(['/register'], { queryParams: { editMode: true } });
   }
 
+  deleteUser(): void {
+    // Lógica para borrar usuario
+    this.authService.delete(this.usuario!.id_user.toString()).subscribe(
+      () => {
+        alert('Cuenta eliminada con éxito');
+        this.router.navigate(['/home']); // Redirigir al home tras eliminar
+      },
+      (error) => console.error('Error al eliminar usuario:', error)
+    );
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']); // Redirigir al login tras logout
+  }
+
+  // FATA POR CREAR
+  /*
+  crearAnuncio(): void {
+    // Lógica para crear un anuncio
+    console.log('Crear anuncio');
+  }
+
+  modificarAnuncio(anuncioId: number): void {
+    // Lógica para modificar el anuncio específico
+    console.log(`Modificar anuncio ${anuncioId}`);
+  }
+
+
+borrarAnuncio(anuncioId: number): void {
+    // Lógica para borrar el anuncio específico
+    this.dataService.deleteAnuncio(anuncioId).subscribe(
+      () => this.loadAnuncios(), // Recargar anuncios tras eliminar
+      error => console.error('Error al eliminar anuncio:', error)
+    );
+  }*/
 }

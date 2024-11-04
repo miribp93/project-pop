@@ -1,41 +1,42 @@
 <mat-toolbar color="primary" class="top-bar">
-  <img src="chango2.png" alt="Chango" class="logo" routerLink="/">
+  <img src="chango2.png" alt="Chango" class="logo" routerLink="/" />
   <span class="spacer"></span>
-  <button mat-raised-button color="accent" routerLink="/home">LogOut</button>
-  <!-- Aqui funcion para logout -->
+  <button mat-raised-button color="accent" (click)="logout()">LogOut</button>
 </mat-toolbar>
 
-<h2 class="text-center mt-3">Mi Perfil</h2>
 <main class="container">
-
-
   <div class="user-info">
     <h3>Datos del Usuario</h3>
-    <p><strong>Nombre:</strong> Juan Pérez</p>
-    <p><strong>Email:</strong> juan.perez.com</p>
-    <p><strong>Teléfono:</strong> +54 9 11 1234 5678</p>
+    <p><strong>Nombre:</strong> {{ usuario?.name }}</p>
+    <p><strong>Email:</strong> {{ usuario?.email }}</p>
+    <p><strong>Teléfono:</strong> {{ usuario?.phone }}</p>
 
-    <button  mat-raised-button color="accent m-2">Modificar Datos</button>
-    <!-- posible opcion es que lleve al campo registro y cambiamos el boron de registrar a modificar dependiendo de donde venga -->
-    <button  mat-raised-button color="warn m-2">Baja cuenta</button>
-    <!-- con un metodo de eliminar en el typescript -->
+    <button mat-raised-button color="accent" (click)="modificarDatos()">
+      Modificar Datos
+    </button>
+    <button mat-raised-button color="warn" (click)="deleteUser()">
+      Baja cuenta
+    </button>
   </div>
-
 
   <div class="ads-section">
     <h3>Mis Anuncios</h3>
 
-    Aqui crear un mat-card con un cun bucle for que muestre los anuncios del Usuario
-    <ul>
-      <li>Anuncio 1</li>
-      <li>Anuncio 2</li>
-      <li>Anuncio 3</li>
+    <mat-card *ngFor="let anuncio of anuncios" class="ad-card mt-2">
+      <mat-card-title>{{ anuncio.titulo }}</mat-card-title>
+      <mat-card-content>{{ anuncio.descripcion }}</mat-card-content>
 
+      <div>
+        <!-- Añadir con el metodo (click) los metods correspondientes -->
+        <button mat-raised-button color="primary" (click)="(anuncio.id)">
+          Modificar Anuncio
+        </button>
+        <button mat-raised-button color="warn" (click)="(anuncio.id)">
+          Eliminar Anuncio
+        </button>
+      </div>
+    </mat-card>
 
-    </ul>
-    <button mat-raised-button color="primary m-2">Agregar Anuncio</button>
-    <button  mat-raised-button color="succes m-2">Modificar Anuncio</button>
-    <button  mat-raised-button color="warn m-2">Eliminar Anuncio</button>
+    <button mat-raised-button color="primary">Agregar Anuncio</button>
   </div>
-
 </main>

@@ -17,11 +17,10 @@ import { CommonModule } from '@angular/common';
 export class AdminDashboardComponent implements OnInit {
 
   users?: User[];
-  public totalLength = 0; // Total de productos
+  public totalLength = 0;
 
 
 constructor(private AuthService : AuthService){}
-
 
   ngOnInit(): void {
 
