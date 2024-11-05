@@ -11,24 +11,44 @@
 .logo {
   height: 75px; /* Ajusta la altura del logo */
 }
-  /* Contenedor principal */
+
+/* Contenedor principal */
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Ajusta para 3 columnas si hay espacio */
+  gap: 20px; /* Espacio entre columnas */
+  padding: 20px;
+}
+
+.user-details {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajustes a los botones*/
+.user-actions {
+  display: flex;
+  gap: 10px; /* Espacio entre los botones */
+  justify-content: space-between;
+  margin-top: 10px; /* Separar los botones del texto */
+}
+
+button {
+  font-size: 0.85rem; /* Botones más pequeños */
+  padding: 6px 12px; /* Tamaño de los botones */
+  min-width: 100px; /* Ancho mínimo para los botones */
+}
+
+button.mat-raised-button {
+  text-transform: none; /* Evitar que el texto se ponga en mayúsculas */
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 767px) {
   .container {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 20px; /* Espacio entre columnas */
-    padding: 20px;
+    grid-template-columns: 1fr; /* En pantallas pequeñas, solo una columna */
   }
-
-  /* Estilos de cada sección */
-  .user-info, .ads-section {
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Títulos */
-  h3 {
-    margin-top: 0;
-  }
+}

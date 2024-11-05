@@ -1,6 +1,7 @@
 <div class="contact-form text-center container">
   <mat-card class="form-card">
-    <h2>Registro</h2>
+    <h2>{{ editMode ? 'Modificar Perfil' : 'Registro' }}</h2>  <!-- Título dinámico -->
+
     <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
 
       <!-- Campo Nombre -->
@@ -53,7 +54,7 @@
         <mat-error *ngIf="f['city'].errors?.['required']">Ciudad es requerida</mat-error>
       </mat-form-field>
 
-      <!-- Código postal con validación de 5 dígitos -->
+      <!-- Código Postal con validación de 5 dígitos -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Código Postal</mat-label>
         <input matInput formControlName="postal_code" required>
@@ -85,7 +86,9 @@
       </mat-form-field>
 
       <div class="form-actions">
-        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Registrar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
+          {{ editMode ? 'Actualizar' : 'Registrar' }}  <!-- Botón dinámico -->
+        </button>
         <button mat-raised-button color="warn" type="reset">Cancelar</button>
       </div>
 

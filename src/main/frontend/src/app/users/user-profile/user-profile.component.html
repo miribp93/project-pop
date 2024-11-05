@@ -9,7 +9,7 @@
   <div class="photo-upload">
     <h3>Foto de Perfil</h3>
     <mat-card class="photo-card">
-      <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo" />
+      <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo"  src=""/>
       <div class="upload-controls">
         <input type="file" (change)="onFileSelected($event)" />
         <button mat-raised-button color="primary" (click)="uploadPhoto()" [disabled]="!selectedFile">
@@ -23,8 +23,12 @@
 
     <h3>Datos del Usuario</h3>
     <p><strong>Nombre:</strong> {{ usuario?.name }}</p>
+    <p><strong>Apellido:</strong> {{ usuario?.last_name1 }}</p>
     <p><strong>Email:</strong> {{ usuario?.email }}</p>
-    <p><strong>Teléfono:</strong> {{ usuario?.phone }}</p>
+    <p><strong>Ciudad:</strong> {{ usuario?.city }}</p>
+    <p><strong>Calle:</strong> {{ usuario?.street }}</p>
+
+
 
     <button mat-raised-button color="accent" (click)="modificarDatos()">
       Modificar Datos

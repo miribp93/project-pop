@@ -7,7 +7,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { productComponent } from './pages/product/product.component';
 import { AnoncesListComponent } from './pages/anonces-list/anonces-list.component';
 import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/registro/registro.component';
+import { RegisterComponent } from './auth/register/register.component';
 import { PayComponent } from './components/pay/pay.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { AdminDashboardComponent } from './users/admin-dashboard/admin-dashboard.component';

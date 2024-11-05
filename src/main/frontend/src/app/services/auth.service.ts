@@ -29,6 +29,7 @@ export class AuthService {
 
   // Método para autenticar usuario
   // Mientras se pueda, evitar el objeto any y usar una interfaz declarando el objeto que esperas
+
   login(username: string, password: string): Observable<UserSession> {
     const body = { username, password };
 
@@ -36,32 +37,42 @@ export class AuthService {
       tap(data => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', username);
+        alert("Bienvenido")
       })
 
     );
   }
 
-  //Método para cerrar sesión
-  logout(): void {
-    this.http.post<any>('/auth/logout', {}).subscribe(
-      () => {
-        localStorage.removeItem('token');
-      },
-      (error) => {
-        console.error('Error en el logout:', error);
-      }
-    );
+
+logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    console.log("Vuelve pronto")
   }
 
   //obtener todos los usuarios
-  findAll(): Observable<User[]> {
-    return this.http
-      .get<User[]>(`/api/user`)
-      .pipe(catchError(this.handleError));
+//   findAll(): Observable<User[]> {
+//     return this.http
+//       .get<User[]>(`/api/user`)
+//       .pipe(catchError(this.handleError));
+//   }
+
+findAll(): Observable<User[]> {
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    console.error('Token no encontrado en localStorage');
+    return throwError(() => new Error('Token no encontrado'));
   }
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  return this.http.get<User[]>(`/api/user/all`, { headers }).pipe(
+    catchError(this.handleError)
+  );
+}
 
   // Registro de un nuevo usuario
-  register(userData: any): Observable<any> {
+  register(userData: any): Observable<User> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http
       .post<any>(`/api/user/register`, userData, { headers })
@@ -96,21 +107,10 @@ export class AuthService {
   }
 
 
-
-   /*login(usuario: string, password: string): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = { usuario, password };
-
-    return this.http.post<any>(`/auth/login`, body, { headers }).pipe.(
-      localStorage.setItem('token', respo)
-      catchError(this.handleError)
-    );
-  }*/
-
   //Eliminar usuario
-  delete(id: string): Observable<any> {
+  delete(id: string): Observable<User> {
     return this.http
-      .delete<any>(`/api/user/${id}`)
+      .delete<User>(`/api/user/${id}`)
       .pipe(catchError(this.handleError));
   }
 

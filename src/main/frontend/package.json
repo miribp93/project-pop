@@ -27,7 +27,9 @@
     "primeng": "^17.18.11",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.3"
+    "zone.js": "~0.14.3",
+    "chokidar": "4.0.1",
+    "readdirp": "4.0.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.6",
