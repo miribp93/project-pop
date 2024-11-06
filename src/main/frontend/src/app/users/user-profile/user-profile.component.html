@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="top-bar">
-  <img src="chango2.png" alt="Chango" class="logo" routerLink="/" />
+  <img src="chango2.webp" alt="Chango" class="logo" routerLink="/" />
   <span class="spacer"></span>
   <button mat-raised-button color="accent" (click)="logout()">LogOut</button>
 </mat-toolbar>
@@ -7,12 +7,12 @@
 <main class="container">
 
   <div class="photo-upload">
-    <h3>Foto de Perfil</h3>
+    <h3 class="text-center">Foto de Perfil</h3>
     <mat-card class="photo-card">
       <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo"  src=""/>
       <div class="upload-controls">
         <input type="file" (change)="onFileSelected($event)" />
-        <button mat-raised-button color="primary" (click)="uploadPhoto()" [disabled]="!selectedFile">
+        <button mat-raised-button color="primary" class="buttons" (click)="uploadPhoto()" [disabled]="!selectedFile">
           Subir Foto
         </button>
       </div>
@@ -21,7 +21,7 @@
 
   <div class="user-info">
 
-    <h3>Datos del Usuario</h3>
+    <h3 class="text-center">Datos del Usuario</h3>
     <p><strong>Nombre:</strong> {{ usuario?.name }}</p>
     <p><strong>Apellido:</strong> {{ usuario?.last_name1 }}</p>
     <p><strong>Email:</strong> {{ usuario?.email }}</p>
@@ -29,26 +29,27 @@
     <p><strong>Calle:</strong> {{ usuario?.street }}</p>
 
 
-
+<div class="buttons">
     <button mat-raised-button color="accent" (click)="modificarDatos()">
       Modificar Datos
     </button>
     <button mat-raised-button color="warn" (click)="deleteUser()">
       Baja cuenta
     </button>
+</div>
   </div>
 
 </main>
 
 
-  <div class="ads-section m-3">
-    <h3>Mis Anuncios</h3>
+  <div class="ads-section m-3 ">
+    <h3 class="text-center">Mis Anuncios</h3>
 
-    <mat-card *ngFor="let anuncio of anuncios" class="ad-card mt-2">
+    <mat-card *ngFor="let anuncio of anuncios" class="ad-card mt-2 container" >
       <mat-card-title>{{ anuncio.titulo }}</mat-card-title>
       <mat-card-content>{{ anuncio.descripcion }}</mat-card-content>
 
-      <div>
+      <div  class="buttons">
         <button mat-raised-button color="primary" (click)="modificarAnuncio(anuncio.id)">
           Modificar Anuncio
         </button>

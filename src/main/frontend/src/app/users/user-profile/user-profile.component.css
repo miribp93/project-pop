@@ -34,3 +34,12 @@
   }
 
 
+
+/* Ajustes a los botones */
+.buttons {
+  display: flex;
+  gap: 50px; /* Espacio entre los botones */
+  justify-content: center; /* Centramos los botones horizontalmente */
+  align-items: center; /* Centramos los botones verticalmente */
+  margin: 10px; /* Separar los botones del resto del contenido */
+}

@@ -30,9 +30,7 @@ import { AdminDashboardComponent } from './users/admin-dashboard/admin-dashboard
        { path: 'login', component: LoginComponent },
        { path: 'register', component: RegisterComponent },
        { path: 'pay', component: PayComponent },
-
      ]
-
    },
    {path: 'profile', component: UserProfileComponent},
    {path: 'admin', component: AdminDashboardComponent}
