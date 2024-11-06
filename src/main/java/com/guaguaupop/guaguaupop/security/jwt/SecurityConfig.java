@@ -31,14 +31,16 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final PasswordEncoder passwordEncoder;
     private final JwtAuthFilter jwtAuthFilter;
-    private UserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/api/user/register", "/api/user/register-manager", "/auth/login").permitAll()
+                        .requestMatchers("/api/user/register",
+                                "/api/user/register-manager",
+                                "/auth/login",
+                                "/auth/forgot-password").permitAll()
                         //.requestMatchers("/user/profile-photo").authenticated()
                         .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))

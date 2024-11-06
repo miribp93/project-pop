@@ -6,6 +6,7 @@ import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
 import com.guaguaupop.guaguaupop.repository.UserRepository;
 import com.guaguaupop.guaguaupop.security.jwt.JwtTokenUtil;
 import com.guaguaupop.guaguaupop.security.jwt.JwtUserResponse;
+import com.guaguaupop.guaguaupop.service.MessageService;
 import com.guaguaupop.guaguaupop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,10 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -36,7 +34,7 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
     private final UserService userService;
-
+    private final MessageService messageService;
 
     //AUTENTICARSE PARA LOGIN
     @PostMapping("/login")
@@ -89,14 +87,12 @@ public class AuthController {
         }
     }
 
-
     //CERRAR SESIÓN
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
 
         return ResponseEntity.ok("Sesión cerrada correctamente.");
     }
-
 
     private JwtUserResponse convertUserEntityAndTokenToJwtUserResponse(User user, String jwtToken) {
 
@@ -105,5 +101,24 @@ public class AuthController {
                 .username(user.getUsername())
                 .token(jwtToken)
                 .build();
+    }
+
+    // ENLACE OLVIDASTE CONTRASEÑA
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+        userService.initiatePasswordReset(email);
+
+        // Aquí envía el correo
+        String resetLink = "http://localhost:4200/reset-password?token=\" + token"; // token temporal
+        messageService.sendPasswordResetEmail(email, resetLink);
+
+        return ResponseEntity.ok("Correo de restablecimiento enviado si el usuario existe.");
+    }
+
+    //ENLACE PARA RESETEAR CONTRASEÑA
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
+        userService.resetPassword(token, newPassword);
+        return ResponseEntity.ok("Contraseña actualizada correctamente.");
     }
 }

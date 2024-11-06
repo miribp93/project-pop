@@ -9,6 +9,9 @@ import com.guaguaupop.guaguaupop.exception.NewUserWithDifferentPasswordsExceptio
 import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
 import com.guaguaupop.guaguaupop.exception.UsernameAlreadyExistsException;
 import com.guaguaupop.guaguaupop.repository.UserRepository;
+import com.guaguaupop.guaguaupop.security.jwt.PasswordResetToken;
+import com.guaguaupop.guaguaupop.security.jwt.PasswordResetTokenRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,10 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -30,6 +31,8 @@ public class UserService extends BaseService<User, Long, UserRepository> {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
+    private final MessageService messageService;
 
     // BUSCAR USUARIO POR USERNAME
     public Optional<User> findUserByUsername(String username) {
@@ -215,5 +218,37 @@ public class UserService extends BaseService<User, Long, UserRepository> {
                 .collect(Collectors.toSet());
     }
 
+    @Transactional
+    public void resetPassword(String token, String newPassword) {
+        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token)
+                .orElseThrow(() -> new IllegalArgumentException("Token no válido"));
 
+        // Verificar si el token ha expirado
+        if (passwordResetToken.getExpirationDate().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("El token ha expirado");
+        }
+
+        // Cambiar la contraseña del usuario
+        User user = passwordResetToken.getUser();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        // Eliminar el token después de usarlo
+        passwordResetTokenRepository.delete(passwordResetToken);
+    }
+
+    public void initiatePasswordReset(String email) {
+
+        // Generar un token de restablecimiento
+        String token = UUID.randomUUID().toString();
+
+        // Crear un enlace de restablecimiento
+        String resetLink = "https://tuaplicacion.com/reset-password?token=" + token;
+
+        // Llamar al servicio de correo para enviar el enlace
+        messageService.sendPasswordResetEmail(email, resetLink);
+
+        // Aquí también podrías guardar el token en la base de datos con su fecha de expiración
+        // y asociarlo al usuario.
+    }
 }
