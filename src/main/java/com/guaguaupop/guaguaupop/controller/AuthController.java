@@ -6,6 +6,7 @@ import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
 import com.guaguaupop.guaguaupop.repository.UserRepository;
 import com.guaguaupop.guaguaupop.security.jwt.JwtTokenUtil;
 import com.guaguaupop.guaguaupop.security.jwt.JwtUserResponse;
+import com.guaguaupop.guaguaupop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Set;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -32,6 +35,7 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
+    private final UserService userService;
 
 
     //AUTENTICARSE PARA LOGIN
@@ -55,10 +59,14 @@ public class AuthController {
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
             log.info("Usuario autenticado: {}", userDetails.getUsername());
             String jwtToken = jwtTokenUtil.generateToken(auth);
+
+            Set<String> roles = userService.getUserRoles(userDetails.getUsername());
+
             log.info("Token JWT generado: {}", jwtToken);
             return JwtUserResponse.jwtUserResponseBuilder()
                     .username(userDetails.getUsername())
                     .token(jwtToken)
+                    .roles(roles)
                     .build();
 
         } catch (BadCredentialsException e) {

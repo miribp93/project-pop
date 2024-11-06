@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -201,5 +203,17 @@ public class UserService extends BaseService<User, Long, UserRepository> {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
+    // OBTENER ROLE DE USUARIO
+    public Set<String> getUserRoles(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
+
+        // Convertir los roles del enum a String
+        return user.getUserRoles().stream()
+                .map(UserRole::name)
+                .collect(Collectors.toSet());
+    }
+
 
 }
