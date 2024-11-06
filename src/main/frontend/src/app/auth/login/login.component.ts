@@ -35,7 +35,10 @@ export class LoginComponent {
           localStorage.setItem('token', response.token);
 
           // Redirigir a la página de inicio o a la ruta deseada
+           //window.location.reload();
+
           this.router.navigate(['/home']);
+
         } else {
           alert('Inicio de sesión exitoso, pero no se recibió un token.');
         }
