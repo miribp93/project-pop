@@ -2,16 +2,16 @@ package com.guaguaupop.guaguaupop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.io.Serializable;
+import java.util.Set;
 
 @Builder
 @Data
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor //constructor vacío
-@AllArgsConstructor //constructor con todos los parámetros
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Ad implements Serializable {
 
@@ -35,9 +35,8 @@ public class Ad implements Serializable {
     @Column(nullable = false, length = 100)
     private String location;
 
-    @Lob
-    @Column
-    private byte[] photo;
+    @Column(name = "photos", columnDefinition = "BYTEA")
+    private byte[] photos;
 
     @Column(nullable = false)
     private int duration;
@@ -45,9 +44,11 @@ public class Ad implements Serializable {
     @Column(length = 50)
     private String condition;
 
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TypeAd typeAd;
+    @CollectionTable(name = "AdTypes", joinColumns = @JoinColumn(name = "idAd"))
+    @Column(name = "typeAd")
+    private Set<TypeAd> typeAd;
 
     @ManyToOne
     @JoinColumn(name = "idUser", referencedColumnName = "idUser")

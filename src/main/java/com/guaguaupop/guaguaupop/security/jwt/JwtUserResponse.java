@@ -1,6 +1,6 @@
 package com.guaguaupop.guaguaupop.security.jwt;
 
-import com.guaguaupop.guaguaupop.dto.GetSimpleUserDTO;
+import com.guaguaupop.guaguaupop.dto.user.GetSimpleUserDTO;
 import lombok.*;
 
 import java.util.Set;

@@ -1,6 +1,6 @@
 package com.guaguaupop.guaguaupop.controller;
 
-import com.guaguaupop.guaguaupop.dto.LoginUserDTO;
+import com.guaguaupop.guaguaupop.dto.user.LoginUserDTO;
 import com.guaguaupop.guaguaupop.entity.User;
 import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
 import com.guaguaupop.guaguaupop.repository.UserRepository;

@@ -1,15 +1,14 @@
 package com.guaguaupop.guaguaupop.service;
 
-import com.guaguaupop.guaguaupop.dto.CreateUserDTO;
-import com.guaguaupop.guaguaupop.dto.GetProfilePhotoDTO;
-import com.guaguaupop.guaguaupop.dto.UpdateUserDTO;
+import com.guaguaupop.guaguaupop.dto.user.CreateUserDTO;
+import com.guaguaupop.guaguaupop.dto.user.GetProfilePhotoDTO;
+import com.guaguaupop.guaguaupop.dto.user.UpdateUserDTO;
 import com.guaguaupop.guaguaupop.entity.*;
 import com.guaguaupop.guaguaupop.exception.EmailAlreadyExistsException;
 import com.guaguaupop.guaguaupop.exception.NewUserWithDifferentPasswordsException;
 import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
 import com.guaguaupop.guaguaupop.exception.UsernameAlreadyExistsException;
 import com.guaguaupop.guaguaupop.repository.UserRepository;
-import com.guaguaupop.guaguaupop.security.jwt.JwtTokenUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

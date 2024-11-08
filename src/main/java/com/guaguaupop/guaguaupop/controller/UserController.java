@@ -1,6 +1,6 @@
 package com.guaguaupop.guaguaupop.controller;
 
-import com.guaguaupop.guaguaupop.dto.*;
+import com.guaguaupop.guaguaupop.dto.user.*;
 import com.guaguaupop.guaguaupop.entity.User;
 import com.guaguaupop.guaguaupop.entity.UserRole;
 import com.guaguaupop.guaguaupop.exception.EmailAlreadyExistsException;
@@ -10,7 +10,6 @@ import com.guaguaupop.guaguaupop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

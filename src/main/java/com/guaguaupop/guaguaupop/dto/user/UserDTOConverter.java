@@ -1,4 +1,4 @@
-package com.guaguaupop.guaguaupop.dto;
+package com.guaguaupop.guaguaupop.dto.user;
 
 import com.guaguaupop.guaguaupop.entity.User;
 import org.springframework.stereotype.Component;

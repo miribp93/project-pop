@@ -1,4 +1,4 @@
-package com.guaguaupop.guaguaupop.dto;
+package com.guaguaupop.guaguaupop.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
