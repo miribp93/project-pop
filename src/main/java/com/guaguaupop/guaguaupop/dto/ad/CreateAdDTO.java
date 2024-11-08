@@ -25,7 +25,6 @@ public class CreateAdDTO {
     @NotBlank(message = "Este campo no puede estar en blanco")
     private String category;
 
-    @NotBlank(message = "Este campo no puede estar en blanco")
     private String city;
 
     @NotNull(message = "Este campo no puede estar en blanco")
@@ -36,4 +35,5 @@ public class CreateAdDTO {
     @NotNull(message = "Señale uno")
     private TypeAd typeAd;
 
+    private byte[] photos;
 }

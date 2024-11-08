@@ -121,22 +121,7 @@ public class User implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
-    /*@ManyToOne
-    @JoinColumn(name = "idAddress", referencedColumnName = "idAddress")
-    private Address address;
-
-    @ManyToOne
-    @JoinColumn(name = "idCity", referencedColumnName = "idCity")
-    private City city;
-
-    @ManyToOne
-    @JoinColumn(name = "idCountry", referencedColumnName = "idCountry")
-    private Country country;
-
-    @ManyToOne
-    @JoinColumn(name = "idPostalCode", referencedColumnName = "idPostalCode")
-    private PostalCode postalCode;
-
+    /*
     @OneToMany(mappedBy = "sender")
     private List<Message> messagesSent;
 

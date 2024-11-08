@@ -3,6 +3,8 @@ package com.guaguaupop.guaguaupop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -33,10 +35,12 @@ public class Ad implements Serializable {
     private String category;
 
     @Column(nullable = false, length = 100)
-    private String location;
+    private String city;
 
+    @ElementCollection
+    @CollectionTable(name = "adPhotos", joinColumns = @JoinColumn(name = "idAd"))
     @Column(name = "photos", columnDefinition = "BYTEA")
-    private byte[] photos;
+    private List<byte[]> photos = new ArrayList<>();
 
     @Column(nullable = false)
     private int duration;
@@ -53,5 +57,14 @@ public class Ad implements Serializable {
     @ManyToOne
     @JoinColumn(name = "idUser", referencedColumnName = "idUser")
     private User user;
+
+    public static class AdBuilder{
+        private Set<TypeAd> typeAds;
+
+        public AdBuilder typeAds(Set<TypeAd> typeAds){
+            this.typeAds = typeAds;
+            return this;
+        }
+    }
 
 }
