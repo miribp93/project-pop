@@ -1,53 +1,94 @@
+/* Estilo para la barra superior */
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   background-color: rgb(195, 253, 188);
-  height: 80px; /* Altura del header */
+  height: 80px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-  height: 75px; /* Ajusta la altura del logo */
+  height: 75px;
 }
-  /* Contenedor principal */
-  .container {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 20px; /* Espacio entre columnas */
-    padding: 20px;
-  }
 
-  /* Estilos de cada sección */
-  .user-info, .ads-section, .photo-upload {
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+/* Contenedor principal */
+.container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
 
-  /* Títulos */
-  h3 {
-    margin-top: 0;
-  }
+/* Estilos de cada sección */
+.user-info, .ads-section, .photo-upload {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-
+/* Estilos de los títulos */
+h3 {
+  margin-top: 0;
+}
 
 /* Ajustes a los botones */
 .buttons {
   display: flex;
-  gap: 50px; /* Espacio entre los botones */
-  justify-content: right; /* Centramos los botones horizontalmente */
-  align-items: center; /* Centramos los botones verticalmente */
-  margin: 10px; /* Separar los botones del resto del contenido */
+  gap: 50px;
+  justify-content: right;
+  align-items: center;
+  margin: 10px;
 }
+
 .nav-bar {
   display: flex;
-
   align-items: center;
-  flex-wrap: wrap; /* Permite que los botones se envuelvan cuando hay poco espacio */
-  gap: 20px; /* Espacio entre las dos barras de herramientas */
-  /* background-color:rgb(195, 253, 188); */
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Estilo específico para la sección de la foto de perfil */
+.photo-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Contenedor de la imagen */
+.photo-card {
+  position: relative;
+  width: 200px; /* Establecer el ancho fijo */
+  height: 200px; /* Establecer la altura fija */
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Oculta cualquier parte de la imagen que se desborde */
+}
+
+/* Estilos para la imagen de perfil */
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* La imagen cubre todo el contenedor sin distorsionarse */
+  object-position: center; /* Centra la imagen dentro del contenedor */
+}
+
+/* Controles de la carga de la foto fuera del recuadro */
+.upload-controls {
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.upload-controls input {
+  margin-bottom: 10px;
 }

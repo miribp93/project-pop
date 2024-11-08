@@ -7,7 +7,6 @@
     <p><strong>Ciudad:</strong> {{ usuario?.city }}</p>
     <p><strong>Calle:</strong> {{ usuario?.street }}</p>
 
-
     <div class="buttons">
       <button mat-raised-button color="accent" (click)="modificarDatos()">
         Modificar Datos
@@ -18,45 +17,43 @@
     </div>
   </div>
 
-
+  <!-- Sección para subir la foto -->
   <div class="photo-upload">
     <h4 class="text-center">Foto de Perfil</h4>
     <div class="photo-card">
-      <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo" src="" />
-      <div class="upload-controls">
-        <input type="file" (change)="onFileSelected($event)" />
-        <button mat-raised-button color="primary" class="buttons" (click)="uploadPhoto()" [disabled]="!selectedFile">
+      <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo" />
+    </div>
+    <div class="upload-controls">
+      <!-- Usamos un formulario para envolver el input de archivo -->
+      <form (ngSubmit)="uploadPhoto()" #photoForm="ngForm">
+        <input type="file" (change)="onFileSelected($event)" name="photo" required />
+        <button mat-raised-button color="primary" class="buttons" type="submit" [disabled]="!selectedFile || !photoForm.form.valid">
           Subir Foto
         </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="ads-section m-3">
+    <h4 class="text-center">Mis Pedidos</h4>
+    <div class="nav-bar button mb-3">
+      <button mat-button color="primary" class="buttons">Agregar Anuncio</button>
+      <button mat-button color="primary" class="buttons">compra</button>
+      <button mat-button color="primary" class="buttons">Venta</button>
+    </div>
+
+    <mat-card *ngFor="let anuncio of anuncios" class="ad-card mt-2">
+      <mat-card-title>{{ anuncio.titulo }}</mat-card-title>
+      <mat-card-content>{{ anuncio.descripcion }}</mat-card-content>
+
+      <div class="buttons">
+        <button mat-stroked-button color="primary" (click)="modificarAnuncio(anuncio.id)">
+          Modificar
+        </button>
+        <button mat-fab color="warn" (click)="eliminarAnuncio(anuncio.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
-    </div>
+    </mat-card>
   </div>
-</div>
-
-
-<div class="ads-section m-3 ">
-  <div>
-  <h4 class="text-center">Mis Pedidos</h4>
-  </div>
-  <div class=" nav-bar button mb-3">
-    <button mat-button color="primary" class="buttons">Agregar Anuncio</button>
-    <button mat-button color="primary" class="buttons">compra</button>
-    <button mat-button color="primary" class="buttons">Venta</button>
-  </div>
-
-  <mat-card *ngFor="let anuncio of anuncios" class="ad-card mt-2 ">
-    <mat-card-title>{{ anuncio.titulo }}</mat-card-title>
-    <mat-card-content>{{ anuncio.descripcion }}</mat-card-content>
-
-    <div class="buttons">
-      <button mat-stroked-button color="primary" (click)="modificarAnuncio(anuncio.id)">
-        Modificar
-      </button>
-      <button mat-fab color="warn" (click)="eliminarAnuncio(anuncio.id)"><mat-icon>delete</mat-icon>
-
-      </button>
-    </div>
-  </mat-card>
-
-
 </div>
