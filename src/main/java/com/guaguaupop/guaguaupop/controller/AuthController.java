@@ -119,7 +119,7 @@ public class AuthController {
     //ENLACE PARA RESETEAR CONTRASEÑA
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String newPassword) {
-        // Aquí se podría validar si el email existe en la base de datos y luego actualizar la contraseña
+
         boolean isUpdated = userService.resetPassword(email, newPassword);
 
         if (isUpdated) {

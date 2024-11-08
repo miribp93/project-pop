@@ -164,15 +164,19 @@ public class UserController {
         try {
             log.info("Retrieving profile photo for user: {}", userDetails.getUsername());
             GetProfilePhotoDTO photoDTO = userService.getProfilePhoto(userDetails.getIdUser());
-            if (photoDTO.getProfilePhoto() == null) {
+
+            // Verifica si la foto de perfil existe
+            if (photoDTO.getPhotoBase64() == null || photoDTO.getPhotoBase64().isEmpty()) {
                 log.warn("Foto de perfil no encontrada para usuario: {}", userDetails.getUsername());
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Foto de perfil no encontrada");
             }
+
             log.info("Profile photo retrieved for user: {}", userDetails.getUsername());
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(photoDTO.getProfilePhoto());
+
+            // Devuelve la foto en base64
+            return ResponseEntity.ok(photoDTO);
 
         } catch (Exception e) {
-
             log.error("Error al obtener la foto de perfil: {}", e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener la foto de perfil: " + e.getMessage());

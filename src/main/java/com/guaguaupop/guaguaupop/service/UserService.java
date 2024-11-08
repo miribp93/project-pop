@@ -196,7 +196,12 @@ public class UserService extends BaseService<User, Long, UserRepository> {
     public GetProfilePhotoDTO getProfilePhoto(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotExistsException::new);
-        return new GetProfilePhotoDTO(user.getProfilePhoto());
+
+        // Convierte el byte[] de la foto en base64
+        String base64Photo = Base64.getEncoder().encodeToString(user.getProfilePhoto());
+
+        // Devuelve el DTO con la imagen en base64
+        return new GetProfilePhotoDTO(base64Photo);
     }
 
     // LISTAR TODOS LOS USUARIOS EN VISTA ADMIN
@@ -216,6 +221,7 @@ public class UserService extends BaseService<User, Long, UserRepository> {
                 .collect(Collectors.toSet());
     }
 
+    // RESETEA CONTRASEÑA
     @Transactional
     public boolean resetPassword(String email, String newPassword) {
         // Buscar el usuario en la base de datos
@@ -232,6 +238,7 @@ public class UserService extends BaseService<User, Long, UserRepository> {
         }
     }
 
+    // ENVIA EMAIL DE RESETEO
     public void initiatePasswordReset(String email) {
 
         // Crear un enlace de restablecimiento
