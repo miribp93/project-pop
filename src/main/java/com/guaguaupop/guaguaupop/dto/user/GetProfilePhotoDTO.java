@@ -9,5 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 public class GetProfilePhotoDTO {
 
-    private String photoBase64;
+    private byte [] profilePhoto;
 }

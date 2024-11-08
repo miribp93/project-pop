@@ -195,12 +195,7 @@ public class UserService extends BaseService<User, Long, UserRepository> {
     public GetProfilePhotoDTO getProfilePhoto(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotExistsException::new);
-
-        // Convierte el byte[] de la foto en base64
-        String base64Photo = Base64.getEncoder().encodeToString(user.getProfilePhoto());
-
-        // Devuelve el DTO con la imagen en base64
-        return new GetProfilePhotoDTO(base64Photo);
+        return new GetProfilePhotoDTO(user.getProfilePhoto());
     }
 
     // LISTAR TODOS LOS USUARIOS EN VISTA ADMIN

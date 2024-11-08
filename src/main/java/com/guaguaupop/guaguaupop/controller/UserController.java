@@ -10,6 +10,7 @@ import com.guaguaupop.guaguaupop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -163,19 +164,15 @@ public class UserController {
         try {
             log.info("Retrieving profile photo for user: {}", userDetails.getUsername());
             GetProfilePhotoDTO photoDTO = userService.getProfilePhoto(userDetails.getIdUser());
-
-            // Verifica si la foto de perfil existe
-            if (photoDTO.getPhotoBase64() == null || photoDTO.getPhotoBase64().isEmpty()) {
+            if (photoDTO.getProfilePhoto() == null) {
                 log.warn("Foto de perfil no encontrada para usuario: {}", userDetails.getUsername());
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Foto de perfil no encontrada");
             }
-
             log.info("Profile photo retrieved for user: {}", userDetails.getUsername());
-
-            // Devuelve la foto en base64
-            return ResponseEntity.ok(photoDTO);
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(photoDTO.getProfilePhoto());
 
         } catch (Exception e) {
+
             log.error("Error al obtener la foto de perfil: {}", e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener la foto de perfil: " + e.getMessage());
