@@ -40,8 +40,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/register",
                                 "/api/user/register-manager",
                                 "/auth/login",
-                                "/auth/forgot-password").permitAll()
-                        //.requestMatchers("/user/profile-photo").authenticated()
+                                "/auth/forgot-password",
+                                "/auth/reset-password"
+                                                        ).permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(sessionManagement->sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

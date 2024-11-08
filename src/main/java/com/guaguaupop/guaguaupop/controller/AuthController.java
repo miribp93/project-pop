@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -109,7 +110,7 @@ public class AuthController {
         userService.initiatePasswordReset(email);
 
         // Aquí envía el correo
-        String resetLink = "http://localhost:4200/reset-password?token=\" + token"; // token temporal
+        String resetLink = "http://localhost:4200/reset-password";
         messageService.sendPasswordResetEmail(email, resetLink);
 
         return ResponseEntity.ok("Correo de restablecimiento enviado si el usuario existe.");
@@ -117,8 +118,14 @@ public class AuthController {
 
     //ENLACE PARA RESETEAR CONTRASEÑA
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
-        userService.resetPassword(token, newPassword);
-        return ResponseEntity.ok("Contraseña actualizada correctamente.");
+    public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String newPassword) {
+        // Aquí se podría validar si el email existe en la base de datos y luego actualizar la contraseña
+        boolean isUpdated = userService.resetPassword(email, newPassword);
+
+        if (isUpdated) {
+            return ResponseEntity.ok("Contraseña actualizada correctamente.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El usuario con ese email no existe.");
+        }
     }
 }
