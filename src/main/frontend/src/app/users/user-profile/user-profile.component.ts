@@ -28,17 +28,22 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // Cargar datos del usuario
-    this.authService.getCurrentUser().subscribe(
-      (user) => (this.usuario = user),
-      (error) => console.error('Error al cargar usuario:', error)
-    );
+        // Cargar datos del usuario
+      this.authService.getCurrentUser().subscribe(
+        (user) => {
+          this.usuario = user;
+          if (user.profile_photo) {
+            this.photoPreview = user.profile_photo; // Asignar URL de la foto de perfil a photoPreview
+            console.log("URL de la foto de perfil:", this.photoPreview);
+          }
+        },
+        (error) => console.error('Error al cargar usuario:', error)
+      );
 
-    this.authService.getCurrentUser();
+      // Cargar anuncios del usuario
+      this.loadAnuncios();
+    }
 
-    // Cargar anuncios del usuario
-    this.loadAnuncios();
-  }
 
   //Cargar todos los anuncios del usuario, actualmente usa data service, modificarr luego por backend
   loadAnuncios(): void {
@@ -88,21 +93,23 @@ export class UserProfileComponent implements OnInit {
     }
 
      // Método para subir la foto al backend
-  uploadPhoto(): void {
-    if (this.selectedFile) {
-      const formData = new FormData();
-      formData.append('photo', this.selectedFile);
+     uploadPhoto(): void {
+      if (this.selectedFile) {
+        const formData = new FormData();
+        formData.append('photo', this.selectedFile);
 
-      // Llamada al servicio para subir la foto
-      this.authService.uploadPhoto(formData).subscribe(
-        (response) => {
-          alert('Foto subida con éxito');
-          this.usuario!.profile_photo = response.photoUrl; // Actualiza la URL de la foto del usuario
-        },
-        (error) => console.error('Error al subir la foto:', error)
-      );
+        // Llamada al servicio para subir la foto
+        this.authService.getCurrentUser().subscribe(
+          (user) => {
+            this.usuario = user;
+            if (user.photo) {
+              this.photoPreview = user.profile_photo; // Asigna la URL de la foto de perfil usando 'photo'
+            }
+          },
+          (error) => console.error('Error al subir la foto:', error)
+        );
+      }
     }
-  }
 
   // FATA POR CREAR
 

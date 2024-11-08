@@ -39,7 +39,15 @@
 .buttons {
   display: flex;
   gap: 50px; /* Espacio entre los botones */
-  justify-content: center; /* Centramos los botones horizontalmente */
+  justify-content: right; /* Centramos los botones horizontalmente */
   align-items: center; /* Centramos los botones verticalmente */
   margin: 10px; /* Separar los botones del resto del contenido */
+}
+.nav-bar {
+  display: flex;
+
+  align-items: center;
+  flex-wrap: wrap; /* Permite que los botones se envuelvan cuando hay poco espacio */
+  gap: 20px; /* Espacio entre las dos barras de herramientas */
+  /* background-color:rgb(195, 253, 188); */
 }

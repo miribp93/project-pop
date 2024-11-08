@@ -9,3 +9,16 @@ main {
   flex-grow: 1;
   padding: 2rem;
 }
+.fixed {
+
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Para que esté por encima del contenido */
+}
+
+/* Contenido de ejemplo para probar el scroll */
+.content {
+  padding: 2rem;
+
+
+}

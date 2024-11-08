@@ -1,27 +1,6 @@
-<mat-toolbar color="primary" class="top-bar">
-  <img src="chango2.webp" alt="Chango" class="logo" routerLink="/" />
-  <span class="spacer"></span>
-  <button mat-raised-button color="accent" (click)="logout()">LogOut</button>
-</mat-toolbar>
-
-<main class="container">
-
-  <div class="photo-upload">
-    <h3 class="text-center">Foto de Perfil</h3>
-    <mat-card class="photo-card">
-      <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo"  src=""/>
-      <div class="upload-controls">
-        <input type="file" (change)="onFileSelected($event)" />
-        <button mat-raised-button color="primary" class="buttons" (click)="uploadPhoto()" [disabled]="!selectedFile">
-          Subir Foto
-        </button>
-      </div>
-    </mat-card>
-  </div>
-
+<div class="container">
   <div class="user-info">
-
-    <h3 class="text-center">Datos del Usuario</h3>
+    <h4 class="text-center">Datos del Usuario</h4>
     <p><strong>Nombre:</strong> {{ usuario?.name }}</p>
     <p><strong>Apellido:</strong> {{ usuario?.last_name1 }}</p>
     <p><strong>Email:</strong> {{ usuario?.email }}</p>
@@ -29,38 +8,55 @@
     <p><strong>Calle:</strong> {{ usuario?.street }}</p>
 
 
-<div class="buttons">
-    <button mat-raised-button color="accent" (click)="modificarDatos()">
-      Modificar Datos
-    </button>
-    <button mat-raised-button color="warn" (click)="deleteUser()">
-      Baja cuenta
-    </button>
-</div>
+    <div class="buttons">
+      <button mat-raised-button color="accent" (click)="modificarDatos()">
+        Modificar Datos
+      </button>
+      <button mat-raised-button color="warn" (click)="deleteUser()">
+        Baja cuenta
+      </button>
+    </div>
   </div>
 
-</main>
 
-
-  <div class="ads-section m-3 ">
-    <h3 class="text-center">Mis Anuncios</h3>
-
-    <mat-card *ngFor="let anuncio of anuncios" class="ad-card mt-2 container" >
-      <mat-card-title>{{ anuncio.titulo }}</mat-card-title>
-      <mat-card-content>{{ anuncio.descripcion }}</mat-card-content>
-
-      <div  class="buttons">
-        <button mat-raised-button color="primary" (click)="modificarAnuncio(anuncio.id)">
-          Modificar Anuncio
-        </button>
-        <button mat-raised-button color="warn" (click)="eliminarAnuncio(anuncio.id)">
-          Eliminar Anuncio
+  <div class="photo-upload">
+    <h4 class="text-center">Foto de Perfil</h4>
+    <div class="photo-card">
+      <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo" src="" />
+      <div class="upload-controls">
+        <input type="file" (change)="onFileSelected($event)" />
+        <button mat-raised-button color="primary" class="buttons" (click)="uploadPhoto()" [disabled]="!selectedFile">
+          Subir Foto
         </button>
       </div>
-    </mat-card>
+    </div>
+  </div>
+</div>
 
-    <button mat-raised-button color="primary">Agregar Anuncio</button>
+
+<div class="ads-section m-3 ">
+  <div>
+  <h4 class="text-center">Mis Pedidos</h4>
+  </div>
+  <div class=" nav-bar button mb-3">
+    <button mat-button color="primary" class="buttons">Agregar Anuncio</button>
+    <button mat-button color="primary" class="buttons">compra</button>
+    <button mat-button color="primary" class="buttons">Venta</button>
   </div>
 
+  <mat-card *ngFor="let anuncio of anuncios" class="ad-card mt-2 ">
+    <mat-card-title>{{ anuncio.titulo }}</mat-card-title>
+    <mat-card-content>{{ anuncio.descripcion }}</mat-card-content>
+
+    <div class="buttons">
+      <button mat-stroked-button color="primary" (click)="modificarAnuncio(anuncio.id)">
+        Modificar
+      </button>
+      <button mat-fab color="warn" (click)="eliminarAnuncio(anuncio.id)"><mat-icon>delete</mat-icon>
+
+      </button>
+    </div>
+  </mat-card>
 
 
+</div>

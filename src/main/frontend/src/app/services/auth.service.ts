@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { catchError, tap, map } from 'rxjs/operators';
 import { User, UserSession } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+
+  // Usamos un BehaviorSubject para gestionar el estado de autenticación
+  private userSubject: BehaviorSubject<UserSession | null> = new BehaviorSubject<UserSession | null>(this.getUserFromLocalStorage());
+  public user$: Observable<UserSession | null> = this.userSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -19,21 +23,49 @@ export class AuthService {
       tap(data => {
         // Guardamos el token y el rol en el localStorage
         localStorage.setItem('token', data.token);
-        localStorage.setItem('username', username);
-        // localStorage.setItem('role', data.role); // Suponiendo que la respuesta incluye un campo `role`
+        localStorage.setItem('username', data.username);
+
+        // Asegurarse de que 'roles' existe y es un array, y acceder al primer rol
+        const role = Array.isArray(data.roles) && data.roles.length > 0 ? data.roles[0] : null;
+        localStorage.setItem('role', role);
+
+        // Creamos un objeto UserSession
+        const userSession: UserSession = {
+          token: data.token,
+          username: data.username,
+          roles: data.roles
+        };
+
+        // Actualizamos el estado del usuario
+        this.userSubject.next(userSession);
+
+
         alert("Bienvenido");
       }),
       catchError(this.handleError)
     );
-  }
 
+  }
   // Método para cerrar sesión
   logout(): void {
+    // Limpiar localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    // localStorage.removeItem('role'); // También eliminamos el rol
+    localStorage.removeItem('role');
+
+    // Actualizar el estado del usuario
+    this.userSubject.next(null);
+
     console.log("Vuelve pronto");
   }
+
+ // Método para solicitar de nuevo la contraseña
+  resetPassword(email: string): Observable<any> {
+    return this.http.post('/api/auth/forgot-password', { email }).pipe( // especificar la ruta a donde debo hacer la llamada
+      catchError(this.handleError)
+    );
+  }
+
 
   // Método para obtener el rol del usuario
   getUserRole(): string {
@@ -43,19 +75,16 @@ export class AuthService {
 
   // Método para verificar si el usuario está autenticado
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
-    return !!token;
+    return this.userSubject.value !== null;  // Comprobamos el estado del usuario con el BehaviorSubject
   }
 
-  // Obtener datos del usuario autenticado
   getCurrentUser(): Observable<User> {
     const token = localStorage.getItem('token');
 
     if (!token) {
       // Maneja el caso donde el token no está presente
       console.error('Token no encontrado en localStorage');
-      return throwError(() => new Error('Token no encontrado'));
-    }
+      return throwError(() => new Error('Token no encontrado'));    }
 
     // Crea el objeto de HttpHeaders con el token
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -65,12 +94,7 @@ export class AuthService {
     );
   }
 
-  // Método para solicitar de nuevo la contraseña
-  resetPassword(email: string): Observable<any> {
-    return this.http.post('/api/auth/forgot-password', { email }).pipe(
-      catchError(this.handleError)
-    );
-  }
+
 
   // Método para obtener todos los usuarios
   findAll(): Observable<User[]> {
@@ -78,7 +102,8 @@ export class AuthService {
 
     if (!token) {
       console.error('Token no encontrado en localStorage');
-      return throwError(() => new Error('Token no encontrado'));    }
+      return throwError(() => new Error('Token no encontrado'));
+    }
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
@@ -87,7 +112,7 @@ export class AuthService {
     );
   }
 
-  // Método que indica si el usuario está bloqueado o no
+  // Método para actualizar el estado de un usuario
   updateUserStatus(userId: number, isBlocked: boolean): Observable<void> {
     return this.http.put<void>(`/api/users/${userId}/status`, { isBlocked }).pipe(
       catchError(this.handleError)
@@ -112,10 +137,7 @@ export class AuthService {
 
   // Método para subir foto
   uploadPhoto(photoData: FormData): Observable<{ photoUrl: string }> {
-    return this.http.post<{ photoUrl: string }>(
-      '/api/user/upload-photo',
-      photoData
-    ).pipe(
+    return this.http.post<{ photoUrl: string }>( '/api/user/upload-photo', photoData ).pipe(
       catchError(this.handleError)
     );
   }
@@ -129,14 +151,22 @@ export class AuthService {
 
   // Función para manejar errores de respuesta HTTP
   private handleError(error: HttpErrorResponse): Observable<never> {
-    if (error.status === 200 && error.error instanceof SyntaxError) {
-      console.error('Error: La respuesta no es JSON.', error);
-      return throwError(
-        () => new Error('La respuesta del servidor no es JSON. Verifique la URL o el servidor.')
-      );
-    } else {
-      console.error('Error:', error);
-      return throwError(() => new Error(`Error en la solicitud: ${error.message}`));
+    console.error('Error:', error);
+    return throwError(() => new Error(`Error en la solicitud: ${error.message}`));
+  }
+
+  // Método privado para obtener el usuario desde localStorage
+  private getUserFromLocalStorage(): UserSession | null {
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
+    const role = localStorage.getItem('role');
+    if (token && username && role) {
+      return {
+        token,
+        username,
+        roles: [role] // Puedes extender esto para manejar múltiples roles
+      };
     }
+    return null;
   }
 }

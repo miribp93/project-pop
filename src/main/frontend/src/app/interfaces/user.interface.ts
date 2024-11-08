@@ -26,4 +26,5 @@ export interface UserLogin {
 export interface UserSession {
   username: string;
   token: string;
+  roles: string[];
 }

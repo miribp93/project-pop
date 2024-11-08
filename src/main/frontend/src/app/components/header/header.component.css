@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  background-color:rgb(195, 253, 188);
+  /* background-color:rgb(195, 253, 188); */
   padding: 10px 100px;
 
 
@@ -16,7 +16,11 @@
   align-items: center;
   flex-wrap: wrap; /* Permite que los botones se envuelvan cuando hay poco espacio */
   gap: 20px; /* Espacio entre las dos barras de herramientas */
-  background-color:rgb(195, 253, 188);
+  /* background-color:rgb(195, 253, 188); */
+}
+
+.nav-button{
+  color: darkgrey;
 }
 
 .spacer {
