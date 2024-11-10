@@ -83,7 +83,13 @@ public class AdService {
 
     // OBTENER ANUNCIOS POR FILTRADO DE CATEGORIA
     public List<Ad> getAdsByCategory(String category) {
-        return adRepository.findByCategory(category); }
+        return adRepository.findByCategory(category);
+    }
+
+    // OBTENER TODOS LOS ANUNCIOS
+    public List<Ad> getAllAds() {
+        return adRepository.findAll();
+    }
 }
 
 

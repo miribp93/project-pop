@@ -50,6 +50,9 @@ public class AdController {
     }
 
     // VER TODOS LOS ANUNCIOS
-
+    @GetMapping("/all") public ResponseEntity<List<Ad>> getAllAds() {
+        List<Ad> ads = adService.getAllAds();
+        return ResponseEntity.ok(ads);
+    }
 
 }
