@@ -66,7 +66,6 @@ export class AuthService {
     );
   }
 
-
   // Método para obtener el rol del usuario
   getUserRole(): string {
     const role = localStorage.getItem('role');
@@ -94,6 +93,24 @@ export class AuthService {
     );
   }
 
+  // Método para obtener la foto de perfil
+getProfilePhoto(): Observable<Blob> {
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    console.error('Token no encontrado en localStorage');
+    return throwError(() => new Error('Token no encontrado'));
+  }
+
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  return this.http.get<Blob>('/api/user/profile-photo', {
+    headers,
+    responseType: 'blob' as 'json'  // Especifica que la respuesta será un Blob
+  }).pipe(
+    catchError(this.handleError)
+  );
+}
 
 
   // Método para obtener todos los usuarios

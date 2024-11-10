@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [RouterModule, CommonModule, MATERIAL_MODULES,FormsModule ],
+  imports: [RouterModule, CommonModule, FormsModule,MATERIAL_MODULES],
   providers: [DataService],
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
@@ -32,9 +32,10 @@ export class UserProfileComponent implements OnInit {
     this.authService.getCurrentUser().subscribe(
       (user) => {
         this.usuario = user;
-        if (user.profile_photo) {
-          this.photoPreview = user.profile_photo; // Asignar URL de la foto de perfil a photoPreview
-          console.log('URL de la foto de perfil:', this.photoPreview);
+        if (user && user.profile_photo) {
+          this.photoPreview = user.profile_photo;
+        } else {
+          this.loadProfilePhoto();  // Llamada explícita si no hay foto en los datos del usuario
         }
       },
       (error) => console.error('Error al cargar usuario:', error)
@@ -43,6 +44,21 @@ export class UserProfileComponent implements OnInit {
     // Cargar anuncios del usuario
     this.loadAnuncios();
   }
+
+  // Cargar la foto de perfil desde el servidor si no está disponible en los datos del usuario
+loadProfilePhoto(): void {
+  this.authService.getProfilePhoto().subscribe(
+    (photoBlob) => {
+      // Crear URL a partir del Blob
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        this.photoPreview = reader.result;  // Asigna la foto a la vista previa
+      };
+      reader.readAsDataURL(photoBlob);  // Convierte el Blob en una URL de imagen
+    },
+    (error) => console.error('Error al cargar la foto de perfil:', error)
+  );
+}
 
   // Cargar todos los anuncios del usuario
   loadAnuncios(): void {
@@ -109,19 +125,17 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-
-  // FATA POR CREAR
-
+  // Método para crear anuncio
   crearAnuncio(): void {
     // Lógica para crear un anuncio
     console.log('Crear anuncio');
   }
-
+  // Método para modificar anuncio
   modificarAnuncio(anuncioId: number): void {
     // Lógica para modificar el anuncio específico
     console.log(`Modificar anuncio ${anuncioId}`);
   }
-
+  // Método para eliminar anuncio
   eliminarAnuncio(anuncioId: number): void {
     // Lógica para borrar el anuncio específico
     console.log('Anuncio borrado');

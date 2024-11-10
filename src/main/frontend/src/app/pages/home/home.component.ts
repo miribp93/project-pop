@@ -3,7 +3,7 @@ import { DataService } from '../../services/data.service';
 import { CommonModule } from '@angular/common';
 import { Anuncio } from '../../interfaces/anuncio.interfaces';
 import { CardComponent } from '../../components/card/card.component';
-import {MatPaginator,PageEvent,} from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MATERIAL_MODULES } from '../../material/material/material.component';
 
 @Component({
@@ -55,4 +55,16 @@ export class HomeComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.setPaginatedProducts(); // Actualizar los productos paginados
   }
+
+  // // Función para ordenar los productos por fecha (más reciente primero)
+  // ordenarPorFecha(): void {
+  //   this.prod.sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
+  //   this.setPaginatedProducts(); // Actualizar la paginación después de ordenar
+  // }
+
+  // // Función para ordenar los productos alfabéticamente
+  // ordenarAlfabeticamente(): void {
+  //   this.prod.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  //   this.setPaginatedProducts(); // Actualizar la paginación después de ordenar
+  // }
 }
