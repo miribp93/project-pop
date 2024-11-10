@@ -1,8 +1,8 @@
 <div class="container text-center">
   <mat-card class="payment-card">
-  <h2>Pago</h2>
+    <h2>Pago</h2>
 
-    <form id="contactForm">
+    <form id="contactForm" (ngSubmit)="paySucces()">
 
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
@@ -20,8 +20,8 @@
       </div>
 
       <div class="form-actions">
-        <button mat-raised-button color="primary" type="submit">Pagar</button>
-        <button mat-button type="reset">Cancelar</button>
+        <button mat-stroked-button color="primary" type="submit">Pagar</button>
+        <button mat-stroked-button color="warn" type="button" (click)="cancelar()">Cancelar</button>
       </div>
     </form>
   </mat-card>

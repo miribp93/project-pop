@@ -1,7 +1,7 @@
 
-  <mat-card *ngIf="prod; else noProduct" class="example-card" appearance="outlined" [routerLink]="['/product', prod.id]">
+  <mat-card *ngIf="prod; else noProduct" class="card" appearance="outlined" [routerLink]="['/product', prod.id]">
   <mat-card-header class="m-2">
-    <div mat-card-avatar class="example-header-image"></div>
+    <div mat-card-avatar class="header-image"></div>
     <mat-card-title></mat-card-title>
     <mat-card-subtitle>{{ prod.nombre }}</mat-card-subtitle>
   </mat-card-header>

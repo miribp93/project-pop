@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MATERIAL_MODULES } from '../../material/material/material.component';
 import { AuthService } from '../../services/auth.service';
@@ -8,24 +8,34 @@ import { CommonModule } from '@angular/common';
   selector: 'app-header',
   standalone: true,
   imports: [
-
     CommonModule,
     RouterModule,
     MATERIAL_MODULES,
-
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
   isAuthenticated: boolean = false;  // Define si el usuario está autenticado
   userRole: string = 'guest';        // Define el rol del usuario ('guest' como valor por defecto)
+  isSmallScreen: boolean = false;    // Define si la pantalla es pequeña
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.updateUserStatus();
+    this.checkScreenSize(); // Check the screen size on initialization
+  }
+
+  // Escucha el evento de redimensionamiento de ventana para actualizar el tamaño de pantalla
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  // Verifica si la pantalla es pequeña
+  checkScreenSize(): void {
+    this.isSmallScreen = window.innerWidth < 768;
   }
 
   // Actualiza el estado de autenticación y el rol

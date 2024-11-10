@@ -1,27 +1,21 @@
 <ng-template #divLoading>
-  <mat-grid-list cols="1">
-    <mat-grid-tile>
-      <mat-spinner></mat-spinner>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
 </ng-template>
 
-<div *ngIf="anun; else divLoading" class="grid p-2">
-
-  <mat-card class="col-12 sm:col-6 mt-3">
-
+<div *ngIf="anun; else divLoading" class="container">
+  <mat-card class="card">
     <mat-card-header>
       <mat-card-title>{{ anun.tipo_anuncio }}</mat-card-title>
       <mat-card-subtitle>{{ anun.tipo_animal }}</mat-card-subtitle>
     </mat-card-header>
-
   </mat-card>
 
-  <mat-card class="col-12 sm:col-6 mt-3">
-
+  <mat-card class="card">
     <mat-card-header>
       <mat-card-title>Información</mat-card-title>
-      <mat-card-subtitle>{{ anun.nombre}}</mat-card-subtitle>
+      <mat-card-subtitle>{{ anun.nombre }}</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
@@ -31,25 +25,11 @@
         <mat-list-item>{{ anun.precio | currency:'EUR':'symbol' }}</mat-list-item>
       </mat-list>
 
-      <!-- Botones con mejor estilo y separación -->
-      <div style="display: flex; gap: 10px; margin-top: 20px;">
-        <button
-          mat-stroked-button
-          color="warn"
-          (click)="regresar()"
-        >
-          Regresar
-        </button>
-
-        <button
-          mat-flat-button
-          color="primary"
-          (click)="comprar()"
-        >
-          Comprar
-        </button>
+      <!-- Botones -->
+      <div class="button-container">
+        <button mat-stroked-button color="warn" (click)="regresar()">Regresar</button>
+        <button mat-flat-button color="primary" (click)="comprar()">Comprar</button>
       </div>
-
     </mat-card-content>
   </mat-card>
 </div>

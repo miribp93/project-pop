@@ -1,8 +1,8 @@
-.example-card {
-  max-width: 400px;
+.card {
+  max-width: 200px;
 }
 
-.example-header-image {
+.header-image {
   background-image: url('../../../assets/logo.jpg');
   background-size: cover;
 }

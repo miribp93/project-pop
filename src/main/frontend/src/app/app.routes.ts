@@ -10,6 +10,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { PayComponent } from './components/pay/pay.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { AdminDashboardComponent } from './users/admin-dashboard/admin-dashboard.component';
+import { ResetPasswordComponent } from './auth/reset-password/resetPassword.component';
+import { ForgotPasswordComponent } from './auth/forgotPassword/forgotPassword.component';
 
  export const routes: Routes = [   {
      path: '',
@@ -23,10 +25,12 @@ import { AdminDashboardComponent } from './users/admin-dashboard/admin-dashboard
        { path: 'contacto', component: ContactComponent },
        { path: 'login', component: LoginComponent },
        { path: 'register', component: RegisterComponent },
+       { path: 'reset-password', component:ResetPasswordComponent},
        { path: 'pay', component: PayComponent },
-       {path: 'profile', component: UserProfileComponent},
-     ]
+       { path: 'profile', component: UserProfileComponent},
+       { path: 'admin', component: AdminDashboardComponent},
+       { path: 'forgotpass', component: ForgotPasswordComponent},
+            ]
    },
 
-   {path: 'admin', component: AdminDashboardComponent}
  ];

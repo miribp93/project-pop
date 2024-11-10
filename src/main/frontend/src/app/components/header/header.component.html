@@ -1,38 +1,57 @@
-
 <mat-toolbar color="primary" class="top-bar">
-  <img src="chango2.webp" alt="Chango" class="logo" routerLink="/" />
+  <img src="chango.webp" alt="Chango" class="logo" routerLink="/" />
   <span class="spacer"></span>
-  <div class="m-3">
-    <!-- Si no está autenticado, muestra Login y Registrar -->
+
+  <!-- Botones de usuario (Login, Registro, Perfil, etc.) -->
+  <div class="user-buttons m-3" *ngIf="!isSmallScreen">
     <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="login">LogIn</button>
     <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="register">Registrar</button>
-
-    <!-- Botón comentado: Mostrar solo para usuarios autenticados y con rol distinto de 'admin' -->
-    <button *ngIf="isAuthenticated && userRole !== 'admin'" mat-raised-button routerLink="profile">Mi Perfil</button>
-
-    <!-- Botón comentado: Mostrar solo para usuarios con rol 'admin' -->
-    <button *ngIf="isAuthenticated && userRole === 'admin'" mat-raised-button routerLink="MANAGER">Administrador</button>
-
-    <!-- Si está autenticado, muestra LogOut -->
+    <button *ngIf="isAuthenticated && userRole !== 'MANAGER'" mat-stroked-button routerLink="profile">Mi Perfil</button>
+    <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mat-stroked-button routerLink="admin">Administrador</button>
     <button *ngIf="isAuthenticated" mat-raised-button (click)="logout()">LogOut</button>
   </div>
+
+  <!-- Botón menú hamburguesa para pantallas pequeñas -->
+  <button mat-icon-button *ngIf="isSmallScreen" [matMenuTriggerFor]="mobileMenu">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- Menú en pantallas pequeñas -->
+  <mat-menu #mobileMenu="matMenu">
+    <button *ngIf="!isAuthenticated" mat-menu-item routerLink="login">LogIn</button>
+    <button *ngIf="!isAuthenticated" mat-menu-item routerLink="register">Registrar</button>
+    <button *ngIf="isAuthenticated && userRole !== 'MANAGER'" mat-menu-item routerLink="profile">Mi Perfil</button>
+    <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mat-menu-item routerLink="admin">Administrador</button>
+    <button *ngIf="isAuthenticated" mat-menu-item (click)="logout()">LogOut</button>
+    <button mat-menu-item routerLink="/anonces/producto">Productos</button>
+    <button mat-menu-item routerLink="/anonces/servicio">Servicios</button>
+    <button mat-menu-item routerLink="/about">Acerca de nosotros</button>
+    <button mat-menu-item routerLink="/contacto">Contáctanos</button>
+    <button mat-menu-item routerLink="/anonces/perro">Perros</button>
+    <button mat-menu-item routerLink="/anonces/gato">Gato</button>
+    <button mat-menu-item routerLink="/anonces/aves">Aves</button>
+    <button mat-menu-item routerLink="/anonces/reptiles">Reptiles</button>
+    <button mat-menu-item routerLink="/anonces/exoticos">Animales exóticos</button>
+    <button mat-menu-item routerLink="/anonces/otros">Otros animales</button>
+
+  </mat-menu>
 </mat-toolbar>
 
-<mat-toolbar color="primary" class="nav-bar">
-  <button mat-button class="nav-button" [matMenuTriggerFor]="servicesMenu"><mat-icon>menu</mat-icon></button>
+<!-- Barra de navegación completa para pantallas grandes -->
+<mat-toolbar color="primary" class="nav-bar" *ngIf="!isSmallScreen">
+  <button mat-button [matMenuTriggerFor]="servicesMenu"><mat-icon>menu</mat-icon></button>
 
   <mat-menu #servicesMenu="matMenu">
-    <button class="nav-button" mat-menu-item routerLink="/anonces/perro">Perro</button>
-    <button class="nav-button" mat-menu-item routerLink="/anonces/gato">Gato</button>
-    <button class="nav-button" mat-menu-item routerLink="/anonces/aves">Aves</button>
-    <button class="nav-button" mat-menu-item routerLink="/anonces/reptiles">Reptiles</button>
-    <button class="nav-button" mat-menu-item routerLink="/anonces/exoticos">Animales exóticos</button>
-    <button class="nav-button" mat-menu-item routerLink="/anonces/otros">Otros animales</button>
+    <button mat-menu-item routerLink="/anonces/perro">Perros</button>
+    <button mat-menu-item routerLink="/anonces/gato">Gato</button>
+    <button mat-menu-item routerLink="/anonces/aves">Aves</button>
+    <button mat-menu-item routerLink="/anonces/reptiles">Reptiles</button>
+    <button mat-menu-item routerLink="/anonces/exoticos">Animales exóticos</button>
+    <button mat-menu-item routerLink="/anonces/otros">Otros animales</button>
   </mat-menu>
 
-  <button class="nav-button" mat-button routerLink="/anonces/producto">Productos</button>
-  <button class="nav-button" mat-button routerLink="/anonces/servicio">Servicios</button>
-  <button class="nav-button" mat-button routerLink="/about">Acerca de nosotros</button>
-  <button class="nav-button" mat-button routerLink="/contacto">Contáctanos</button>
+  <button mat-button routerLink="/anonces/producto">Productos</button>
+  <button mat-button routerLink="/anonces/servicio">Servicios</button>
+  <button mat-button routerLink="/about">Acerca de nosotros</button>
+  <button mat-button routerLink="/contacto">Contáctanos</button>
 </mat-toolbar>
-

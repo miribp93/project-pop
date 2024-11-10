@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MATERIAL_MODULES } from '../../material/material/material.component';
@@ -17,34 +16,45 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   usuario: string = '';
   password: string = '';
+  redirectTo: string | null = null;
+  productId: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
+  ngOnInit(): void {
+    // Obtener los parámetros de consulta en la inicialización del componente
+    this.route.queryParamMap.subscribe(params => {
+      this.redirectTo = params.get('redirect');
+      this.productId = params.get('productId');
+    });
+  }
 
   onLogin(): void {
-
     this.authService.login(this.usuario, this.password).subscribe(
       response => {
-        // Verificar si la respuesta contiene un token o algún indicador de éxito
         if (response && response.token) {
-          // Almacenar el token en localStorage o sessionStorage
           localStorage.setItem('token', response.token);
 
-          // Redirigir a la página de inicio o a la ruta deseada
-           //window.location.reload();
-
-          this.router.navigate(['/home']);
-
+          // Si `redirectTo` y `productId` están definidos, redirige a la página de pago
+          if (this.redirectTo === 'pay' && this.productId) {
+            this.router.navigate(['/pay'], { queryParams: { productId: this.productId } });
+          } else {
+            // Redirigir a una página predeterminada si no hay parámetros
+            this.router.navigate(['/home']);
+          }
         } else {
           alert('Inicio de sesión exitoso, pero no se recibió un token.');
         }
       },
       error => {
-        // Manejo de errores (por ejemplo, credenciales incorrectas)
         console.error('Error en el inicio de sesión', error);
         alert('Usuario o contraseña incorrectos');
       }
@@ -52,7 +62,6 @@ export class LoginComponent {
   }
 
   onForgotPassword(): void {
-
     this.router.navigate(['/forgotpass']);
   }
 }

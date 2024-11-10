@@ -1,4 +1,46 @@
-.col-lg-custom {
-  flex: 0 0 20%; /* Hace que la columna ocupe el 20% del ancho */
-  max-width: 20%;
+
+/* Contenedor principal con Flexbox */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en múltiples filas */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  gap: 20px; /* Espacio entre las tarjetas */
+  margin: 0 auto; /* Centra el contenedor */
+  padding-top: 10px; /* Espacio superior */
+  max-width: 80%; /* Contenedor al 80% del ancho de la pantalla */
+}
+
+/* Estilos para las tarjetas (productos) */
+.producto-card {
+  flex: 1 1 100%; /* En pantallas pequeñas, cada tarjeta ocupa el 100% de la fila */
+  max-width: 300px; /* Limita el ancho máximo de las tarjetas */
+}
+
+/* Pantalla de tablet */
+@media (min-width: 576px) {
+  .producto-card {
+    flex: 1 1 45%; /* En tabletas, cada tarjeta ocupa el 45% del ancho */
+  }
+}
+
+/* Pantalla de escritorio (PC) */
+@media (min-width: 992px) {
+  .producto-card {
+    flex: 1 1 18%; /* En pantallas de escritorio, cada tarjeta ocupa el 18% */
+  }
+}
+
+/* Responsividad de las tarjetas en pantallas grandes */
+@media (min-width: 1200px) {
+  .producto-card {
+    flex: 1 1 18%; /* Ajustar a 5 tarjetas en una fila */
+  }
+}
+
+/* Paginador */
+mat-paginator {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 10px 0;
 }

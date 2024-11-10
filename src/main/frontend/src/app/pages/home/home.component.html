@@ -1,13 +1,12 @@
-<h3 class="text-center container ">Todos los Productos y Servicios</h3>
+<h3 class="text-center container">Todos los Productos y Servicios</h3>
 <mat-divider></mat-divider>
 
-<div class="row g-4 pt-2">
-
-  <div *ngFor="let producto of paginatedProd" class="col-12 col-sm-6 col-md-4 col-lg-custom">
+<!-- Contenedor flexbox -->
+<div class="flex-container">
+  <div *ngFor="let producto of paginatedProd" class="producto-card">
     <productos-prod-card [prod]="producto"></productos-prod-card>
   </div>
 </div>
-
 
 <mat-paginator [length]="totalLength"
                [pageSize]="pageSize"

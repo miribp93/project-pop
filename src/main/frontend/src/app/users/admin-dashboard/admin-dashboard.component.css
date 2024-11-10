@@ -1,22 +1,8 @@
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  background-color: rgb(195, 253, 188);
-  height: 80px; /* Altura del header */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-  height: 75px; /* Ajusta la altura del logo */
-}
-
 /* Contenedor principal */
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Ajusta para 3 columnas si hay espacio */
-  gap: 20px; /* Espacio entre columnas */
+  grid-template-columns: 1fr; /* Ajusta para más columnas en pantallas más grandes si hay espacio */
+  gap: 20px; /* Espacio entre elementos */
   padding: 20px;
 }
 
@@ -26,29 +12,39 @@
   border-radius: 8px;
   background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Ajustes a los botones*/
+/* Ajustes a los botones */
 .user-actions {
   display: flex;
-  gap: 10px; /* Espacio entre los botones */
-  justify-content: space-between;
-  margin-top: 10px; /* Separar los botones del texto */
+  gap: 8px; /* Espacio entre los botones */
+  align-items: center;
+  margin-left: auto; /* Mueve los botones al extremo derecho */
 }
 
+/* Estilo del botón */
 button {
-  font-size: 0.85rem; /* Botones más pequeños */
-  padding: 6px 12px; /* Tamaño de los botones */
-  min-width: 100px; /* Ancho mínimo para los botones */
-}
-
-button.mat-raised-button {
-  text-transform: none; /* Evitar que el texto se ponga en mayúsculas */
+  font-size: 0.8rem; /* Botones más pequeños */
+  padding: 4px 8px; /* Tamaño de los botones */
+  min-width: auto; /* Ancho mínimo adaptado */
 }
 
 /* Responsividad para pantallas pequeñas */
 @media (max-width: 767px) {
   .container {
-    grid-template-columns: 1fr; /* En pantallas pequeñas, solo una columna */
+    grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+  }
+
+  .user-details {
+    flex-direction: column; /* Ordena en columna en pantallas pequeñas */
+    align-items: flex-start;
+  }
+
+  .user-actions {
+    align-self: flex-end; /* Alinea los botones a la derecha */
+    margin-top: 10px;
   }
 }
