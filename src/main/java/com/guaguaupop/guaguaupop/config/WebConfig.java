@@ -18,10 +18,10 @@ public class WebConfig implements WebMvcConfigurer{
                 .allowedMethods("GET","POST","PUT", "DELETE");
     }
 
-    @Bean
+    /*@Bean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         factory.setMaxFileSize(DataSize.parse("10MB"));
         factory.setMaxRequestSize(DataSize.parse("10MB"));
-        return factory.createMultipartConfig(); }
+        return factory.createMultipartConfig(); }*/
 }

@@ -39,7 +39,6 @@ public class Ad implements Serializable {
     private String city;
 
     @ElementCollection
-    @CollectionTable(name = "adPhotos", joinColumns = @JoinColumn(name = "idAd"))
     @Column(name = "photos", columnDefinition = "BYTEA")
     private List<byte[]> photos = new ArrayList<>();
 
@@ -66,6 +65,19 @@ public class Ad implements Serializable {
             this.typeAds = typeAds;
             return this;
         }
+    }
+
+    @Override public String toString() {
+        return "Ad{" + "idAd=" + idAd + ", " +
+                "title='" + title + '\'' + ", " +
+                "description='" + description + '\'' + ", " +
+                "price=" + price + ", " +
+                "category='" + category + '\'' + ", " +
+                "city='" + city + '\'' + ", " +
+                "duration=" + duration + ", " +
+                "condition='" + condition + '\'' + ", " +
+                "city='" + city + '\'' + ", " +
+                "user=" + (user != null ? user.getIdUser() : null) + '}';
     }
 
 }
