@@ -9,5 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 public class GetAdPhotosDTO {
 
-    private byte [] profilePhoto;
+    private byte [] photos;
 }

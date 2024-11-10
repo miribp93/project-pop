@@ -7,12 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -20,6 +19,16 @@ import java.util.List;
 public class AdService {
 
     private final AdRepository adRepository;
+
+    // Definición de las categorías disponibles
+    private final Set<String> categories = Set.of(
+            "Perros", "Gatos", "Aves", "Reptiles", "Conejos / Cobayas", "Animales Exóticos", "Otros Animales"
+    );
+
+    public Set<String> getCategories() {
+        return categories;
+    }
+
 
     // CREAR ANUNCIO
     public Ad createAd(CreateAdDTO createAdDTO, MultipartFile[] files) throws IOException {
@@ -45,11 +54,8 @@ public class AdService {
         return savedAd;
     }
 
-}
-
-
-//SUBIR FOTOS DEL ANUNCIO
-    /*public void uploadAdPhotos(Long adId, MultipartFile[] files) throws IOException {
+    /*//SUBIR FOTOS DEL ANUNCIO
+    public void uploadAdPhotos(Long adId, MultipartFile[] files) throws IOException {
 
         Ad ad = adRepository.findById(adId)
                 .orElseThrow(AdNotExistsException::new);
@@ -60,9 +66,18 @@ public class AdService {
         }
         ad.setPhotos(photos.toArray(new byte[0][])); // BLOB array
         adRepository.save(ad);
+    }
+
+    // GET FOTOS DE ANUNCIO
+    public List<byte[]> getAdPhotos(Long adId) {
+    Ad ad = adRepository.findById(adId) .orElseThrow(()
+            -> new AdNotExistsException("El anuncio no existe"));
+    return ad.getPhotos();
     }*/
 
-// GET FOTOS DE ANUNCIO
-
+    // OBTENER ANUNCIOS POR FILTRADO DE CATEGORIA
+    public List<Ad> getAdsByCategory(String category) {
+        return adRepository.findByCategory(category); }
+}
 
 

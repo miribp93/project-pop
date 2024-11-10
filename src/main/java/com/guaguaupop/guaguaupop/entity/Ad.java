@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,7 +32,7 @@ public class Ad implements Serializable {
     @Column(nullable = false)
     private Double price;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "category", nullable = false)
     private String category;
 
     @Column(nullable = false, length = 100)

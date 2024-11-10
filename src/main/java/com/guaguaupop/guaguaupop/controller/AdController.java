@@ -3,13 +3,14 @@ package com.guaguaupop.guaguaupop.controller;
 import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.service.AdService;
+import com.guaguaupop.guaguaupop.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.util.List;
 import java.io.IOException;
 
 @Slf4j
@@ -22,12 +23,15 @@ public class AdController {
 
     // CREAR ANUNCIO
     @PostMapping("/create")
-    public ResponseEntity<Ad> createAd(@ModelAttribute CreateAdDTO createAdDTO,
-                                       @RequestParam("files") MultipartFile[] files) {
-        try { Ad ad = adService.createAd(createAdDTO, files);
-            return new ResponseEntity<>(ad, HttpStatus.CREATED);
-        } catch (IOException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Ad> createAd(
+            @RequestParam("ad") CreateAdDTO createAdDTO,
+            @RequestParam("photos") MultipartFile[] files,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        try {
+            Ad ad = adService.createAd(createAdDTO, files);
+            return ResponseEntity.ok(ad); }
+        catch (IOException e) {
+            return ResponseEntity.status(500).body(null);
         }
     }
 
@@ -36,4 +40,16 @@ public class AdController {
     // MODIFICAR ANUNCIO
 
     // BORRAR ANUNCIO
+
+    // VER ANUNCIOS FILTRADOS
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Ad>> getAdsByCategory(
+            @PathVariable String category) {
+        List<Ad> ads = adService.getAdsByCategory(category);
+        return ResponseEntity.ok(ads);
+    }
+
+    // VER TODOS LOS ANUNCIOS
+
+
 }
