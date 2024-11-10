@@ -31,14 +31,11 @@ public class AdController {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             CreateAdDTO createAdDTO = objectMapper.readValue(adJson, CreateAdDTO.class);
-            Ad ad = adService.createAd(createAdDTO, files);
-            return ResponseEntity.ok(ad);
+            Ad ad = adService.createAd(createAdDTO, files, userDetails.getIdUser());            return ResponseEntity.ok(ad);
         } catch (IOException e) {
             return ResponseEntity.status(500).body(null);
         }
     }
-
-    // SUBIR FOTOS A ANUNCIO
 
     // MODIFICAR ANUNCIO
 

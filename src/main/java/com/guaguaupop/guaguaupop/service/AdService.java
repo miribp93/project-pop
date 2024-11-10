@@ -2,7 +2,10 @@ package com.guaguaupop.guaguaupop.service;
 
 import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
 import com.guaguaupop.guaguaupop.entity.Ad;
+import com.guaguaupop.guaguaupop.entity.User;
+import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
 import com.guaguaupop.guaguaupop.repository.AdRepository;
+import com.guaguaupop.guaguaupop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ import java.util.Set;
 public class AdService {
 
     private final AdRepository adRepository;
+    private final UserRepository userRepository;
 
     // Definición de las categorías disponibles
     private final Set<String> categories = Set.of(
@@ -31,12 +35,13 @@ public class AdService {
 
 
     // CREAR ANUNCIO
-    public Ad createAd(CreateAdDTO createAdDTO, MultipartFile[] files) throws IOException {
+    public Ad createAd(CreateAdDTO createAdDTO, MultipartFile[] files, Long idUser) throws IOException {
         List<byte[]> photos = new ArrayList<>();
         for (MultipartFile file : files) {
             photos.add(file.getBytes());
         }
 
+        User user = userRepository.findById(idUser).orElseThrow(UserNotExistsException::new);
         Ad ad = Ad.builder()
                 .title(createAdDTO.getTitle())
                 .price(createAdDTO.getPrice())
@@ -46,7 +51,8 @@ public class AdService {
                 .typeAd(Collections.singleton(createAdDTO.getTypeAd()))
                 .condition(createAdDTO.getCondition())
                 .duration(createAdDTO.getDuration())
-                .photos(photos) // Usar la lista de bytes
+                .photos(photos)
+                .user(user)
                 .build();
 
         Ad savedAd = adRepository.save(ad);

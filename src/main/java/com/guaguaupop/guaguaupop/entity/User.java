@@ -132,5 +132,10 @@ public class User implements UserDetails {
     private List<Ad> products;
 */
 
+    @Override public String toString() {
+        return "User{" + "idUser=" + idUser + ", " +
+                "username='" + username + '\'' + '}';
+    }
+
 
 }
