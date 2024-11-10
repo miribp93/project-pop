@@ -1,5 +1,6 @@
 package com.guaguaupop.guaguaupop.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.service.AdService;
@@ -24,13 +25,15 @@ public class AdController {
     // CREAR ANUNCIO
     @PostMapping("/create")
     public ResponseEntity<Ad> createAd(
-            @RequestParam("ad") CreateAdDTO createAdDTO,
-            @RequestParam("photos") MultipartFile[] files,
+            @RequestPart("ad") String adJson,
+            @RequestPart("photos") MultipartFile[] files,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            CreateAdDTO createAdDTO = objectMapper.readValue(adJson, CreateAdDTO.class);
             Ad ad = adService.createAd(createAdDTO, files);
-            return ResponseEntity.ok(ad); }
-        catch (IOException e) {
+            return ResponseEntity.ok(ad);
+        } catch (IOException e) {
             return ResponseEntity.status(500).body(null);
         }
     }
