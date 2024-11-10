@@ -1,7 +1,13 @@
 <h3 class="text-center container">Todos los Productos y Servicios</h3>
 <mat-divider></mat-divider>
 
-<!-- Contenedor flexbox -->
+<!-- Contenedor para los botones de ordenación
+<div class="text-center">
+  <button mat-button (click)="ordenarPorFecha()">Ver por Fecha</button>
+  <button mat-button (click)="ordenarAlfabeticamente()">Ordenar Alfabéticamente</button>
+</div> -->
+
+<!-- Contenedor flexbox para los productos -->
 <div class="flex-container">
   <div *ngFor="let producto of paginatedProd" class="producto-card">
     <productos-prod-card [prod]="producto"></productos-prod-card>
