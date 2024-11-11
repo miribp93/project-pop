@@ -130,7 +130,7 @@ public class UserController {
     }
 
     // SUBIR LA FOTO DE PERFIL
-    @PostMapping("/profile-photo")
+    @PostMapping("/upload-profile-photo")
     public ResponseEntity<?> uploadProfilePhoto(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                 @RequestParam("file") MultipartFile file) {
         if (userDetails == null) {
