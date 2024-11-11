@@ -18,7 +18,7 @@ import { FormsModule } from '@angular/forms';
 export class UserProfileComponent implements OnInit {
   usuario: User | null = null; // Datos del usuario
   anuncios: any[] = []; // Anuncios del usuario
-  selectedFile?: File; // Archivo seleccionado para la foto de perfil
+  selectedFile: File | null = null;
   photoPreview?: string | ArrayBuffer | null; // Vista previa de la foto
 
   constructor(
@@ -93,37 +93,38 @@ loadProfilePhoto(): void {
     this.router.navigate(['/login']); // Redirigir al login tras logout
   }
 
-  // Método para manejar la selección de archivo
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      this.selectedFile = input.files[0];
+ // Evento para manejar la selección de archivo
+ onFileSelected(event: Event): void {
+  const fileInput = event.target as HTMLInputElement;
+  if (fileInput.files && fileInput.files.length > 0) {
+    this.selectedFile = fileInput.files[0];
 
-      // Vista previa de la imagen seleccionada
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.photoPreview = reader.result;
-      };
-      reader.readAsDataURL(this.selectedFile);
-    }
+    // Mostrar vista previa de la imagen
+    const reader = new FileReader();
+    reader.onload = () => (this.photoPreview = reader.result);
+    reader.readAsDataURL(this.selectedFile);
   }
+}
 
-  // Método para subir la foto al backend
-  uploadPhoto(): void {
-    if (this.selectedFile) {
-      const formData = new FormData();
-      formData.append('photo', this.selectedFile);
+// Método para subir la foto
+uploadPhoto(): void {
+  if (this.selectedFile) {
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
 
-      // Llamada al servicio para subir la foto
-      this.authService.uploadPhoto(formData).subscribe(
-        (response) => {
-          alert('Foto subida con éxito');
-          this.usuario!.profile_photo = response.photoUrl; // Actualiza la URL de la foto del usuario
-        },
-        (error) => console.error('Error al subir la foto:', error)
-      );
-    }
+    this.authService.uploadPhoto(formData).subscribe({
+      next: (response) => {
+        alert("Foto de perfil actualizada correctamente");
+        // Actualizar la vista previa con la URL de la nueva foto si es necesario
+        if (response.photoUrl) {
+          this.photoPreview = response.photoUrl;
+        }
+      },
+      error: (err) => alert("Error al subir la foto de perfil: " + err.message),
+    });
   }
+}
+
 
   // Método para crear anuncio
   crearAnuncio(): void {

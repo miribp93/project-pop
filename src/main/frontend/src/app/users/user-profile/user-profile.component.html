@@ -17,14 +17,12 @@
     </div>
   </div>
 
-  <!-- Sección para subir la foto -->
   <div class="photo-upload">
     <h4 class="text-center">Foto de Perfil</h4>
     <div class="photo-card">
       <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo" />
     </div>
     <div class="upload-controls">
-      <!-- Usamos un formulario para envolver el input de archivo -->
       <form (ngSubmit)="uploadPhoto()" #photoForm="ngForm">
         <input type="file" (change)="onFileSelected($event)" name="photo" required />
         <button mat-raised-button color="primary" class="buttons" type="submit" [disabled]="!selectedFile || !photoForm.form.valid">
@@ -38,7 +36,7 @@
     <h4 class="text-center">Mis Pedidos</h4>
     <div class="nav-bar button mb-3">
       <button mat-button color="primary" class="buttons">Agregar Anuncio</button>
-      <button mat-button color="primary" class="buttons">compra</button>
+      <button mat-button color="primary" class="buttons">Compra</button>
       <button mat-button color="primary" class="buttons">Venta</button>
     </div>
 

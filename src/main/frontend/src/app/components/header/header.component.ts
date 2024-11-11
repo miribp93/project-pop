@@ -16,14 +16,18 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isAuthenticated: boolean = false;  // Define si el usuario está autenticado
-  userRole: string = 'guest';        // Define el rol del usuario ('guest' como valor por defecto)
-  isSmallScreen: boolean = false;    // Define si la pantalla es pequeña
+  isAuthenticated = false;  // Define si el usuario está autenticado
+  userRole = 'guest';       // Define el rol del usuario ('guest' como valor por defecto)
+  isSmallScreen = false;    // Define si la pantalla es pequeña
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.updateUserStatus();
+    this.authService.user$.subscribe(userSession => {
+      this.isAuthenticated = !!userSession;
+      this.userRole = userSession?.roles[0] || 'guest';
+    });
+
     this.checkScreenSize(); // Check the screen size on initialization
   }
 
@@ -38,16 +42,9 @@ export class HeaderComponent implements OnInit {
     this.isSmallScreen = window.innerWidth < 768;
   }
 
-  // Actualiza el estado de autenticación y el rol
-  updateUserStatus(): void {
-    this.isAuthenticated = this.authService.isAuthenticated(); // Verifica autenticación
-    this.userRole = this.authService.getUserRole();           // Obtiene el rol
-  }
-
   // Cierra sesión y redirige a la página principal
   logout(): void {
     this.authService.logout();
-    this.updateUserStatus();          // Actualiza el estado tras logout
-    this.router.navigate(['/']);       // Redirige a la página de inicio
+    this.router.navigate(['/']); // Redirige a la página de inicio
   }
 }

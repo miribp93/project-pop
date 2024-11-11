@@ -152,12 +152,21 @@ getProfilePhoto(): Observable<Blob> {
     );
   }
 
-  // Método para subir foto
   uploadPhoto(photoData: FormData): Observable<{ photoUrl: string }> {
-    return this.http.post<{ photoUrl: string }>( '/api/user/upload-photo', photoData ).pipe(
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      return throwError(() => new Error('No se encontró el token de autenticación'));
+    }
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.post<{ photoUrl: string }>('/api/user/upload-profile-photo', photoData, { headers }).pipe(
       catchError(this.handleError)
     );
   }
+
+
+
 
   // Eliminar usuario
   delete(id: string): Observable<User> {
