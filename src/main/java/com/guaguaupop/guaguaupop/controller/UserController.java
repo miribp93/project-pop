@@ -114,8 +114,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
         }
 
-        if (updateUserDTO.getPassword1().isPresent() &&
-                !updateUserDTO.getPassword1().get().equals(updateUserDTO.getPassword2().get())) {
+        if (updateUserDTO.getPassword().isPresent() &&
+                !updateUserDTO.getPassword().get().equals(updateUserDTO.getPassword2().get())) {
             return ResponseEntity.badRequest().body("Las contraseñas no coinciden");
         }
 

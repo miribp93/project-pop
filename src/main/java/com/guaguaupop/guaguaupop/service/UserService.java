@@ -172,10 +172,10 @@ public class UserService extends BaseService<User, Long, UserRepository> {
         updateUserDTO.getCity().ifPresent(user::setCity);
         updateUserDTO.getPostalCode().ifPresent(user::setPostalCode);
 
-        if (updateUserDTO.getPassword1().isPresent() &&
-                updateUserDTO.getPassword1().get().equals(updateUserDTO.getPassword2().get())) {
-            user.setPassword(updateUserDTO.getPassword1().get());
-        } else if (updateUserDTO.getPassword1().isPresent()) {
+        if (updateUserDTO.getPassword().isPresent() &&
+                updateUserDTO.getPassword().get().equals(updateUserDTO.getPassword2().get())) {
+            user.setPassword(updateUserDTO.getPassword().get());
+        } else if (updateUserDTO.getPassword().isPresent()) {
             throw new IllegalArgumentException("Las contraseñas no coinciden");
         }
 
