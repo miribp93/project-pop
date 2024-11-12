@@ -39,10 +39,10 @@ public class User implements UserDetails {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "lastName1", nullable = false)
+    @Column(name = "last_name1", nullable = false)
     private String lastName1;
 
-    @Column(name = "lastName2", nullable = false)
+    @Column(name = "last_name2", nullable = false)
     private String lastName2;
 
     @Column(name = "email", unique = true, nullable = false)
@@ -57,7 +57,7 @@ public class User implements UserDetails {
     @Column(name = "city", nullable = false)
     private String city;
 
-    @Column(name = "postalCode", nullable = false)
+    @Column(name = "postal_code", nullable = false)
     @Pattern(regexp = "\\d{5}", message = "El código postal debe tener 5 dígitos")
     private String postalCode;
 
@@ -70,7 +70,7 @@ public class User implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "userRoles", joinColumns = @JoinColumn(name = "idUser"))
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "id_user"))
     @Column(name = "role")
     private Set<UserRole> userRoles;
 

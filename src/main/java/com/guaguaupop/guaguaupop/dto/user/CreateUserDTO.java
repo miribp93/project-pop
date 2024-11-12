@@ -1,5 +1,6 @@
 package com.guaguaupop.guaguaupop.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -23,7 +24,9 @@ public class CreateUserDTO {
     @NotBlank(message = "La confirmación de contraseña es obligatoria.")
     private String password2;
     @NotBlank(message = "El primer apellido es obligatorio.")
+    @JsonProperty("last_name1")
     private String lastName1;
+    @JsonProperty("last_name2")
     private String lastName2;
     @NotBlank(message = "El email es obligatorio.")
     private String email;
@@ -33,6 +36,7 @@ public class CreateUserDTO {
     private String city;
     @NotBlank(message = "El código postal es obligatorio.")
     @Pattern(regexp = "\\d{5}", message = "El código postal debe tener 5 dígitos.")
+    @JsonProperty("postal_code")
     private String postalCode;
     private Set<String> roles;
 }
