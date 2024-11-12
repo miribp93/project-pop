@@ -42,7 +42,7 @@ export class AdminDashboardComponent implements OnInit {
   //Eliminar Usuario
   deleteUser(userId: number): void {
     // Lógica para borrar usuario
-    this.authService.delete(userId.toString()).subscribe(
+    this.authService.delete(userId).subscribe(
       () => {
         alert('Cuenta eliminada con éxito');
         this.users = this.users?.filter(user => user.id_user !== userId);

@@ -2,8 +2,6 @@
   <div class="user-info">
     <h4 class="text-center">Datos del Usuario</h4>
     <p><strong>Nombre:</strong> {{ usuario?.name }}</p>
-    <p><strong>Contraseña:</strong> {{ usuario?.password }}</p>
-    <p><strong>Contraseña2:</strong> {{ usuario?.password2 }}</p>
     <p><strong>Apellido1:</strong> {{ usuario?.last_name1 }}</p>
     <p><strong>Apellido2:</strong> {{ usuario?.last_name2 }}</p>
     <p><strong>Email:</strong> {{ usuario?.email }}</p>
@@ -11,7 +9,6 @@
     <p><strong>Calle:</strong> {{ usuario?.street }}</p>
     <p><strong>Teléfono:</strong> {{ usuario?.phone }}</p>
     <p><strong>Nombre Usuario:</strong> {{ usuario?.username }}</p>
-    <p><strong>ID Usuario:</strong> {{ usuario?.id_user }}</p>
 
     <div class="buttons">
       <button mat-stroked-button color="accent" (click)="modificarDatos()">

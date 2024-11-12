@@ -164,10 +164,8 @@ getProfilePhoto(): Observable<Blob> {
   }
 
 
-
-
   // Eliminar usuario
-  delete(id: string): Observable<User> {
+  delete(id: number): Observable<User> {
     return this.http.delete<User>(`/api/user/${id}`).pipe(
       catchError(this.handleError)
     );
