@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';  // Asegúrate de importar HttpClient
-import { catchError, Observable, of } from 'rxjs';
-import { Anuncio } from '../interfaces/anuncio.interfaces';  // Asegúrate de tener esta interfaz
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';  // Asegúrate de importar HttpClient
+import { catchError, Observable, of, throwError } from 'rxjs';
+import { Anuncio, ad } from '../interfaces/anuncio.interfaces';  // Asegúrate de tener esta interfaz
 import { environments } from '../../environments/environments';  // Revisa que esta ruta sea válida
 
 @Injectable({
@@ -20,9 +20,9 @@ export class DataService {
 
   getAnuncioById( id: string ): Observable<Anuncio|undefined> {
     return this.http.get<Anuncio>(`${ this.baseUrl }/anuncios/${ id }`)
-      .pipe(
-        catchError( error => of(undefined) )
-      );
+    .pipe(
+      catchError( error => of(undefined) )
+    );
   }
 
 
@@ -46,6 +46,26 @@ export class DataService {
     );
   }
 
+  //Metodo para traer todos los anuncios
+  getAnonces(): Observable<ad[]> {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.error('Token no encontrado en localStorage');
+      return throwError(() => new Error('Token no encontrado'));
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<ad[]>(`/api/ad/all`, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
+  // Función para manejar errores de respuesta HTTP
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    console.error('Error:', error);
+    return throwError(() => new Error(`Error en la solicitud: ${error.message}`));
+  }
 
 
 

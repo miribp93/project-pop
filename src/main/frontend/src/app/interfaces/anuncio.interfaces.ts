@@ -8,6 +8,18 @@ export interface Anuncio {
   img:          string;
 }
 
+export interface ad {
+  id_ad: number;
+category: string;
+city: string;
+contition:string;
+description: string;
+duration: string;
+price: number;
+title: string;
+id_user: number;
+}
+
 export enum TipoAnuncio {
   Producto = "Producto",
   Servicio = "Servicio",

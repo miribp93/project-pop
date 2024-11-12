@@ -39,8 +39,6 @@ export class AuthService {
         // Actualizamos el estado del usuario
         this.userSubject.next(userSession);
 
-
-        alert("Bienvenido");
       }),
       catchError(this.handleError)
     );

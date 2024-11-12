@@ -37,10 +37,7 @@ export class RegisterComponent {
         phone: ['', [Validators.required, Validators.pattern('^[0-9]{9,}$')]], // Permite al menos 9 dígitos
         street: ['', Validators.required],
         city: ['', Validators.required],
-        postal_code: [
-          '',
-          [Validators.required, Validators.pattern('^[0-9]{5}$')],
-        ],
+        postal_code: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')],],
         password: ['', [Validators.required, Validators.minLength(8)]], // Ajustado a 8 caracteres
         password2: ['', Validators.required],
         username: ['', Validators.required],
