@@ -2,18 +2,16 @@
   <div class="user-info">
     <h4 class="text-center">Datos del Usuario</h4>
     <p><strong>Nombre:</strong> {{ usuario?.name }}</p>
-    <p><strong>contraseña:</strong> {{ usuario?.password }}</p>
-    <p><strong>contraseña2:</strong> {{ usuario?.password2 }}</p>
+    <p><strong>Contraseña:</strong> {{ usuario?.password }}</p>
+    <p><strong>Contraseña2:</strong> {{ usuario?.password2 }}</p>
     <p><strong>Apellido1:</strong> {{ usuario?.last_name1 }}</p>
     <p><strong>Apellido2:</strong> {{ usuario?.last_name2 }}</p>
     <p><strong>Email:</strong> {{ usuario?.email }}</p>
     <p><strong>Ciudad:</strong> {{ usuario?.city }}</p>
     <p><strong>Calle:</strong> {{ usuario?.street }}</p>
-    <p><strong>Telefono:</strong> {{ usuario?.phone }}</p>
+    <p><strong>Teléfono:</strong> {{ usuario?.phone }}</p>
     <p><strong>Nombre Usuario:</strong> {{ usuario?.username }}</p>
-    <p><strong>id Usuario:</strong> {{ usuario?.id_user }}</p>
-
-
+    <p><strong>ID Usuario:</strong> {{ usuario?.id_user }}</p>
 
     <div class="buttons">
       <button mat-stroked-button color="accent" (click)="modificarDatos()">
@@ -30,10 +28,17 @@
     <div class="photo-card">
       <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo" />
     </div>
-    <div class="upload-controls">
+
+    <!-- Mostrar el botón "Cambiar Foto" solo si hay una foto de perfil -->
+    <div class="change-photo-button mt-3" *ngIf="photoPreview">
+      <button mat-raised-button color="primary" (click)="selectFile()">Cambiar Foto</button>
+    </div>
+
+    <!-- Formulario para subir una nueva foto, inicialmente oculto -->
+    <div *ngIf="isFileSelected">
       <form (ngSubmit)="uploadPhoto()" #photoForm="ngForm">
         <input type="file" (change)="onFileSelected($event)" name="photo" required />
-        <button mat-raised-button color="primary" class="buttons" type="submit" [disabled]="!selectedFile || !photoForm.form.valid">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!selectedFile || !photoForm.form.valid">
           Subir Foto
         </button>
       </form>

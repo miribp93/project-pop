@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
   password: string = '';
   redirectTo: string | null = null;
   productId: string | null = null;
+  showPassword = false;  // Controla la visibilidad de la contraseña
+
 
   constructor(
     private authService: AuthService,
@@ -35,6 +37,11 @@ export class LoginComponent implements OnInit {
       this.redirectTo = params.get('redirect');
       this.productId = params.get('productId');
     });
+  }
+
+  // Alterna la visibilidad del campo de contraseña
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   onLogin(): void {

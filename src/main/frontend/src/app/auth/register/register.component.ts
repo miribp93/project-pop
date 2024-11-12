@@ -21,6 +21,8 @@ import { CommonModule } from '@angular/common';
 export class RegisterComponent {
   registerForm: FormGroup;
   editMode: boolean = false; // Flag para verificar si estamos en modo edición
+  showPassword = false;   // Controla la visibilidad de la contraseña
+  showPassword2 = false;  // Controla la visibilidad de la confirmación de contraseña
 
   constructor(
     private fb: FormBuilder,
@@ -38,8 +40,8 @@ export class RegisterComponent {
         street: ['', Validators.required],
         city: ['', Validators.required],
         postal_code: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')],],
-        password: ['', [Validators.required, Validators.minLength(8)]], // Ajustado a 8 caracteres
-        password2: ['', Validators.required],
+        password: ['', [Validators.minLength(8)]], // Sin validación obligatoria por defecto
+        password2: [''],
         username: ['', Validators.required],
       },
       {
@@ -73,11 +75,21 @@ export class RegisterComponent {
       }
     };
   }
+
   // Métodos auxiliares para facilitar el acceso a los controles desde la plantilla
   get f() {
     return this.registerForm.controls;
   }
 
+  // Alterna la visibilidad del campo de contraseña
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
+
+  // Alterna la visibilidad del campo de confirmación de contraseña
+  toggleShowPassword2() {
+    this.showPassword2 = !this.showPassword2;
+  }
 
   ngOnInit(): void {
     // Revisamos si estamos en modo edición
@@ -86,6 +98,18 @@ export class RegisterComponent {
       if (this.editMode) {
         // Si estamos en modo edición, cargamos los datos del usuario
         this.loadUserData();
+
+        // En modo edición, eliminamos la validación de contraseña
+        this.registerForm.get('password')?.clearValidators();
+        this.registerForm.get('password2')?.clearValidators();
+        this.registerForm.get('password')?.updateValueAndValidity();
+        this.registerForm.get('password2')?.updateValueAndValidity();
+      } else {
+        // Si no estamos en modo edición, activamos las validaciones de contraseña
+        this.registerForm.get('password')?.setValidators([Validators.required, Validators.minLength(8)]);
+        this.registerForm.get('password2')?.setValidators([Validators.required]);
+        this.registerForm.get('password')?.updateValueAndValidity();
+        this.registerForm.get('password2')?.updateValueAndValidity();
       }
     });
   }

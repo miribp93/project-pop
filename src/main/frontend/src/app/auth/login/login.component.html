@@ -3,27 +3,36 @@
     <h2>Inicio de Sesión</h2>
     <form id="LoginForm" (ngSubmit)="onLogin()">
 
+      <!-- Campo Usuario -->
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Usuario</mat-label>
-          <input matInput type="text" id="usuario" name="usuario" [(ngModel)]="usuario" required autocomplete="current-password">
+          <input matInput type="text" id="usuario" name="usuario" [(ngModel)]="usuario" required autocomplete="username">
         </mat-form-field>
       </div>
 
+      <!-- Campo Contraseña con botón de visualización -->
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" id="password" name="password" [(ngModel)]="password" required autocomplete="current-password">
+          <mat-label>Contraseña</mat-label>
+          <input matInput [type]="showPassword ? 'text' : 'password'" id="password" name="password" [(ngModel)]="password" required autocomplete="current-password">
+          <button mat-icon-button matSuffix (click)="toggleShowPassword()" type="button">
+            <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
         </mat-form-field>
       </div>
+
+      <!-- Enlace Olvidó su contraseña -->
       <div class="forgot-password">
         <a (click)="onForgotPassword()" class="forgot-password-link">¿Olvidó su contraseña?</a>
       </div>
 
+      <!-- Botones de acción -->
       <div class="form-actions mt-3">
         <button mat-raised-button color="primary" type="submit">Entrar</button>
-        <button mat-raised-button color="warn" type="button" >Cancelar</button>
+        <button mat-raised-button color="warn" type="button">Cancelar</button>
       </div>
+
     </form>
   </mat-card>
 </div>

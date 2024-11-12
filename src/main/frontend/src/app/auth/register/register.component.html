@@ -1,6 +1,6 @@
 <div class="contact-form text-center container">
   <mat-card class="form-card">
-    <h2>{{ editMode ? 'Modificar Perfil' : 'Registro' }}</h2>  <!-- Título dinámico -->
+    <h2>{{ editMode ? 'Modificar Perfil' : 'Registro' }}</h2> <!-- Título dinámico -->
 
     <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
 
@@ -24,10 +24,10 @@
         <input matInput formControlName="last_name2">
       </mat-form-field>
 
-      <!-- Campo Email con validación de formato -->
+      <!-- Campo Email con validación de formato y solo lectura en modo edición -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" required>
+        <input matInput formControlName="email" required [readonly]="editMode">
         <mat-error *ngIf="f['email'].errors?.['required']">Email es requerido</mat-error>
         <mat-error *ngIf="f['email'].errors?.['email']">Formato de email inválido</mat-error>
       </mat-form-field>
@@ -62,18 +62,24 @@
         <mat-error *ngIf="f['postal_code'].errors?.['pattern']">Debe contener 5 dígitos</mat-error>
       </mat-form-field>
 
-      <!-- Contraseña con validación de longitud mínima -->
-      <mat-form-field appearance="outline" class="full-width">
+      <!-- Campo Contraseña (solo visible si no está en modo edición) -->
+      <mat-form-field *ngIf="!editMode" appearance="outline" class="full-width">
         <mat-label>Contraseña</mat-label>
-        <input matInput type="password" formControlName="password" required>
+        <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" required>
+        <button mat-icon-button matSuffix (click)="toggleShowPassword()" type="button">
+          <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         <mat-error *ngIf="f['password'].errors?.['required']">Contraseña es requerida</mat-error>
         <mat-error *ngIf="f['password'].errors?.['minlength']">Debe tener al menos 6 caracteres</mat-error>
       </mat-form-field>
 
-      <!-- Confirmación de contraseña con validación personalizada -->
-      <mat-form-field appearance="outline" class="full-width">
+      <!-- Campo Confirmación de Contraseña (solo visible si no está en modo edición) -->
+      <mat-form-field *ngIf="!editMode" appearance="outline" class="full-width">
         <mat-label>Confirmar Contraseña</mat-label>
-        <input matInput type="password" formControlName="password2" required>
+        <input matInput [type]="showPassword2 ? 'text' : 'password'" formControlName="password2" required>
+        <button mat-icon-button matSuffix (click)="toggleShowPassword2()" type="button">
+          <mat-icon>{{ showPassword2 ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         <mat-error *ngIf="f['password2'].errors?.['required']">Confirmar contraseña es requerida</mat-error>
         <mat-error *ngIf="f['password2'].errors?.['mustMatch']">Las contraseñas no coinciden</mat-error>
       </mat-form-field>
@@ -87,7 +93,7 @@
 
       <div class="form-actions">
         <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
-          {{ editMode ? 'Actualizar' : 'Registrar' }}  <!-- Botón dinámico -->
+          {{ editMode ? 'Actualizar' : 'Registrar' }} <!-- Botón dinámico -->
         </button>
         <button mat-raised-button color="warn" type="reset">Cancelar</button>
       </div>
