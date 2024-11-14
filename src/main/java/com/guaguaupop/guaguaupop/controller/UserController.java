@@ -189,6 +189,23 @@ public class UserController {
         }
         return ResponseEntity.ok(users); // Devuelve 200 con la lista de usuarios
     }
+
+    // BLOQUEAR USUARIO
+    /*@PostMapping("/block/{id}")
+    public ResponseEntity<?> blockUser(@PathVariable Long id,
+        @RequestParam int durationMinutes) {
+
+        try { userService.blockUser(id, durationMinutes);
+        return ResponseEntity.ok("User blocked successfully for " +
+        durationMinutes + " minutes");
+        } catch (Exception e) {
+        return ResponseEntity.status(500).body("Error blocking user: " + e.getMessage());
+        }
+    }*/
+
+
+
+
 }
 
 

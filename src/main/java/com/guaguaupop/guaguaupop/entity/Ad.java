@@ -55,7 +55,7 @@ public class Ad implements Serializable {
     private Set<TypeAd> typeAd;
 
     @ManyToOne
-    @JoinColumn(name = "idUser", referencedColumnName = "idUser")
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     private User user;
 
     public static class AdBuilder{

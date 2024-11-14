@@ -27,7 +27,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
+    @Column(name = "id_user", nullable = false, updatable = false)
     private Long idUser;
 
     @Column(name = "username", unique = true, nullable = false)
@@ -89,6 +89,9 @@ public class User implements UserDetails {
             return this;
         }
     }
+
+    /*@Column(name = "unblock_time")
+    private LocalDateTime unblockTime;*/
 
     @CreatedDate
     private LocalDateTime localDateTime;
