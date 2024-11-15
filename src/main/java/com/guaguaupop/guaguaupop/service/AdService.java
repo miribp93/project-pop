@@ -1,11 +1,13 @@
 package com.guaguaupop.guaguaupop.service;
 
 import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
+import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.User;
 import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
 import com.guaguaupop.guaguaupop.repository.AdRepository;
 import com.guaguaupop.guaguaupop.repository.UserRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -25,13 +28,10 @@ public class AdService {
     private final UserRepository userRepository;
 
     // Definición de las categorías disponibles
+    @Getter
     private final Set<String> categories = Set.of(
             "Perros", "Gatos", "Aves", "Reptiles", "Conejos / Cobayas", "Animales Exóticos", "Otros Animales"
     );
-
-    public Set<String> getCategories() {
-        return categories;
-    }
 
 
     // CREAR ANUNCIO
@@ -82,14 +82,28 @@ public class AdService {
     }*/
 
     // OBTENER ANUNCIOS POR FILTRADO DE CATEGORIA
-    public List<Ad> getAdsByCategory(String category) {
-        return adRepository.findByCategory(category);
+    public List<GetAdSimpleDTO> getAdsByCategory(String category) {
+        List<Ad> ads = adRepository.findByCategory(category);
+        return ads.stream()
+                .map(this::toGetAdSimpleDTO)
+                .collect(Collectors.toList());
     }
 
     // OBTENER TODOS LOS ANUNCIOS
-    public List<Ad> getAllAds() {
-        return adRepository.findAll();
+    public List<GetAdSimpleDTO> getAllAds() {
+        List<Ad> ads = adRepository.findAll();
+        return ads.stream()
+                .map(this::toGetAdSimpleDTO)
+                .collect(Collectors.toList());
     }
+        //Convertir Ad a AdSimpleDTO
+        private GetAdSimpleDTO toGetAdSimpleDTO(Ad ad){
+            return GetAdSimpleDTO.builder()
+                    .title(ad.getTitle())
+                    .photos(ad.getFirstPhoto())
+                    .price(ad.getPrice())
+                    .build();
+        }
 }
 
 

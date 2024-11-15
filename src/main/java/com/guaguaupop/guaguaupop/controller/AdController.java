@@ -2,6 +2,7 @@ package com.guaguaupop.guaguaupop.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
+import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.service.AdService;
 import com.guaguaupop.guaguaupop.service.CustomUserDetails;
@@ -43,15 +44,16 @@ public class AdController {
 
     // VER ANUNCIOS FILTRADOS
     @GetMapping("/category/{category}")
-    public ResponseEntity<List<Ad>> getAdsByCategory(
+    public ResponseEntity<List<GetAdSimpleDTO>> getAdsByCategory(
             @PathVariable String category) {
-        List<Ad> ads = adService.getAdsByCategory(category);
+        List<GetAdSimpleDTO> ads = adService.getAdsByCategory(category);
         return ResponseEntity.ok(ads);
     }
 
     // VER TODOS LOS ANUNCIOS
-    @GetMapping("/all") public ResponseEntity<List<Ad>> getAllAds() {
-        List<Ad> ads = adService.getAllAds();
+    @GetMapping("/all")
+    public ResponseEntity<List<GetAdSimpleDTO>> getAllAds() {
+        List<GetAdSimpleDTO> ads = adService.getAllAds();
         return ResponseEntity.ok(ads);
     }
 

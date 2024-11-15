@@ -3,8 +3,7 @@ package com.guaguaupop.guaguaupop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +39,7 @@ public class Ad implements Serializable {
 
     @ElementCollection
     @Column(name = "photos", columnDefinition = "BYTEA")
-    private List<byte[]> photos = new ArrayList<>();
+    private List<byte[]> photos;
 
     @Column(nullable = false)
     private int duration;
@@ -65,6 +64,14 @@ public class Ad implements Serializable {
             this.typeAds = typeAds;
             return this;
         }
+    }
+
+    public List<byte[]> getFirstPhoto(){
+
+        if (photos != null && !photos.isEmpty()){
+            return Collections.singletonList(photos.getFirst());
+        }
+        return Collections.singletonList(new byte[0]);
     }
 
     @Override public String toString() {

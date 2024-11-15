@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -39,5 +40,5 @@ public class CreateAdDTO {
     @NotNull(message = "Señale uno")
     private TypeAd typeAd;
 
-    private byte[] photos;
+    private List<byte[]> photos;
 }
