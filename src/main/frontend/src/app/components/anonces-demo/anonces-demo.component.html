@@ -1,0 +1,22 @@
+<h3 class="text-center mt-3">Demo Prueba Anuncios</h3>
+
+
+<mat-divider></mat-divider>
+
+<div class="container">
+  <div *ngFor="let ad of ads" class="user-details">
+    <p>{{ ad.title }} - {{ ad.description }} - - {{ ad.city }} - {{ ad.price }}</p>
+
+    <!-- Contenedor de los botones alineados a la derecha -->
+    <!-- <div class="user-actions">
+      <button mat-stroked-button color="primary" (click)="toggleBlockUser(user)">
+        {{ user.isBlocked ? 'Desbloquear' : 'Bloquear' }}
+      </button>
+      <button mat-stroked-button color="warn" (click)="deleteUser(user.id_user)">
+        Eliminar Usuario
+      </button>
+    </div> -->
+  </div>
+</div>
+
+

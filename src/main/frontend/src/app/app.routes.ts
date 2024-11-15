@@ -12,25 +12,30 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
 import { AdminDashboardComponent } from './users/admin-dashboard/admin-dashboard.component';
 import { ResetPasswordComponent } from './auth/reset-password/resetPassword.component';
 import { ForgotPasswordComponent } from './auth/forgotPassword/forgotPassword.component';
+import { AnoncesDemoComponent } from './components/anonces-demo/anonces-demo.component';
+import { UserAnoncesComponent } from './users/user-anonces/user-anonces.component';
 
- export const routes: Routes = [   {
-     path: '',
-     component: LayoutComponent,
-     children: [
-       { path: '', component: HomeComponent },     //pagina principal
-       { path: 'home', redirectTo: '', pathMatch: 'full' },  // Redirigir '/home' a la página principal
-       { path:'product/:id', component: productComponent},
-       { path: 'anonces/:categoria', component: AnoncesListComponent },
-       { path: 'about', component: AboutComponent },
-       { path: 'contacto', component: ContactComponent },
-       { path: 'login', component: LoginComponent },
-       { path: 'register', component: RegisterComponent },
-       { path: 'reset-password', component:ResetPasswordComponent},
-       { path: 'pay', component: PayComponent },
-       { path: 'profile', component: UserProfileComponent},
-       { path: 'admin', component: AdminDashboardComponent},
-       { path: 'forgotpass', component: ForgotPasswordComponent},
-            ]
-   },
+export const routes: Routes = [
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: '', component: HomeComponent }, //pagina principal
+      { path: 'home', redirectTo: '', pathMatch: 'full' }, // Redirigir '/home' a la página principal
+      { path: 'product/:id', component: productComponent },
+      { path: 'anonces/:categoria', component: AnoncesListComponent },
+      { path: 'about', component: AboutComponent },
+      { path: 'contacto', component: ContactComponent },
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
+      { path: 'reset-password', component: ResetPasswordComponent },
+      { path: 'pay', component: PayComponent },
+      { path: 'profile', component: UserProfileComponent },
+      { path: 'admin', component: AdminDashboardComponent },
+      { path: 'forgotpass', component: ForgotPasswordComponent },
 
- ];
+      { path: 'anoncesDemo', component: AnoncesDemoComponent }, //pagina demo para probar traer anuncios
+      { path: 'usercreateads', component: UserAnoncesComponent },
+    ],
+  },
+];

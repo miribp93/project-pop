@@ -3,6 +3,7 @@ import { User } from '../../interfaces/user.interface';
 import { AuthService } from '../../services/auth.service';
 import { MATERIAL_MODULES } from '../../material/material/material.component';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -17,9 +18,8 @@ import { CommonModule } from '@angular/common';
 export class AdminDashboardComponent implements OnInit {
   users?: User[];
   public totalLength = 0;
-  router: any;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private router: Router) {}
 
   ngOnInit(): void {
 
@@ -27,8 +27,8 @@ export class AdminDashboardComponent implements OnInit {
     this.authService.findAll().subscribe(
       (user) => {
         console.log('Datos recibidos:', user);
-        this.users = user;
-        this.totalLength = this.users.length;
+        this.users = user || [];
+        //this.totalLength = this.users.length;
       },
       (error) => console.error('Error en la carga de datos:', error)
     );

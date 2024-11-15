@@ -119,8 +119,13 @@ export class UserProfileComponent implements OnInit {
     this.isFileSelected = !this.isFileSelected;
   }
 
-  modificarAnuncio(anuncioId: number): void {
-    console.log(`Modificar anuncio ${anuncioId}`);
+  adAnonces(){
+    this.router.navigate(['/usercreateads']);
+  }
+
+  modificarAnuncio(id_ad: number): void {
+    this.router.navigate(['/usercreateads'], { queryParams: { editMode: true } });
+    console.log(`Modificar anuncio ${id_ad}`);
   }
 
   eliminarAnuncio(anuncioId: number): void {

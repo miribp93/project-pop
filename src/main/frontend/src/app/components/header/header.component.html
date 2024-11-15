@@ -1,5 +1,6 @@
 <mat-toolbar color="primary" class="top-bar">
   <img src="chango.webp" alt="Chango" class="logo" routerLink="/" />
+
   <span class="spacer"></span>
 
   <!-- Botones de usuario (Login, Registro, Perfil, etc.) -->
@@ -23,6 +24,11 @@
     <button *ngIf="isAuthenticated && userRole !== 'MANAGER'" mat-menu-item routerLink="profile">Mi Perfil</button>
     <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mat-menu-item routerLink="admin">Administrador</button>
     <button *ngIf="isAuthenticated" mat-menu-item (click)="logout()">LogOut</button>
+
+    <button  mat-menu-item routerLink="anoncesDemo">AnoncesDemo</button>
+
+
+
     <button mat-menu-item routerLink="/anonces/producto">Productos</button>
     <button mat-menu-item routerLink="/anonces/servicio">Servicios</button>
     <button mat-menu-item routerLink="/about">Acerca de nosotros</button>

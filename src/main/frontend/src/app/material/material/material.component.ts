@@ -28,7 +28,8 @@ export const MATERIAL_MODULES = [
   MatGridListModule,
   MatProgressSpinnerModule,
   MatSelectModule,
-  MatSidenavModule
+  MatSidenavModule,
+
 ];
 
 export class MaterialComponent {}
