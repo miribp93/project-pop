@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
 import com.guaguaupop.guaguaupop.entity.Ad;
+import com.guaguaupop.guaguaupop.entity.TypeAd;
 import com.guaguaupop.guaguaupop.service.AdService;
 import com.guaguaupop.guaguaupop.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -56,5 +57,16 @@ public class AdController {
         List<GetAdSimpleDTO> ads = adService.getAllAds();
         return ResponseEntity.ok(ads);
     }
+
+    // VER ANUNCIO POR TYPE_AD : PRODUCT / SERVICE
+    @GetMapping("/type/{typeAd}")
+    public ResponseEntity<List<GetAdSimpleDTO>>getAdsByTypeAd(
+            @PathVariable TypeAd typeAd){
+        List<GetAdSimpleDTO> ads = adService.getAllByTypeAd(typeAd);
+        return ResponseEntity.ok(ads);
+    }
+
+
+
 
 }

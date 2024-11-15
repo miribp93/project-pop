@@ -3,6 +3,7 @@ package com.guaguaupop.guaguaupop.service;
 import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
 import com.guaguaupop.guaguaupop.entity.Ad;
+import com.guaguaupop.guaguaupop.entity.TypeAd;
 import com.guaguaupop.guaguaupop.entity.User;
 import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
 import com.guaguaupop.guaguaupop.repository.AdRepository;
@@ -60,27 +61,6 @@ public class AdService {
         return savedAd;
     }
 
-    /*//SUBIR FOTOS DEL ANUNCIO
-    public void uploadAdPhotos(Long adId, MultipartFile[] files) throws IOException {
-
-        Ad ad = adRepository.findById(adId)
-                .orElseThrow(AdNotExistsException::new);
-
-        List<byte[]> photos = new ArrayList<>();
-        for (MultipartFile file : files) {
-            photos.add(file.getBytes());
-        }
-        ad.setPhotos(photos.toArray(new byte[0][])); // BLOB array
-        adRepository.save(ad);
-    }
-
-    // GET FOTOS DE ANUNCIO
-    public List<byte[]> getAdPhotos(Long adId) {
-    Ad ad = adRepository.findById(adId) .orElseThrow(()
-            -> new AdNotExistsException("El anuncio no existe"));
-    return ad.getPhotos();
-    }*/
-
     // OBTENER ANUNCIOS POR FILTRADO DE CATEGORIA
     public List<GetAdSimpleDTO> getAdsByCategory(String category) {
         List<Ad> ads = adRepository.findByCategory(category);
@@ -96,7 +76,7 @@ public class AdService {
                 .map(this::toGetAdSimpleDTO)
                 .collect(Collectors.toList());
     }
-        //Convertir Ad a AdSimpleDTO
+    //Convertir Ad a AdSimpleDTO
         private GetAdSimpleDTO toGetAdSimpleDTO(Ad ad){
             return GetAdSimpleDTO.builder()
                     .title(ad.getTitle())
@@ -104,6 +84,17 @@ public class AdService {
                     .price(ad.getPrice())
                     .build();
         }
+
+    // OBTENER TODOS LOS PRODUCTOS
+
+    public List<GetAdSimpleDTO> getAllByTypeAd(TypeAd typeAd){
+        List<Ad> ads = adRepository.findByTypeAd(typeAd);
+        return ads.stream()
+                .map(this::toGetAdSimpleDTO)
+                .collect(Collectors.toList());
+    }
+
+    // OBTENER TODOS LOS SERVICIOS
 }
 
 

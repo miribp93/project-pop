@@ -49,8 +49,8 @@ public class Ad implements Serializable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "AdTypes", joinColumns = @JoinColumn(name = "idAd"))
-    @Column(name = "typeAd")
+    @CollectionTable(name = "ad_types", joinColumns = @JoinColumn(name = "id_ad"))
+    @Column(name = "type_ad")
     private Set<TypeAd> typeAd;
 
     @ManyToOne
