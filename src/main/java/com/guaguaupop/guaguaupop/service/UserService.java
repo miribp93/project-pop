@@ -142,7 +142,6 @@ public class UserService extends BaseService<User, Long, UserRepository> {
     }
 
     public User newUser(User newUser) {
-
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         return userRepository.save(newUser);
     }
@@ -150,12 +149,10 @@ public class UserService extends BaseService<User, Long, UserRepository> {
     // ADMINISTRATOR: BORRAR POR ID UN USUARIO NO LOGUEADO
     @Override
     public void deleteById(Long id) {
-
         userRepository.deleteById(id);
     }
 
     public Optional<User> getUser(Long id) {
-
         return userRepository.findById(id);
     }
 
@@ -222,13 +219,13 @@ public class UserService extends BaseService<User, Long, UserRepository> {
         Optional<User> optionalUser = Optional.ofNullable(userRepository.findByEmail(email));
 
         if (optionalUser.isPresent()) {
-            User user = optionalUser.get(); // Obtener el usuario
+            User user = optionalUser.get();
             String hashedPassword = passwordEncoder.encode(newPassword); // Asegúrate de codificar la nueva contraseña
-            user.setPassword(hashedPassword); // Actualiza la contraseña del usuario
-            userRepository.save(user); // Guarda los cambios
-            return true; // La actualización fue exitosa
+            user.setPassword(hashedPassword);
+            userRepository.save(user);
+            return true;
         } else {
-            return false; // El usuario no se encontró con el email proporcionado
+            return false;
         }
     }
 

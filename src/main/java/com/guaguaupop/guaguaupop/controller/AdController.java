@@ -2,6 +2,7 @@ package com.guaguaupop.guaguaupop.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
+import com.guaguaupop.guaguaupop.dto.ad.GetAdCompleteDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
@@ -9,7 +10,9 @@ import com.guaguaupop.guaguaupop.service.AdService;
 import com.guaguaupop.guaguaupop.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,13 +61,45 @@ public class AdController {
         return ResponseEntity.ok(ads);
     }
 
-    // VER ANUNCIO POR TYPE_AD : PRODUCT / SERVICE
+    // FILTRAR ANUNCIOS POR TYPE_AD : PRODUCT / SERVICE
     @GetMapping("/type/{typeAd}")
     public ResponseEntity<List<GetAdSimpleDTO>>getAdsByTypeAd(
             @PathVariable TypeAd typeAd){
         List<GetAdSimpleDTO> ads = adService.getAllByTypeAd(typeAd);
         return ResponseEntity.ok(ads);
     }
+
+    // FILTRAR ANUNCIOS POR TYPE_AD y CATEGORIA
+    @GetMapping("/type/{typeAd}/category/{category}")
+    public ResponseEntity<List<GetAdSimpleDTO>> getAdsByTypeAdAndCategory(
+            @PathVariable TypeAd typeAd,
+            @PathVariable String category) {
+        List<GetAdSimpleDTO> ads = adService.getAllByTypeAdAndCategory(typeAd, category);
+        return ResponseEntity.ok(ads);
+    }
+
+    // VER ANUNCIO COMPLETO
+    @GetMapping("/complete/{idAd}")
+    public ResponseEntity<GetAdCompleteDTO> getAdComplete(
+            @PathVariable Long idAd,
+            @AuthenticationPrincipal CustomUserDetails userDetails){
+
+        if (userDetails == null){
+            return ResponseEntity.status(401).build();
+        }
+        GetAdCompleteDTO ad = adService.getAdComplete(idAd);
+        return ResponseEntity.ok(ad);
+    }
+
+    // BORRAR ANUNCIO
+    @PreAuthorize("hasRole('ADMINISTRATOR') or hasRole('MANAGER')")
+    @DeleteMapping("/delete/{idAd}")
+    public ResponseEntity<?> deleteById(@PathVariable Long idAd) {
+
+        adService.deleteById(idAd);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 

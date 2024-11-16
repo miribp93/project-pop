@@ -1,6 +1,7 @@
 package com.guaguaupop.guaguaupop.service;
 
 import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
+import com.guaguaupop.guaguaupop.dto.ad.GetAdCompleteDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
@@ -33,7 +34,6 @@ public class AdService {
     private final Set<String> categories = Set.of(
             "Perros", "Gatos", "Aves", "Reptiles", "Conejos / Cobayas", "Animales Exóticos", "Otros Animales"
     );
-
 
     // CREAR ANUNCIO
     public Ad createAd(CreateAdDTO createAdDTO, MultipartFile[] files, Long idUser) throws IOException {
@@ -79,14 +79,14 @@ public class AdService {
     //Convertir Ad a AdSimpleDTO
         private GetAdSimpleDTO toGetAdSimpleDTO(Ad ad){
             return GetAdSimpleDTO.builder()
+                    .idAd(ad.getIdAd())
                     .title(ad.getTitle())
                     .photos(ad.getFirstPhoto())
                     .price(ad.getPrice())
                     .build();
         }
 
-    // OBTENER TODOS LOS PRODUCTOS
-
+    // OBTENER TODOS LOS ANUNCIOS POR TIPO DE ANUNCIO : PRODUCT / SERVICE
     public List<GetAdSimpleDTO> getAllByTypeAd(TypeAd typeAd){
         List<Ad> ads = adRepository.findByTypeAd(typeAd);
         return ads.stream()
@@ -94,7 +94,40 @@ public class AdService {
                 .collect(Collectors.toList());
     }
 
-    // OBTENER TODOS LOS SERVICIOS
+    // OBTENER TODOS LOS ANUNCIOS POR TIPO Y CATEGORIA
+    public List<GetAdSimpleDTO> getAllByTypeAdAndCategory(TypeAd typeAd, String category) {
+        List<Ad> ads = adRepository.findByTypeAdAndCategory(typeAd, category);
+        return ads.stream()
+                .map(this::toGetAdSimpleDTO)
+                .collect(Collectors.toList());
+    }
+
+
+    // OBTENER DATOS COMPLETOS ANUNCIO
+    public GetAdCompleteDTO getAdComplete(Long idAd){
+        Ad ad = adRepository.findById(idAd).orElseThrow(()->new RuntimeException("No se puede abrir el anuncio"));
+        return GetAdCompleteDTO.builder()
+                .idAd(ad.getIdAd())
+                .title(ad.getTitle())
+                .duration(ad.getDuration())
+                .description(ad.getDescription())
+                .condition(ad.getCondition())
+                .price(ad.getPrice())
+                .typeAd(ad.getTypeAd())
+                .photos(ad.getPhotos())
+                .category(ad.getCategory())
+                .city(ad.getCity())
+                .build();
+    }
+
+    // BORRAR ANUNCIO POR ID
+    public void deleteById(Long idAd){
+        adRepository.deleteById(idAd);
+    }
+
+
+
+
 }
 
 

@@ -1,5 +1,6 @@
 package com.guaguaupop.guaguaupop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -61,12 +62,12 @@ public class User implements UserDetails {
     @Pattern(regexp = "\\d{5}", message = "El código postal debe tener 5 dígitos")
     private String postalCode;
 
-
     @Column(name = "profile_photo", columnDefinition = "BYTEA")
     private byte[] profilePhoto;
 
     @OneToMany(mappedBy = "user")
-    private List<Ad> services;
+    @JsonIgnore
+    private List<Ad> ads;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
@@ -130,10 +131,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "receiver")
     private List<Message> messagesReceived;
+    */
 
-    @OneToMany(mappedBy = "user")
-    private List<Ad> products;
-*/
+
 
     @Override public String toString() {
         return "User{" + "idUser=" + idUser + ", " +
