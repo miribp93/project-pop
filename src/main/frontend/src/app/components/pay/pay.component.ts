@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { MATERIAL_MODULES } from '../material/material.component';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-pago',
+  selector: 'app-pay',
   standalone: true,
   imports: [
     MATERIAL_MODULES,

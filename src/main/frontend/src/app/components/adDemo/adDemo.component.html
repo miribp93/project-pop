@@ -1,0 +1,22 @@
+<h3 class="text-center mt-3">Demo Prueba Anuncios</h3>
+
+<mat-divider></mat-divider>
+<div class="container">
+  <mat-card *ngFor="let ad of ads" class="ad-card mt-3 p-3">
+    <mat-card-content><strong>Nombre: </strong>{{ ad.title }}</mat-card-content>
+    <mat-card-content><strong>Precio: </strong>{{ ad.price | currency:'EUR':'symbol' }}</mat-card-content>
+    <mat-card-content><strong>Descripcion: </strong>{{ ad.description }}</mat-card-content>
+    <mat-card-content><strong>Categoria: </strong>{{ ad.category }}</mat-card-content>
+
+    <!-- Mostrar la foto -->
+    <div *ngIf="ad.photos">
+      <p><strong>Foto:</strong></p>
+      <img *ngFor="let photo of ad.photos" [src]="getImageUrl(photo.photos)" alt="Foto del anuncio" />
+    </div>
+
+    <!-- Botón para eliminar anuncio -->
+    <button mat-stroked-button color="warn" (click)="deleteAnonce(ad.id_ad)" class="buttons">
+      Eliminar Anuncio
+    </button>
+  </mat-card>
+</div>

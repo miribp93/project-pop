@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 

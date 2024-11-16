@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

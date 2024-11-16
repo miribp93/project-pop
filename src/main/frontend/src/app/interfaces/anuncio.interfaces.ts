@@ -18,6 +18,18 @@ export interface Ad {
   price: number;
   title: string;
   id_user: number;
+  photos?: Ad_photo[];  // Propiedad opcional para fotos
+  type?: Ad_type;
+}
+
+export interface Ad_photo{
+  ad_id_ad: number;
+  photos: string;
+}
+
+export interface Ad_type{
+  id_ad: number;
+  type_ad: ImageBitmap;
 }
 
 export enum TipoAnuncio {

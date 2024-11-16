@@ -6,26 +6,26 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { DataService } from '../../services/data.service';
+import { AdService } from '../../services/ad.service';
 import { Ad } from '../../interfaces/anuncio.interfaces';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-user-anonces',
+  selector: 'app-userAd',
   standalone: true,
   imports: [MATERIAL_MODULES, CommonModule, ReactiveFormsModule,],
-  templateUrl: './user-anonces.component.html',
-  styleUrl: './user-anonces.component.css',
+  templateUrl: './userAd.component.html',
+  styleUrl: './userAd.component.css',
 })
-export class UserAnoncesComponent {
+export class UserAdComponent {
   adForm!: FormGroup;
   //categories: string[] = ['Perro', 'Gato', 'Aves', 'Animales Exoticos']; // Ejemplo de categorías
   selectedFiles: File[] = [];
   editMode: boolean= false; // Cambia según el modo en el que estés , lo uso al igual que el formulario de registro , me redirige aqui si quiero modificar los datos del producto
 
-  constructor(private fb: FormBuilder, private dataService: DataService, private router: Router) {}
+  constructor(private fb: FormBuilder, private dataService: AdService, private router: Router) {}
 
   ngOnInit() {
     this.adForm = this.fb.group({

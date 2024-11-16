@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataService } from '../../services/data.service';
+import { AdService } from '../../services/ad.service';
 import { CommonModule } from '@angular/common';
 import { Anuncio } from '../../interfaces/anuncio.interfaces';
 import { CardComponent } from '../../components/card/card.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { MATERIAL_MODULES } from '../../components/material/material.component';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +16,7 @@ import { MATERIAL_MODULES } from '../../material/material/material.component';
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [DataService],
+  providers: [AdService],
 })
 export class HomeComponent implements OnInit {
   public prod: Anuncio[] = []; // Lista completa de productos
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined; // Referencia al paginator
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: AdService) {}
 
   ngOnInit(): void {
     // Cargar los anuncios desde el servicio

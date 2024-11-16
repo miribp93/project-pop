@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { DataService } from '../../services/data.service';
+import { AdService } from '../../services/ad.service';
 import { Anuncio } from '../../interfaces/anuncio.interfaces';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../components/card/card.component';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { MATERIAL_MODULES } from '../../components/material/material.component';
 
 @Component({
-  selector: 'app-anonces-list',
-  templateUrl: './anonces-list.component.html',
-  styleUrls: ['./anonces-list.component.css'],
+  selector: 'app-adFilter',
+  templateUrl: './adFilter.component.html',
+  styleUrls: ['./adFilter.component.css'],
   standalone: true,
   imports: [
     RouterModule,
@@ -20,9 +20,9 @@ import { MATERIAL_MODULES } from '../../material/material/material.component';
     MATERIAL_MODULES
 
   ],
-  providers: [DataService],
+  providers: [AdService],
 })
-export class AnoncesListComponent implements OnInit {
+export class AdFilterComponent implements OnInit {
   public anuncios: Anuncio[] = [];  // Lista completa de anuncios
   public paginaAnuncios: Anuncio[] = [];  // Lista de anuncios paginados
   public categoria!: string;
@@ -37,7 +37,7 @@ export class AnoncesListComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private dataService: DataService
+    private dataService: AdService
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +90,9 @@ export class AnoncesListComponent implements OnInit {
       console.log('Anuncio obtenido por ID:', this.anuncioPorId);
     });
   }
+
+
+
 
   // Configura los anuncios que se mostrarán en la página actual
   setPaginatedAnuncios() {

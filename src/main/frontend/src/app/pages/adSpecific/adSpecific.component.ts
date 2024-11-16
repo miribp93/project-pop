@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Anuncio } from '../../interfaces/anuncio.interfaces';
-import { DataService } from '../../services/data.service';
+import { AdService } from '../../services/ad.service';
 import { AuthService } from '../../services/auth.service';
 import { switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { MATERIAL_MODULES } from '../../components/material/material.component';
 
 @Component({
-  selector: 'app-anonces',
+  selector: 'app-adSpecific',
   standalone: true,
   imports: [
     CommonModule,
     MATERIAL_MODULES
   ],
-  templateUrl: './product.component.html',
-  styleUrl: './product.component.css',
-  providers: [DataService],
+  templateUrl: './adSpecific.component.html',
+  styleUrl: './adSpecific.component.css',
+  providers: [AdService],
 })
-export class productComponent implements OnInit {
+export class AdSpecificComponent implements OnInit {
   public anun?: Anuncio;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dataService: DataService,
+    private dataService: AdService,
     private authService: AuthService // Inyectamos AuthService
   ) {}
 

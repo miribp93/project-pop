@@ -1,12 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Ad, Anuncio } from '../../interfaces/anuncio.interfaces';
-
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { MATERIAL_MODULES } from '../material/material.component';
 
  @Component({
-   selector: 'productos-prod-card',
+   selector: 'app-card',
    templateUrl: './card.component.html',
    standalone: true,
    imports: [
@@ -17,7 +16,9 @@ import { MATERIAL_MODULES } from '../../material/material/material.component';
    styleUrl: './card.component.css',
  })
  export class CardComponent implements OnInit {
-   @Input()   public prod!: Anuncio;
+   @Input()
+
+   public prod!: Anuncio;
 
    ngOnInit(): void {
      if (!this.prod) {

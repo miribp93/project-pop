@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../interfaces/user.interface';
 import { AuthService } from '../../services/auth.service';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-admin-dashboard',
+  selector: 'app-adminDashboard',
   standalone: true,
   imports: [
     MATERIAL_MODULES,
     CommonModule
   ],
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css']
+  templateUrl: './adminDashboard.component.html',
+  styleUrls: ['./adminDashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
   users?: User[];

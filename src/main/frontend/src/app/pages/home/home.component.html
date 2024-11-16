@@ -10,7 +10,7 @@
 <!-- Contenedor flexbox para los productos -->
 <div class="flex-container">
   <div *ngFor="let producto of paginatedProd" class="producto-card">
-    <productos-prod-card [prod]="producto"></productos-prod-card>
+    <app-card [prod]="producto"></app-card>
   </div>
 </div>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { MATERIAL_MODULES } from '../material/material.component';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 

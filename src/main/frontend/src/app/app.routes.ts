@@ -3,17 +3,17 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { productComponent } from './pages/product/product.component';
-import { AnoncesListComponent } from './pages/anonces-list/anonces-list.component';
+import { AdSpecificComponent } from './pages/adSpecific/adSpecific.component';
+import { AdFilterComponent } from './pages/adFilter/adFilter.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { PayComponent } from './components/pay/pay.component';
-import { UserProfileComponent } from './users/user-profile/user-profile.component';
-import { AdminDashboardComponent } from './users/admin-dashboard/admin-dashboard.component';
+import { UserProfileComponent } from './users/userProfile/userProfile.component';
+import { AdminDashboardComponent } from './users/adminDashboard/adminDashboard.component';
 import { ResetPasswordComponent } from './auth/reset-password/resetPassword.component';
 import { ForgotPasswordComponent } from './auth/forgotPassword/forgotPassword.component';
-import { AnoncesDemoComponent } from './components/anonces-demo/anonces-demo.component';
-import { UserAnoncesComponent } from './users/user-anonces/user-anonces.component';
+import { AdDemoComponent } from './components/adDemo/adDemo.component';
+import { UserAdComponent } from './users/userAd/userAd.component';
 
 export const routes: Routes = [
   {
@@ -22,8 +22,8 @@ export const routes: Routes = [
     children: [
       { path: '', component: HomeComponent }, //pagina principal
       { path: 'home', redirectTo: '', pathMatch: 'full' }, // Redirigir '/home' a la página principal
-      { path: 'product/:id', component: productComponent },
-      { path: 'anonces/:categoria', component: AnoncesListComponent },
+      { path: 'product/:id', component: AdSpecificComponent },
+      { path: 'anonces/:categoria', component: AdFilterComponent },
       { path: 'about', component: AboutComponent },
       { path: 'contacto', component: ContactComponent },
       { path: 'login', component: LoginComponent },
@@ -33,9 +33,8 @@ export const routes: Routes = [
       { path: 'profile', component: UserProfileComponent },
       { path: 'admin', component: AdminDashboardComponent },
       { path: 'forgotpass', component: ForgotPasswordComponent },
-
-      { path: 'anoncesDemo', component: AnoncesDemoComponent }, //pagina demo para probar traer anuncios
-      { path: 'usercreateads', component: UserAnoncesComponent },
+      { path: 'addemo', component: AdDemoComponent }, //pagina demo para probar traer anuncios
+      { path: 'usercreateads', component: UserAdComponent },
     ],
   },
 ];

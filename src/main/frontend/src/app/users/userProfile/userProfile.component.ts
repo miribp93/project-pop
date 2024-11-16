@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { DataService } from '../../services/data.service';
+import { AdService } from '../../services/ad.service';
 import { User } from '../../interfaces/user.interface';
 import { CommonModule } from '@angular/common';
-import { MATERIAL_MODULES } from '../../material/material/material.component';
+import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-user-profile',
+  selector: 'app-userProfile',
   standalone: true,
   imports: [CommonModule, FormsModule, MATERIAL_MODULES],
-  providers: [DataService],
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css'],
+  providers: [AdService],
+  templateUrl: './userProfile.component.html',
+  styleUrls: ['./userProfile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
   usuario: User | null = null;
@@ -24,7 +24,7 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private dataService: DataService,
+    private dataService: AdService,
     private router: Router
   ) {}
 
