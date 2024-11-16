@@ -44,7 +44,8 @@ public class SecurityConfig {
                                 "/auth/reset-password",
                                 "/api/ad/all",
                                 "/api/ad/category/{category}",
-                                "/api/ad/type/{typeAd}"
+                                "/api/ad/type/{typeAd}",
+                                "/api/ad/type/{typeAd}/category/{category}"
                                                         ).permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))

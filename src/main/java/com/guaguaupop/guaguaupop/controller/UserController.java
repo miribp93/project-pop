@@ -63,7 +63,7 @@ public class UserController {
     // OBTENER DATOS DE USUARIO Y VISUALIZAR PERFIL
     @GetMapping("/profile")
     public ResponseEntity<GetUserDTOAdmin> me(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        // Verifica que userDetails no sea nulo
+
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
