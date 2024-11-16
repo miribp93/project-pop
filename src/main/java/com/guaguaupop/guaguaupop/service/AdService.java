@@ -127,6 +127,13 @@ public class AdService {
     }
 
     // USUARIO BORRA SU ANUNCIO
+    public void deleteAd(Long idAd, Long idUser){
+        Ad ad = adRepository.findById(idAd).orElseThrow(()->new RuntimeException("No se puede abrir el anuncio"));
+        if (!ad.getUser().getIdUser().equals(idUser)){
+            throw new RuntimeException("No tienes permiso para borrar el anuncio");
+        }
+        adRepository.delete(ad);
+    }
 
 
     // MIS ANUNCIOS --(usuario ve sus anuncios)

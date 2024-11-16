@@ -112,7 +112,14 @@ public class AdController {
         return ResponseEntity.ok(ads);
     }
 
-
+    // USUARIO BORRA UN ANUNCIO PROPIO
+    @DeleteMapping("/delete-my-ad/{idAd}")
+    public ResponseEntity<Void> deleteAd(
+            @PathVariable Long idAd,
+            @AuthenticationPrincipal CustomUserDetails userDetails){
+        adService.deleteAd(idAd, userDetails.getIdUser());
+        return ResponseEntity.ok().build();
+    }
 
 
 
