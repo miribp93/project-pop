@@ -11,7 +11,6 @@ import java.util.Set;
 @Data
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -72,19 +71,6 @@ public class Ad implements Serializable {
             return Collections.singletonList(photos.getFirst());
         }
         return Collections.singletonList(new byte[0]);
-    }
-
-    @Override public String toString() {
-        return "Ad{" + "idAd=" + idAd + ", " +
-                "title='" + title + '\'' + ", " +
-                "description='" + description + '\'' + ", " +
-                "price=" + price + ", " +
-                "category='" + category + '\'' + ", " +
-                "city='" + city + '\'' + ", " +
-                "duration=" + duration + ", " +
-                "condition='" + condition + '\'' + ", " +
-                "city='" + city + '\'' + ", " +
-                "user=" + (user != null ? user.getIdUser() : null) + '}';
     }
 
 }

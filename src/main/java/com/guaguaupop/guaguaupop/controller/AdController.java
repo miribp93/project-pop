@@ -100,6 +100,21 @@ public class AdController {
         return ResponseEntity.noContent().build();
     }
 
+    // MIS ANUNCIOS --(usuario ve sus anuncios)
+    @GetMapping("/myads")
+    public ResponseEntity<List<GetAdSimpleDTO>> getMyAds(
+            @AuthenticationPrincipal CustomUserDetails userDetails){
+        if (userDetails == null) {
+            return ResponseEntity.status(401).build();
+        }
+        Long idUser = userDetails.getIdUser();
+        List<GetAdSimpleDTO> ads = adService.getMyAds(idUser);
+        return ResponseEntity.ok(ads);
+    }
+
+
+
+
 
 
 

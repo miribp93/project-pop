@@ -35,6 +35,16 @@ public class AdService {
             "Perros", "Gatos", "Aves", "Reptiles", "Conejos / Cobayas", "Animales Exóticos", "Otros Animales"
     );
 
+    //Convertir Ad a AdSimpleDTO
+    private GetAdSimpleDTO toGetAdSimpleDTO(Ad ad){
+        return GetAdSimpleDTO.builder()
+                .idAd(ad.getIdAd())
+                .title(ad.getTitle())
+                .photos(ad.getFirstPhoto())
+                .price(ad.getPrice())
+                .build();
+    }
+
     // CREAR ANUNCIO
     public Ad createAd(CreateAdDTO createAdDTO, MultipartFile[] files, Long idUser) throws IOException {
         List<byte[]> photos = new ArrayList<>();
@@ -76,15 +86,6 @@ public class AdService {
                 .map(this::toGetAdSimpleDTO)
                 .collect(Collectors.toList());
     }
-    //Convertir Ad a AdSimpleDTO
-        private GetAdSimpleDTO toGetAdSimpleDTO(Ad ad){
-            return GetAdSimpleDTO.builder()
-                    .idAd(ad.getIdAd())
-                    .title(ad.getTitle())
-                    .photos(ad.getFirstPhoto())
-                    .price(ad.getPrice())
-                    .build();
-        }
 
     // OBTENER TODOS LOS ANUNCIOS POR TIPO DE ANUNCIO : PRODUCT / SERVICE
     public List<GetAdSimpleDTO> getAllByTypeAd(TypeAd typeAd){
@@ -123,6 +124,17 @@ public class AdService {
     // BORRAR ANUNCIO POR ID
     public void deleteById(Long idAd){
         adRepository.deleteById(idAd);
+    }
+
+    // USUARIO BORRA SU ANUNCIO
+
+
+    // MIS ANUNCIOS --(usuario ve sus anuncios)
+    public List<GetAdSimpleDTO> getMyAds(Long idUser){
+            List<Ad> ads = adRepository.findByUserIdUser(idUser);
+            return ads.stream()
+                    .map(this::toGetAdSimpleDTO)
+                    .collect(Collectors.toList());
     }
 
 

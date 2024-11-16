@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface AdRepository extends JpaRepository<Ad, Long> {
 
+    List<Ad> findByUserIdUser(Long idUser);
+
     List<Ad> findByCategory(String category);
 
     @Query("SELECT a FROM Ad a JOIN a.typeAd t WHERE t = :typeAd")

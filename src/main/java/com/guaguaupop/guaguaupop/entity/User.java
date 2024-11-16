@@ -135,10 +135,4 @@ public class User implements UserDetails {
 
 
 
-    @Override public String toString() {
-        return "User{" + "idUser=" + idUser + ", " +
-                "username='" + username + '\'' + '}';
-    }
-
-
 }
