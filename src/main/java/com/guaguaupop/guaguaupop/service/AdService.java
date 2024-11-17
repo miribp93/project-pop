@@ -3,6 +3,7 @@ package com.guaguaupop.guaguaupop.service;
 import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdCompleteDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
+import com.guaguaupop.guaguaupop.dto.ad.UpdateAdDTO;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
 import com.guaguaupop.guaguaupop.entity.User;
@@ -15,10 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -41,6 +39,22 @@ public class AdService {
                 .idAd(ad.getIdAd())
                 .title(ad.getTitle())
                 .photos(ad.getFirstPhoto())
+                .price(ad.getPrice())
+                .build();
+    }
+
+    //Convertir Ad a AdCompleteDTO
+    private GetAdCompleteDTO toGetAdCompleteDTO(Ad ad){
+        return GetAdCompleteDTO.builder()
+                .idAd(ad.getIdAd())
+                .title(ad.getTitle())
+                .condition(ad.getCondition())
+                .category(ad.getCategory())
+                .typeAd(ad.getTypeAd())
+                .description(ad.getDescription())
+                .city(ad.getCity())
+                .photos(ad.getPhotos())
+                .duration(ad.getDuration())
                 .price(ad.getPrice())
                 .build();
     }
@@ -121,7 +135,7 @@ public class AdService {
                 .build();
     }
 
-    // BORRAR ANUNCIO POR ID
+    // ADMIN: BORRAR ANUNCIO POR ID
     public void deleteById(Long idAd){
         adRepository.deleteById(idAd);
     }
@@ -135,13 +149,39 @@ public class AdService {
         adRepository.delete(ad);
     }
 
-
     // MIS ANUNCIOS --(usuario ve sus anuncios)
     public List<GetAdSimpleDTO> getMyAds(Long idUser){
             List<Ad> ads = adRepository.findByUserIdUser(idUser);
             return ads.stream()
                     .map(this::toGetAdSimpleDTO)
                     .collect(Collectors.toList());
+    }
+
+    // MODIFICAR MIS ANUNCIOS
+    public GetAdCompleteDTO updateAd(Long idAd, Long idUser, UpdateAdDTO updateAdDTO){
+        Ad ad = adRepository.findById(idAd)
+                .orElseThrow(() -> new RuntimeException("Anuncio no encontrado"));
+        if (!ad.getUser().getIdUser().equals(idUser)){
+            throw new RuntimeException("No tienes permiso para modificar el anuncio.");
+        }
+
+        updateAdDTO.getCategory().ifPresent(category->{
+            if(!categories.contains(category)){
+                throw new IllegalArgumentException("Categoría inválida");
+            }
+            ad.setCategory(category);
+        });
+        updateAdDTO.getDuration().ifPresent(ad::setDuration);
+        updateAdDTO.getDescription().ifPresent(ad::setDescription);
+        updateAdDTO.getCondition().ifPresent(ad::setCondition);
+        updateAdDTO.getTypeAd().ifPresent(ad::setTypeAd);
+        updateAdDTO.getPrice().ifPresent(ad::setPrice);
+        updateAdDTO.getTitle().ifPresent(ad::setTitle);
+        updateAdDTO.getCity().ifPresent(ad::setCity);
+        updateAdDTO.getPhotos().ifPresent(ad::setPhotos);
+
+        adRepository.save(ad);
+        return toGetAdCompleteDTO(ad);
     }
 
 

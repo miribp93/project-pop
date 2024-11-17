@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdCompleteDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
+import com.guaguaupop.guaguaupop.dto.ad.UpdateAdDTO;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
 import com.guaguaupop.guaguaupop.service.AdService;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.io.IOException;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -120,6 +124,50 @@ public class AdController {
         adService.deleteAd(idAd, userDetails.getIdUser());
         return ResponseEntity.ok().build();
     }
+
+    // ACTUALIZAR ANUNCIO
+    @PutMapping(value = "/update/{idAd}", consumes = "multipart/form-data")
+    public ResponseEntity<?> updateAd(
+            @PathVariable Long idAd,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestParam Optional<String> title,
+            @RequestParam Optional<String> description,
+            @RequestParam Optional<Double> price,
+            @RequestParam Optional<String> category,
+            @RequestParam Optional<String> city,
+            @RequestParam Optional<Integer> duration,
+            @RequestParam Optional<String> condition,
+            @RequestParam Optional<Set<TypeAd>> typeAd,
+            @RequestParam Optional<List<MultipartFile>> photos) {
+                if (userDetails == null) {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
+                }
+                try {
+                    UpdateAdDTO updatedAd = new UpdateAdDTO();
+                    updatedAd.setTitle(title);
+                    updatedAd.setDescription(description);
+                    updatedAd.setPrice(price);
+                    updatedAd.setCategory(category);
+                    updatedAd.setCity(city);
+                    updatedAd.setDuration(duration);
+                    updatedAd.setCondition(condition);
+                    updatedAd.setTypeAd(typeAd);
+                    List<byte[]> photoBytes = photos.map(files -> files.stream() .map(file -> {
+                        try {
+                            return file.getBytes();
+                        } catch (Exception e) {
+                            throw new RuntimeException("Error al procesar el archivo", e);
+                        }
+                    }) .collect(Collectors.toList())) .orElse(null);
+                    updatedAd.setPhotos(Optional.ofNullable(photoBytes));
+                    GetAdCompleteDTO ad = adService.updateAd(idAd, userDetails.getIdUser(), updatedAd);
+                    return ResponseEntity.ok(ad);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el anuncio: " + e.getMessage());
+                }
+    }
+
 
 
 
