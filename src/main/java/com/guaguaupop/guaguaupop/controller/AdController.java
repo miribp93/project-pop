@@ -46,10 +46,6 @@ public class AdController {
         }
     }
 
-    // MODIFICAR ANUNCIO
-
-    // BORRAR ANUNCIO
-
     // VER ANUNCIOS FILTRADOS
     @GetMapping("/category/{category}")
     public ResponseEntity<List<GetAdSimpleDTO>> getAdsByCategory(
@@ -167,11 +163,5 @@ public class AdController {
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el anuncio: " + e.getMessage());
                 }
     }
-
-
-
-
-
-
 
 }

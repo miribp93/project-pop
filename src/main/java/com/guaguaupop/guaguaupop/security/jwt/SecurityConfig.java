@@ -45,7 +45,8 @@ public class SecurityConfig {
                                 "/api/ad/all",
                                 "/api/ad/category/{category}",
                                 "/api/ad/type/{typeAd}",
-                                "/api/ad/type/{typeAd}/category/{category}"
+                                "/api/ad/type/{typeAd}/category/{category}",
+                                "/complete/{idAd}"
                                                         ).permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
