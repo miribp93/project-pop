@@ -104,19 +104,16 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-
         return UserDetails.super.isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-
-        return UserDetails.super.isAccountNonLocked();
+        return !userRoles.contains(UserRole.BLOCKED);
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-
         return UserDetails.super.isCredentialsNonExpired();
     }
 

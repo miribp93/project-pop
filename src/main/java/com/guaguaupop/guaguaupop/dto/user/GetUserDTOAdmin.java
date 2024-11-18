@@ -10,6 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 public class GetUserDTOAdmin {
 
+    @JsonProperty("id_user")
+    private Long idUser;
     private String username;
     private String name;
     @JsonProperty("last_name1")

@@ -31,12 +31,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final CustomUserDetailsService customUserDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         try {
             String token = getTokenFromRequest(request);
             if (StringUtils.hasText(token) && jwtTokenUtil.validateToken(token)) {
                 Long idUser = jwtTokenUtil.getUserIdFromJWT(token);
                 CustomUserDetails userDetails = (CustomUserDetails) customUserDetailsService.loadUserById(idUser);
+                if (userDetails.getAuthorities().stream() .anyMatch(grantedAuthority
+                        -> grantedAuthority.getAuthority().equals("ROLE_BLOCKED"))) {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "El usuario está bloqueado.");
+                    return;
+                }
+
                 UsernamePasswordAuthenticationToken authentication
                         = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetails(request));

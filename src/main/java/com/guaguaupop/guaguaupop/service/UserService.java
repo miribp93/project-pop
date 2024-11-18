@@ -1,8 +1,6 @@
 package com.guaguaupop.guaguaupop.service;
 
-import com.guaguaupop.guaguaupop.dto.user.CreateUserDTO;
-import com.guaguaupop.guaguaupop.dto.user.GetProfilePhotoDTO;
-import com.guaguaupop.guaguaupop.dto.user.UpdateUserDTO;
+import com.guaguaupop.guaguaupop.dto.user.*;
 import com.guaguaupop.guaguaupop.entity.*;
 import com.guaguaupop.guaguaupop.exception.EmailAlreadyExistsException;
 import com.guaguaupop.guaguaupop.exception.NewUserWithDifferentPasswordsException;
@@ -29,7 +27,7 @@ public class UserService extends BaseService<User, Long, UserRepository> {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MessageService messageService;
-    //private final JwtTokenUtil jwtTokenUtil;
+    private final UserDTOConverter userDTOConverter;
 
     // BUSCAR USUARIO POR USERNAME
     public Optional<User> findUserByUsername(String username) {
@@ -194,11 +192,13 @@ public class UserService extends BaseService<User, Long, UserRepository> {
                 .orElseThrow(UserNotExistsException::new);
         return new GetProfilePhotoDTO(user.getProfilePhoto());
     }
-
     // LISTAR TODOS LOS USUARIOS EN VISTA ADMIN
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<GetUserDTOAdmin> findAllUsers() {
+
+        return userRepository.findAll()
+                .stream()
+                .map(userDTOConverter::convertUserToGetUserDTOProfile)
+                .collect(Collectors.toList());
     }
 
     // OBTENER ROLE DE USUARIO
@@ -240,6 +240,26 @@ public class UserService extends BaseService<User, Long, UserRepository> {
     }
 
     // BLOQUEAR USUARIO
+    public void blockUser(Long idUser) {
+        User user = userRepository.findById(idUser).orElseThrow(UserNotExistsException::new);
+        //No se puede bloquear al admin o manager
+        if (user.getUserRoles().contains(UserRole.MANAGER) || user.getUserRoles().contains(UserRole.ADMINISTRATOR)) {
+            throw new IllegalArgumentException("No se puede bloquear este usuario.");
+        }
+        Set<UserRole> role = user.getUserRoles();
+        role.add(UserRole.BLOCKED);
+        userRepository.save(user);
+    }
+
+    // DESBLOQUEAR USUARIO
+    public void unblockUser(Long idUser){
+        User user = userRepository.findById(idUser).orElseThrow(UserNotExistsException::new);
+        Set<UserRole> role = user.getUserRoles();
+        role.remove(UserRole.BLOCKED);
+        user.setUserRoles(role);
+        userRepository.save(user);
+    }
+
     /*@Transactional
     public void blockUser(Long userId, int durationMinutes) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));        Set<UserRole> roles = user.getUserRoles();

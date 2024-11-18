@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Data
 public class UpdateUserDTO {
+
     private Optional<String> username = Optional.empty();
     private Optional<String> name = Optional.empty();
     @JsonProperty("last_name1")

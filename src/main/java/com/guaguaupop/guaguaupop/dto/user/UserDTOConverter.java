@@ -33,6 +33,7 @@ public class UserDTOConverter {
         }
 
         return GetUserDTOAdmin.builder()
+                .idUser(user.getIdUser())
                 .username(user.getUsername())
                 .name(user.getName())
                 .lastName1(user.getLastName1())

@@ -99,17 +99,21 @@ public class UserController {
 
     // EL ADMINISTRADOR ASIGNA ROLES A LOS USUARIOS
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATOR')")
-    @PostMapping("/{userId}/roles")
-    public ResponseEntity<Void> assignRoleToUser(@PathVariable Long userId, @RequestBody Map<String, String> request) {
+    @PostMapping("/{idUser}/roles")
+    public ResponseEntity<Void> assignRoleToUser(
+            @PathVariable Long idUser,
+            @RequestBody Map<String, String> request) {
         String roleName = request.get("role");
         UserRole role = UserRole.valueOf(roleName.toUpperCase());
-        userService.assignRoleToUser(userId, role);
+        userService.assignRoleToUser(idUser, role);
         return ResponseEntity.ok().build();
     }
 
     // ACTUALIZAR DATOS PERSONALES DEL USUARIO
     @PutMapping("/update")
-    public ResponseEntity<?> updateUser(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody UpdateUserDTO updateUserDTO) {
+    public ResponseEntity<?> updateUser(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody UpdateUserDTO updateUserDTO) {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
         }
@@ -131,8 +135,10 @@ public class UserController {
 
     // SUBIR LA FOTO DE PERFIL
     @PostMapping("/upload-profile-photo")
-    public ResponseEntity<?> uploadProfilePhoto(@AuthenticationPrincipal CustomUserDetails userDetails,
-                                                @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> uploadProfilePhoto(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestParam("file") MultipartFile file) {
+
         if (userDetails == null) {
 
             log.warn("Usuario no autenticado");
@@ -156,11 +162,14 @@ public class UserController {
 
     // GET FOTO DE PERFIL
     @GetMapping("/profile-photo")
-    public ResponseEntity<?> getProfilePhoto(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> getProfilePhoto(
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
         if (userDetails == null) {
             log.warn("Usuario no autenticado");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
         }
+
         try {
             log.info("Retrieving profile photo for user: {}", userDetails.getUsername());
             GetProfilePhotoDTO photoDTO = userService.getProfilePhoto(userDetails.getIdUser());
@@ -182,15 +191,51 @@ public class UserController {
     // LISTAR USUARIOS EN VISTA ADMIN
     @PreAuthorize("hasRole('ADMINISTRATOR') or hasRole('MANAGER')")
     @GetMapping("/all")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.findAll();
+    public ResponseEntity<List<GetUserDTOAdmin>> getAllUsers() {
+        List<GetUserDTOAdmin> users = userService.findAllUsers();
         if (users.isEmpty()) {
-            return ResponseEntity.noContent().build(); // Devuelve 204 si no hay usuarios
+            return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(users); // Devuelve 200 con la lista de usuarios
+        return ResponseEntity.ok(users);
     }
 
     // BLOQUEAR USUARIO
+    @PreAuthorize("hasRole('ADMINISTRATOR') or hasRole('MANAGER')")
+    @PutMapping("block/{idUser}")
+    public ResponseEntity<?> blockUser(
+            @PathVariable Long idUser) {
+
+        try{
+
+            userService.blockUser(idUser);
+            return ResponseEntity.ok("Usuario bloqueado.");
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se puede bloquear a este usuario.");
+        }
+    }
+
+    // DESBLOQUEAR USUARIO
+    @PreAuthorize("hasRole('ADMINISTRATOR') or hasRole('MANAGER')")
+    @PutMapping("unblock/{idUser}")
+    private ResponseEntity<?> unblockUser(
+            @PathVariable Long idUser){
+
+        try{
+
+            userService.unblockUser(idUser);
+            return ResponseEntity.ok("Usuario desbloqueado.");
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se puede bloquear a este usuario.");
+        }
+    }
+
+
     /*@PostMapping("/block/{id}")
     public ResponseEntity<?> blockUser(@PathVariable Long id,
         @RequestParam int durationMinutes) {
