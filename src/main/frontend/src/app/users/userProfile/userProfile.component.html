@@ -23,7 +23,9 @@
   <div class="photo-upload">
     <h4 class="text-center">Foto de Perfil</h4>
     <div class="photo-card">
+      <!-- Si existe una foto, se muestra; si no, se muestra el mensaje "Sin Foto" -->
       <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo" />
+      <p *ngIf="!photoPreview">Sin Foto</p>
     </div>
 
     <!-- Mostrar el botón "Cambiar Foto" solo si hay una foto de perfil -->
@@ -31,8 +33,8 @@
       <button mat-raised-button color="primary" (click)="selectFile()">Cambiar Foto</button>
     </div>
 
-    <!-- Formulario para subir una nueva foto, inicialmente oculto -->
-    <div *ngIf="isFileSelected">
+    <!-- Formulario para subir una nueva foto, visible si no hay foto o si se seleccionó un archivo -->
+    <div *ngIf="!photoPreview || isFileSelected">
       <form (ngSubmit)="uploadPhoto()" #photoForm="ngForm">
         <input type="file" (change)="onFileSelected($event)" name="photo" required />
         <button mat-raised-button color="primary" type="submit" [disabled]="!selectedFile || !photoForm.form.valid">
@@ -56,7 +58,6 @@
 
       <div class="buttons">
         <button mat-stroked-button color="primary" (click)="modificarAnuncio(anuncio.id)">
-          <!-- <button mat-stroked-button color="primary" (click)="modificarAnuncio(ad.id_ad)"> -->
           Modificar
         </button>
         <button mat-fab color="warn" (click)="eliminarAnuncio(anuncio.id)">

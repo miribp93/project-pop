@@ -91,11 +91,14 @@ export class UserProfileComponent implements OnInit {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       this.selectedFile = fileInput.files[0];
+      this.isFileSelected = true; // Asegura que el formulario de subida de foto sea visible
+
       const reader = new FileReader();
       reader.onload = () => (this.photoPreview = reader.result);
       reader.readAsDataURL(this.selectedFile);
     }
   }
+
 
   uploadPhoto(): void {
     if (this.selectedFile) {
@@ -104,15 +107,23 @@ export class UserProfileComponent implements OnInit {
 
       this.authService.uploadPhoto(formData).subscribe({
         next: (response) => {
-          alert("Foto de perfil actualizada correctamente");
+          alert('Foto de perfil actualizada correctamente');
           if (response.photoUrl) {
             this.photoPreview = response.photoUrl;
+            this.isFileSelected = false;
+
+            // Recargar el usuario para obtener la foto actualizada
+            this.authService.getCurrentUser().subscribe((user) => {
+              this.usuario = user;
+              this.photoPreview = user.profile_photo; // Asume que `profile_photo` es la URL de la foto en los datos del usuario
+            });
           }
         },
-        error: (err) => alert("Error al subir la foto de perfil: " + err.message),
+        error: (err) => alert('Error al subir la foto de perfil: ' + err.message),
       });
     }
   }
+
 
   // Mostrar el formulario para seleccionar archivo
   selectFile(): void {

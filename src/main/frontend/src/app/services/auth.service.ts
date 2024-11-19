@@ -112,7 +112,7 @@ getProfilePhoto(): Observable<Blob> {
 
 
   // Método para obtener todos los usuarios
-  findAll(): Observable<User[]> {
+  getdAll(): Observable<User[]> {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -150,18 +150,29 @@ getProfilePhoto(): Observable<Blob> {
     );
   }
 
+  //subir foto, modificacion 19/11/24
   uploadPhoto(photoData: FormData): Observable<{ photoUrl: string }> {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      return throwError(() => new Error('No se encontró el token de autenticación'));
+      return throwError(
+        () => new Error('No se encontró el token de autenticación')
+      );
     }
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.post<{ photoUrl: string }>('/api/user/upload-profile-photo', photoData, { headers }).pipe(
-      catchError(this.handleError)
-    );
+    return this.http
+      .post<{ photoUrl: string }>('/api/user/upload-profile-photo', photoData, {
+        headers,
+      })
+      .pipe(
+        catchError(this.handleError),
+        tap((response) => {
+          console.log('Respuesta de la API:', response);
+        })
+      );
   }
+
 
 
   // Eliminar usuario

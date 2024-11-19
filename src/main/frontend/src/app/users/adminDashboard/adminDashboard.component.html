@@ -9,7 +9,7 @@
 
     <!-- Contenedor de los botones alineados a la derecha -->
     <div class="user-actions">
-      <button mat-stroked-button color="primary" (click)="toggleBlockUser(user)">
+      <button mat-stroked-button color="primary" (click)="BlockUser(user)">
         {{ user.isBlocked ? 'Desbloquear' : 'Bloquear' }}
       </button>
       <button mat-stroked-button color="warn" (click)="deleteUser(user.id_user)">

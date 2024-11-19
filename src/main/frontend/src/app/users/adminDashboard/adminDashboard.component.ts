@@ -24,7 +24,7 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit(): void {
 
     //Carga todos los usuarios
-    this.authService.findAll().subscribe(
+    this.authService.getdAll().subscribe(
       (user) => {
         console.log('Datos recibidos:', user);
         this.users = user || [];
@@ -51,7 +51,7 @@ export class AdminDashboardComponent implements OnInit {
     );
   }
   //Bloquear o desbloquear usuario
-  toggleBlockUser(user: User): void {
+  BlockUser(user: User): void {
     // Cambia el estado de bloqueo del usuario
     user.isBlocked = !user.isBlocked;
 
