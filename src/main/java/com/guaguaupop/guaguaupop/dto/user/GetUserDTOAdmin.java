@@ -1,7 +1,10 @@
 package com.guaguaupop.guaguaupop.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.guaguaupop.guaguaupop.entity.UserRole;
 import lombok.*;
+
+import java.util.Set;
 
 @Builder
 @Getter
@@ -24,4 +27,5 @@ public class GetUserDTOAdmin {
     private String city;
     @JsonProperty("postal_code")
     private String postalCode;
+    private Set<UserRole> roles;
 }

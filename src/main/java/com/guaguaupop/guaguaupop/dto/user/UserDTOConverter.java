@@ -34,6 +34,7 @@ public class UserDTOConverter {
 
         return GetUserDTOAdmin.builder()
                 .idUser(user.getIdUser())
+                .roles(user.getUserRoles())
                 .username(user.getUsername())
                 .name(user.getName())
                 .lastName1(user.getLastName1())

@@ -192,6 +192,7 @@ public class UserService extends BaseService<User, Long, UserRepository> {
                 .orElseThrow(UserNotExistsException::new);
         return new GetProfilePhotoDTO(user.getProfilePhoto());
     }
+
     // LISTAR TODOS LOS USUARIOS EN VISTA ADMIN
     public List<GetUserDTOAdmin> findAllUsers() {
 
