@@ -1,22 +1,27 @@
 <h3 class="text-center mt-3">Perfil Administrador</h3>
-
 <h4 class="text-center">Todos Los usuarios</h4>
 <mat-divider></mat-divider>
 
 <div class="container">
-  <div *ngFor="let user of users" class="user-details">
-    <p>{{ user.name }} - {{ user.last_name1 }} - {{ user.last_name2 }} - {{ user.city }} - {{ user.email }}</p>
-
-    <!-- Contenedor de los botones alineados a la derecha -->
+  <div *ngFor="let user of pagedUsers" class="user-details">
+    <p>{{ user.id_user }} - Rol: {{ user.role }} - {{ user.name }} {{ user.last_name1 }} {{ user.last_name2 }} - {{ user.city }} - {{ user.email }}</p>
     <div class="user-actions">
+      <!-- Verifica el rol del usuario para decidir el texto del botón -->
       <button mat-stroked-button color="primary" (click)="BlockUser(user)">
-        {{ user.isBlocked ? 'Desbloquear' : 'Bloquear' }}
+        {{ user.role === 'bloqueado' ? 'Desbloquear' : 'Bloquear' }}
       </button>
-      <!-- <button mat-stroked-button color="warn" (click)="deleteUserAdmin(user.id_user)">
+      <button mat-stroked-button color="warn" (click)="deleteUserAdmin(user.id_user)">
         Eliminar Usuario
-      </button> -->
+      </button>
     </div>
   </div>
 </div>
 
+<mat-paginator [length]="totalLength"
+               [pageSize]="pageSize"
+               [pageIndex]="pageIndex"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="onPageChange($event)"
+               aria-label="Select page">
+</mat-paginator>
 

@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { User, UserSession } from '../interfaces/user.interface';
@@ -8,10 +12,11 @@ import { User, UserSession } from '../interfaces/user.interface';
   providedIn: 'root',
 })
 export class AuthService {
-
   // Usamos un BehaviorSubject para gestionar el estado de autenticación
-  private userSubject: BehaviorSubject<UserSession | null> = new BehaviorSubject<UserSession | null>(this.getUserFromLocalStorage());
-  public user$: Observable<UserSession | null> = this.userSubject.asObservable();
+  private userSubject: BehaviorSubject<UserSession | null> =
+    new BehaviorSubject<UserSession | null>(this.getUserFromLocalStorage());
+  public user$: Observable<UserSession | null> =
+    this.userSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -20,29 +25,30 @@ export class AuthService {
     const body = { username, password };
 
     return this.http.post<any>(`/auth/login`, body).pipe(
-      tap(data => {
+      tap((data) => {
         // Guardamos el token y el rol en el localStorage
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.username);
 
         // Asegurarse de que 'roles' existe y es un array, y acceder al primer rol
-        const role = Array.isArray(data.roles) && data.roles.length > 0 ? data.roles[0] : null;
+        const role =
+          Array.isArray(data.roles) && data.roles.length > 0
+            ? data.roles[0]
+            : null;
         localStorage.setItem('role', role);
 
         // Creamos un objeto UserSession
         const userSession: UserSession = {
           token: data.token,
           username: data.username,
-          roles: data.roles
+          roles: data.roles,
         };
 
         // Actualizamos el estado del usuario
         this.userSubject.next(userSession);
-
       }),
       catchError(this.handleError)
     );
-
   }
   // Método para cerrar sesión
   logout(): void {
@@ -54,12 +60,21 @@ export class AuthService {
     // Actualizar el estado del usuario
     this.userSubject.next(null);
 
-    console.log("Vuelve pronto");
+    console.log('Vuelve pronto');
   }
 
- // Método para solicitar de nuevo la contraseña
+  // Registro de un nuevo usuario
+  register(userData: any): Observable<User> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http
+      .post<User>(`/api/user/register`, userData, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  // Método para solicitar de nuevo la contraseña
   resetPassword(email: string): Observable<any> {
-    return this.http.post('/api/auth/forgot-password', { email }).pipe( // especificar la ruta a donde debo hacer la llamada
+    return this.http.post('/api/auth/forgot-password', { email }).pipe(
+      // especificar la ruta a donde debo hacer la llamada
       catchError(this.handleError)
     );
   }
@@ -72,7 +87,7 @@ export class AuthService {
 
   // Método para verificar si el usuario está autenticado
   isAuthenticated(): boolean {
-    return this.userSubject.value !== null;  // Comprobamos el estado del usuario con el BehaviorSubject
+    return this.userSubject.value !== null; // Comprobamos el estado del usuario con el BehaviorSubject
   }
 
   getCurrentUser(): Observable<User> {
@@ -81,35 +96,35 @@ export class AuthService {
     if (!token) {
       // Maneja el caso donde el token no está presente
       console.error('Token no encontrado en localStorage');
-      return throwError(() => new Error('Token no encontrado'));    }
+      return throwError(() => new Error('Token no encontrado'));
+    }
 
     // Crea el objeto de HttpHeaders con el token
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.get<User>('/api/user/profile', { headers }).pipe(
-      catchError(this.handleError)
-    );
+    return this.http
+      .get<User>('/api/user/profile', { headers })
+      .pipe(catchError(this.handleError));
   }
 
   // Método para obtener la foto de perfil
-getProfilePhoto(): Observable<Blob> {
-  const token = localStorage.getItem('token');
+  getProfilePhoto(): Observable<Blob> {
+    const token = localStorage.getItem('token');
 
-  if (!token) {
-    console.error('Token no encontrado en localStorage');
-    return throwError(() => new Error('Token no encontrado'));
+    if (!token) {
+      console.error('Token no encontrado en localStorage');
+      return throwError(() => new Error('Token no encontrado'));
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http
+      .get<Blob>('/api/user/profile-photo', {
+        headers,
+        responseType: 'blob' as 'json', // Especifica que la respuesta será un Blob
+      })
+      .pipe(catchError(this.handleError));
   }
-
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-  return this.http.get<Blob>('/api/user/profile-photo', {
-    headers,
-    responseType: 'blob' as 'json'  // Especifica que la respuesta será un Blob
-  }).pipe(
-    catchError(this.handleError)
-  );
-}
-
 
   // Método para obtener todos los usuarios
   getdAll(): Observable<User[]> {
@@ -120,26 +135,30 @@ getProfilePhoto(): Observable<Blob> {
       return throwError(() => new Error('Token no encontrado'));
     }
 
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    return this.http.get<User[]>(`/api/user/all`, { headers }).pipe(
-      catchError(this.handleError)
-    );
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    return this.http
+      .get<User[]>(`/api/user/all`, { headers })
+      .pipe(catchError(this.handleError));
   }
 
-  // Método para actualizar el estado de un usuario
-  updateUserStatus(userId: number, isBlocked: boolean): Observable<void> {
-    return this.http.put<void>(`/api/users/${userId}/status`, { isBlocked }).pipe(
-      catchError(this.handleError)
-    );
+  // Método para bloquear usuario
+  blockUser(userId: number): Observable<void> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    return this.http
+      .put<void>(`/api/user/block/${userId}`,{}, { headers })
+      .pipe(catchError(this.handleError));
   }
 
-  // Registro de un nuevo usuario
-  register(userData: any): Observable<User> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<User>(`/api/user/register`, userData, { headers }).pipe(
-      catchError(this.handleError)
-    );
+  // Método para desbloquear usuario
+  unblockUser(userId: number): Observable<void> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    return this.http
+      .put<void>(`/api/user/unblock/${userId}`,{}, { headers })
+      .pipe(catchError(this.handleError));
   }
 
   // Actualización de datos del usuario
@@ -147,16 +166,18 @@ getProfilePhoto(): Observable<Blob> {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      return throwError(() => new Error('No se encontró el token de autenticación'));
+      return throwError(
+        () => new Error('No se encontró el token de autenticación')
+      );
     }
 
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     });
 
     return this.http
-      .put<User>(`/api/user/update`, user, { headers })  // Envía los datos del usuario
+      .put<User>(`/api/user/update`, user, { headers }) // Envía los datos del usuario
       .pipe(catchError(this.handleError));
   }
 
@@ -165,19 +186,26 @@ getProfilePhoto(): Observable<Blob> {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      return throwError(() => new Error('No se encontró el token de autenticación'));
+      return throwError(
+        () => new Error('No se encontró el token de autenticación')
+      );
     }
 
-    const headers = new HttpHeaders({'Authorization': `Bearer ${token}`});
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     return this.http
-      .delete<User>(`/api/user/delete`, { headers })  // Envía los datos del usuario
+      .delete<User>(`/api/user/delete`, { headers }) // Envía los datos del usuario
       .pipe(catchError(this.handleError));
   }
 
-  deleteUserAdmin(){
+  deleteUserAdmin(userId: number): Observable<void> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-  }
+    return this.http
+      .delete<void>(`/api/user/delete/${userId}`, { headers })
+      .pipe(catchError(this.handleError));
+}
 
   //subir foto, modificacion 19/11/24
   uploadPhoto(photoData: FormData): Observable<{ photoUrl: string }> {
@@ -202,14 +230,12 @@ getProfilePhoto(): Observable<Blob> {
       );
   }
 
-
-
-
-
   // Función para manejar errores de respuesta HTTP
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('Error:', error);
-    return throwError(() => new Error(`Error en la solicitud: ${error.message}`));
+    return throwError(
+      () => new Error(`Error en la solicitud: ${error.message}`)
+    );
   }
 
   // Método privado para obtener el usuario desde localStorage
@@ -221,7 +247,7 @@ getProfilePhoto(): Observable<Blob> {
       return {
         token,
         username,
-        roles: [role] // Puedes extender esto para manejar múltiples roles
+        roles: [role], // Puedes extender esto para manejar múltiples roles
       };
     }
     return null;

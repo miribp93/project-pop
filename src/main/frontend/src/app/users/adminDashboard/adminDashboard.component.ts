@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-adminDashboard',
@@ -16,52 +17,75 @@ import { Router } from '@angular/router';
   styleUrls: ['./adminDashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
-  users?: User[];
-  public totalLength = 0;
+  users: User[] = [];
+  pagedUsers: User[] = [];  // Usuarios para la página actual
+  totalLength = 0;
+  pageSize = 10;  // Tamaño de página predeterminado
+  pageIndex = 0;
 
-  constructor(private authService: AuthService,private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-
-    //Carga todos los usuarios
     this.authService.getdAll().subscribe(
       (user) => {
         console.log('Datos recibidos:', user);
         this.users = user || [];
-        //this.totalLength = this.users.length;
+        this.totalLength = this.users.length;
+        this.updatePagedUsers();  // Inicializa los usuarios paginados
       },
       (error) => console.error('Error en la carga de datos:', error)
     );
   }
 
-  //Cerrar sesión
+  // Actualiza la lista de usuarios paginados al cambiar la página o el tamaño
+  onPageChange(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updatePagedUsers();
+  }
+
+  // Calcula y actualiza los usuarios que deben mostrarse en la página actual
+  private updatePagedUsers(): void {
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.pagedUsers = this.users.slice(startIndex, endIndex);
+  }
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/home']);
   }
-  //Eliminar Usuario
-  // deleteUserAdmin(userId: number): void {
-  //   // Lógica para borrar usuario
-  //   this.authService.deleteUserAdmin().subscribe(
-  //     () => {
-  //       alert('Cuenta eliminada con éxito');
-  //       this.users = this.users?.filter(user => user.id_user !== userId);
-  //     },
-  //     (error) => console.error('Error al eliminar usuario:', error)
-  //   );
-  // }
-  //Bloquear o desbloquear usuario
-  BlockUser(user: User): void {
-    // Cambia el estado de bloqueo del usuario
-    user.isBlocked = !user.isBlocked;
 
-    // Aquí se llamaría al servicio para actualizar el estado del usuario en el backend
-    this.authService.updateUserStatus(user.id_user, user.isBlocked).subscribe(
+  deleteUserAdmin(userId: number): void {
+    this.authService.deleteUserAdmin(userId).subscribe(
       () => {
-        const action = user.isBlocked ? 'bloqueado' : 'desbloqueado';
-        alert(`El usuario ha sido ${action}`);
+        alert('Cuenta eliminada con éxito');
+        this.users = this.users.filter(user => user.id_user !== userId);
+        this.totalLength = this.users.length;  // Actualiza el total
+        this.updatePagedUsers();  // Actualiza los usuarios en pantalla
       },
-      (error: any) => console.error('Error al actualizar el estado del usuario:', error)
+      (error) => console.error('Error al eliminar usuario:', error)
     );
   }
+
+  BlockUser(user: User): void {
+    if (user.role === 'BLOQUEADO') {
+      this.authService.unblockUser(user.id_user).subscribe(
+        () => {
+          user.role = 'USER';  // Rol de usuario normal tras desbloquear
+          alert('El usuario ha sido desbloqueado');
+        },
+        (error: any) => console.error('Error al desbloquear el usuario:', error)
+      );
+    } else {
+      this.authService.blockUser(user.id_user).subscribe(
+        () => {
+          user.role = 'BLOQUEADO';  // Rol bloqueado tras bloquear
+          alert('El usuario ha sido bloqueado');
+        },
+        (error: any) => console.error('Error al bloquear el usuario:', error)
+      );
+    }
+  }
+
 }

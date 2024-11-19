@@ -16,6 +16,7 @@ export interface User {
   profile_photo?: string | null;
   street: string;
   username: string;
+  role: string;
 }
 
 export interface UserLogin {
