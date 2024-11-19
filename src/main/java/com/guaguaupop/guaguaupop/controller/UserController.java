@@ -235,6 +235,24 @@ public class UserController {
         }
     }
 
+    // QUITAR ROLE USUARIO
+    @PreAuthorize("hasRole('ADMINISTRATOR') or hasRole('MANAGER')")
+    @PutMapping("quitroleuser/{idUser}")
+    private ResponseEntity<?> quitRoleUser(
+            @PathVariable Long idUser){
+
+        try{
+
+            userService.quitRoleUser(idUser);
+            return ResponseEntity.ok("Role borrado.");
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se puede cambiar a este usuario.");
+        }
+    }
+
 
     /*@PostMapping("/block/{id}")
     public ResponseEntity<?> blockUser(@PathVariable Long id,

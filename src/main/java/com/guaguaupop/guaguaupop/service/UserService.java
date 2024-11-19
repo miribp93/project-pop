@@ -260,6 +260,15 @@ public class UserService extends BaseService<User, Long, UserRepository> {
         userRepository.save(user);
     }
 
+    // QUITAR ROLE USUARIO
+    public void quitRoleUser(Long idUser){
+        User user = userRepository.findById(idUser).orElseThrow(UserNotExistsException::new);
+        Set<UserRole> role = user.getUserRoles();
+        role.remove(UserRole.USER);
+        user.setUserRoles(role);
+        userRepository.save(user);
+    }
+
     /*@Transactional
     public void blockUser(Long userId, int durationMinutes) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));        Set<UserRole> roles = user.getUserRoles();
