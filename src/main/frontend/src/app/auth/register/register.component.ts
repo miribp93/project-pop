@@ -148,10 +148,10 @@ export class RegisterComponent {
 
     if (this.editMode) {
       // Si estamos en modo edición, actualizamos el perfil
-      this.authService.update(userData).subscribe(
+      this.authService.updateUser(userData).subscribe(
         (response) => {
           alert('Perfil actualizado exitosamente');
-          this.router.navigate(['/user-profile']); // Redirige al perfil del usuario
+          this.router.navigate(['/profile']); // Redirige al perfil del usuario
         },
         (error) => {
           console.error('Error al actualizar el perfil', error);

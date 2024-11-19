@@ -143,11 +143,40 @@ getProfilePhoto(): Observable<Blob> {
   }
 
   // Actualización de datos del usuario
-  update(user: User): Observable<User> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<User>(`/api/user/${user.id_user}`, user, { headers }).pipe(
-      catchError(this.handleError)
-    );
+  updateUser(user: User): Observable<User> {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      return throwError(() => new Error('No se encontró el token de autenticación'));
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http
+      .put<User>(`/api/user/update`, user, { headers })  // Envía los datos del usuario
+      .pipe(catchError(this.handleError));
+  }
+
+  // Eliminar usuario
+  deleteUser(): Observable<User> {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      return throwError(() => new Error('No se encontró el token de autenticación'));
+    }
+
+    const headers = new HttpHeaders({'Authorization': `Bearer ${token}`});
+
+    return this.http
+      .delete<User>(`/api/user/delete`, { headers })  // Envía los datos del usuario
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteUserAdmin(){
+
   }
 
   //subir foto, modificacion 19/11/24
@@ -175,12 +204,7 @@ getProfilePhoto(): Observable<Blob> {
 
 
 
-  // Eliminar usuario
-  delete(id: number): Observable<User> {
-    return this.http.delete<User>(`/api/user/${id}`).pipe(
-      catchError(this.handleError)
-    );
-  }
+
 
   // Función para manejar errores de respuesta HTTP
   private handleError(error: HttpErrorResponse): Observable<never> {

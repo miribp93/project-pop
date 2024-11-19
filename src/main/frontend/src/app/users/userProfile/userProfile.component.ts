@@ -72,7 +72,7 @@ export class UserProfileComponent implements OnInit {
 
   deleteUser(): void {
     if (this.usuario) {
-      this.authService.delete(this.usuario.id_user).subscribe(
+      this.authService.deleteUser().subscribe(
         () => {
           alert('Cuenta eliminada con éxito');
           this.router.navigate(['/home']);

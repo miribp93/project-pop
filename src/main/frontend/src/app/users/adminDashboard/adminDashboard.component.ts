@@ -40,16 +40,16 @@ export class AdminDashboardComponent implements OnInit {
     this.router.navigate(['/home']);
   }
   //Eliminar Usuario
-  deleteUser(userId: number): void {
-    // Lógica para borrar usuario
-    this.authService.delete(userId).subscribe(
-      () => {
-        alert('Cuenta eliminada con éxito');
-        this.users = this.users?.filter(user => user.id_user !== userId);
-      },
-      (error) => console.error('Error al eliminar usuario:', error)
-    );
-  }
+  // deleteUserAdmin(userId: number): void {
+  //   // Lógica para borrar usuario
+  //   this.authService.deleteUserAdmin().subscribe(
+  //     () => {
+  //       alert('Cuenta eliminada con éxito');
+  //       this.users = this.users?.filter(user => user.id_user !== userId);
+  //     },
+  //     (error) => console.error('Error al eliminar usuario:', error)
+  //   );
+  // }
   //Bloquear o desbloquear usuario
   BlockUser(user: User): void {
     // Cambia el estado de bloqueo del usuario
