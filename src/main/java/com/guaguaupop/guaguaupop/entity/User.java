@@ -69,6 +69,11 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Ad> ads;
 
+    @ManyToMany @JoinTable(name = "user_favorites", joinColumns = @JoinColumn
+            (name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_ad"))
+    @JsonIgnore
+    private Set<Ad> favoriteAds;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "id_user"))
@@ -90,9 +95,6 @@ public class User implements UserDetails {
             return this;
         }
     }
-
-    /*@Column(name = "unblock_time")
-    private LocalDateTime unblockTime;*/
 
     @CreatedDate
     private LocalDateTime localDateTime;
@@ -121,15 +123,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
-
-    /*
-    @OneToMany(mappedBy = "sender")
-    private List<Message> messagesSent;
-
-    @OneToMany(mappedBy = "receiver")
-    private List<Message> messagesReceived;
-    */
-
 
 
 }

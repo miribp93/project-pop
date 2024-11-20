@@ -235,6 +235,7 @@ public class UserService extends BaseService<User, Long, UserRepository> {
 
         // Crear un enlace de restablecimiento
         String resetLink = "http://localhost:4200/resetpass";
+        // "http://localhost:4200/reset-password";
 
         // Llamar al servicio de correo para enviar el enlace
         messageService.sendPasswordResetEmail(email, resetLink);
@@ -270,34 +271,7 @@ public class UserService extends BaseService<User, Long, UserRepository> {
         userRepository.save(user);
     }
 
-    /*@Transactional
-    public void blockUser(Long userId, int durationMinutes) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));        Set<UserRole> roles = user.getUserRoles();
-        Set<UserRole> roles = user.getUserRoles();
-        if (roles == null) {
-            roles = new HashSet<>();
-        }
-        roles.add(UserRole.BLOCKED);
-        UserRole user.setUserRoles(roles);
-        user.setUnblockTime(LocalDateTime.now().plusMinutes(durationMinutes));
-        userRepository.save(user);
-    }
-    @Transactional
-    @Scheduled(fixedRate = 60000)
-    public void unblockUsers() {
-        LocalDateTime now = LocalDateTime.now();
-        userRepository.findAll().forEach(user -> {
-        if (user.getUnblockTime() != null && user.getUnblockTime().isBefore(now)) {
-        Set<UserRole> roles = user.getUserRoles();
-        if (roles != null) { roles.remove(UserRole.BLOCKED);
-        roles.add(UserRole.USER);
-        user.setUserRoles(roles);
-        user.setUnblockTime(null);
-        userRepository.save(user); } } });
-    }
+    // MIS FAVORITOS
 
-//nuevo commit
-
-     */
 
 }
