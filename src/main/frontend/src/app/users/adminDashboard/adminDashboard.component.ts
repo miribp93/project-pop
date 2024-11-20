@@ -69,10 +69,10 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   BlockUser(user: User): void {
-    if (user.role === 'BLOQUEADO') {
+    if (user.roles === 'BLOCKED') {
       this.authService.unblockUser(user.id_user).subscribe(
         () => {
-          user.role = 'USER';  // Rol de usuario normal tras desbloquear
+          user.roles = 'USER';  // Cambia el rol a usuario normal tras desbloquear
           alert('El usuario ha sido desbloqueado');
         },
         (error: any) => console.error('Error al desbloquear el usuario:', error)
@@ -80,7 +80,7 @@ export class AdminDashboardComponent implements OnInit {
     } else {
       this.authService.blockUser(user.id_user).subscribe(
         () => {
-          user.role = 'BLOQUEADO';  // Rol bloqueado tras bloquear
+          user.roles = 'BLOCKED';  // Cambia el rol a bloqueado tras bloquear
           alert('El usuario ha sido bloqueado');
         },
         (error: any) => console.error('Error al bloquear el usuario:', error)

@@ -72,12 +72,24 @@ export class AuthService {
   }
 
   // Método para solicitar de nuevo la contraseña
-  resetPassword(email: string): Observable<any> {
-    return this.http.post('/api/auth/forgot-password', { email }).pipe(
-      // especificar la ruta a donde debo hacer la llamada
+  sendEmailPassword(email: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.post(`/auth/forgot-password?email=${encodeURIComponent(email)}`,{}, { headers, responseType: 'text' } // Cambiar el tipo de respuesta a texto
+    ).pipe(
       catchError(this.handleError)
     );
   }
+
+  //Restablecer contraseña
+  resetPassword(email: string, newPassword: string) {
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json',});
+    return this.http.post(`/reset-password`, { email, newPassword }, {headers});
+  }
+
 
   // Método para obtener el rol del usuario
   getUserRole(): string {
@@ -144,20 +156,20 @@ export class AuthService {
   // Método para bloquear usuario
   blockUser(userId: number): Observable<void> {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', });
 
     return this.http
-      .put<void>(`/api/user/block/${userId}`,{}, { headers })
+      .put<void>(`/api/user/block/${userId}`,{},  { headers })
       .pipe(catchError(this.handleError));
   }
 
   // Método para desbloquear usuario
   unblockUser(userId: number): Observable<void> {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', });
 
     return this.http
-      .put<void>(`/api/user/unblock/${userId}`,{}, { headers })
+      .put<void>(`/api/user/unblock/${userId}`, {}, { headers })
       .pipe(catchError(this.handleError));
   }
 
@@ -171,10 +183,7 @@ export class AuthService {
       );
     }
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    });
+    const headers = new HttpHeaders({Authorization: `Bearer ${token}`,'Content-Type': 'application/json', });
 
     return this.http
       .put<User>(`/api/user/update`, user, { headers }) // Envía los datos del usuario

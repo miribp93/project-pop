@@ -48,13 +48,26 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.usuario, this.password).subscribe(
       response => {
         if (response && response.token) {
-          localStorage.setItem('token', response.token);
+          // El rol ya se guarda en localStorage en el método login del AuthService
 
-          // Si `redirectTo` y `productId` están definidos, redirige a la página de pago
+          // Obtener el rol desde el localStorage
+          const userRole = this.authService.getUserRole();
+
+          // Verificar si el usuario tiene el rol "Bloqueado"
+          if (userRole === 'BLOCKED') {
+            alert('Usuario Bloqueado');
+            // Limpiar el almacenamiento para evitar accesos no autorizados
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            localStorage.removeItem('username');
+            this.router.navigate(['/home']);
+            return; // Salir del método
+          }
+
+          // Si el usuario no está bloqueado, redirigir según la lógica de negocio
           if (this.redirectTo === 'pay' && this.productId) {
             this.router.navigate(['/pay'], { queryParams: { productId: this.productId } });
           } else {
-            // Redirigir a una página predeterminada si no hay parámetros
             this.router.navigate(['/home']);
           }
         } else {

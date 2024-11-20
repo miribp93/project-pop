@@ -7,9 +7,10 @@
   <div class="user-buttons m-3" *ngIf="!isSmallScreen">
     <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="login">LogIn</button>
     <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="register">Registrar</button>
-    <button *ngIf="isAuthenticated && userRole !== 'MANAGER'" mat-stroked-button routerLink="profile">Mi Perfil</button>
-    <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mat-stroked-button routerLink="admin">Administrador</button>
-    <button *ngIf="isAuthenticated" mat-stroked-button (click)="logout()">LogOut</button>
+    <button *ngIf="isAuthenticated && userRole === 'BLOCKED'" mat-stroked-button color="primary" routerLink="login">LogIn</button>
+    <button *ngIf="isAuthenticated && userRole === 'USER'" mat-stroked-button color="primary" routerLink="profile">Mi Perfil</button>
+    <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mat-stroked-button color="primary" routerLink="admin">Administrador</button>
+    <button *ngIf="isAuthenticated" mat-stroked-button color="primary" (click)="logout()">LogOut</button>
   </div>
 
   <!-- Botón menú hamburguesa para pantallas pequeñas -->
@@ -19,13 +20,15 @@
 
   <!-- Menú en pantallas pequeñas -->
   <mat-menu #mobileMenu="matMenu">
-    <button *ngIf="!isAuthenticated" mat-menu-item routerLink="login">LogIn</button>
-    <button *ngIf="!isAuthenticated" mat-menu-item routerLink="register">Registrar</button>
-    <button *ngIf="isAuthenticated && userRole !== 'MANAGER'" mat-menu-item routerLink="profile">Mi Perfil</button>
-    <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mat-menu-item routerLink="admin">Administrador</button>
-    <button *ngIf="isAuthenticated" mat-menu-item (click)="logout()">LogOut</button>
+    <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="login">LogIn</button>
+    <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="register">Registrar</button>
 
-    <button  mat-menu-item routerLink="anoncesDemo">AnoncesDemo</button>
+    <!-- Botón Mi Perfil solo si está autenticado y no está bloqueado -->
+    <button *ngIf="isAuthenticated && userRole === 'USER'" mat-stroked-button color="primary" routerLink="profile">Mi Perfil</button>
+    <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mmat-stroked-button color="primary" routerLink="admin">Administrador</button>
+    <button *ngIf="isAuthenticated" mat-stroked-button color="primary" (click)="logout()">LogOut</button>
+
+    <button mat-menu-item routerLink="anoncesDemo">AnoncesDemo</button>
 
 
 

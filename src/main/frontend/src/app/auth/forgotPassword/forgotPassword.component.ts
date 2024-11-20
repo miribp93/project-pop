@@ -22,10 +22,10 @@ export class ForgotPasswordComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onResetPassword(): void {
-    this.authService.resetPassword(this.email).subscribe(
+    this.authService.sendEmailPassword(this.email).subscribe(
       () => {
-        alert('Se ha enviado un correo para recuperar su contraseña.');
-        this.router.navigate(['/login']); // Redirige al inicio de sesión
+        alert('Correo de restablecimiento enviado si el usuario existe.');
+        this.router.navigate(['/login']);
       },
       (error) => console.error('Error al enviar el correo de recuperación:', error)
     );

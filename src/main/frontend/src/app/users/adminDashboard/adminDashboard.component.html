@@ -4,11 +4,11 @@
 
 <div class="container">
   <div *ngFor="let user of pagedUsers" class="user-details">
-    <p>{{ user.id_user }} - Rol: {{ user.role }} - {{ user.name }} {{ user.last_name1 }} {{ user.last_name2 }} - {{ user.city }} - {{ user.email }}</p>
+    <p>{{ user.username }} - Rol: {{ user.roles }} - {{ user.name }} - {{ user.email }}</p>
     <div class="user-actions">
       <!-- Verifica el rol del usuario para decidir el texto del botón -->
       <button mat-stroked-button color="primary" (click)="BlockUser(user)">
-        {{ user.role === 'bloqueado' ? 'Desbloquear' : 'Bloquear' }}
+        {{ user.roles === 'BLOCKED' ? 'Desbloquear' : 'Bloquear' }}
       </button>
       <button mat-stroked-button color="warn" (click)="deleteUserAdmin(user.id_user)">
         Eliminar Usuario
