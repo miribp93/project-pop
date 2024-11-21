@@ -107,11 +107,8 @@ public class AuthController {
     // ENLACE OLVIDASTE CONTRASEÑA
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestParam String email) {
-        userService.initiatePasswordReset(email);
 
-        // Aquí envía el correo
-        String resetLink = "http://localhost:4200/reset-password";
-        messageService.sendPasswordResetEmail(email, resetLink);
+        userService.initiatePasswordReset(email);
 
         return ResponseEntity.ok("Correo de restablecimiento enviado si el usuario existe.");
     }
