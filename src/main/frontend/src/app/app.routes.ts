@@ -23,7 +23,7 @@ export const routes: Routes = [
       { path: '', component: HomeComponent }, //pagina principal
       { path: 'home', redirectTo: '', pathMatch: 'full' }, // Redirigir '/home' a la página principal
       { path: 'product/:id', component: AdSpecificComponent },
-      { path: 'anonces/:categoria', component: AdFilterComponent },
+      { path: 'adfilter', component: AdFilterComponent },
       { path: 'about', component: AboutComponent },
       { path: 'contacto', component: ContactComponent },
       { path: 'login', component: LoginComponent },

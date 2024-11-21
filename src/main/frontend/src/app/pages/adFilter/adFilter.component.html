@@ -1,4 +1,4 @@
-<div class="anuncios-container text-center row g-4 pt-2 mt-2">
+<!-- <div class="anuncios-container text-center row g-4 pt-2 mt-2">
   <h2 >Anuncios de {{ categoria }}</h2>
 
   <div *ngIf="anuncios.length === 0">No hay anuncios disponibles para esta categoría.</div>
@@ -6,7 +6,7 @@
 
 <div class="flex-container">
   <div *ngFor="let producto of paginaAnuncios" class="producto-card">
-    <app-card [prod]="producto"></app-card>
+    <app-card [ad]="producto"></app-card>
   </div>
 </div>
 
@@ -16,4 +16,40 @@
                [pageSizeOptions]="[5, 10, 25, 100]"
                (page)="onPageChange($event)"
                aria-label="Select page">
-</mat-paginator>
+</mat-paginator> -->
+
+
+<div class="anuncios-container text-center row g-4 pt-2 mt-2">
+  <h2>Anuncios de {{ categoria || 'todos' }}</h2>
+
+  <div *ngIf="ads.length === 0">No hay anuncios disponibles para esta categoría.</div>
+  <mat-divider></mat-divider>
+
+  <div class="flex-container">
+    <div *ngFor="let ad of paginaAds" class="producto-card">
+      <app-card [ad]="ad"></app-card>
+    </div>
+  </div>
+
+  <mat-paginator
+    [length]="totalLength"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="onPageChange($event)"
+    aria-label="Select page">
+  </mat-paginator>
+</div>
+
+
+
+<!--
+ //Mostrar anuncio completo
+html
+Copiar código
+<div *ngIf="AdPorId">
+  <h2>{{ AdPorId.title }}</h2>
+  <p>{{ AdPorId.description }}</p>
+  <img *ngFor="let photo of AdPorId.photos" [src]="photo.photos" alt="Photo">
+</div>
+ -->

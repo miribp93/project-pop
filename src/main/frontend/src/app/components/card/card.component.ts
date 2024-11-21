@@ -18,10 +18,10 @@ import { MATERIAL_MODULES } from '../material/material.component';
  export class CardComponent implements OnInit {
    @Input()
 
-   public prod!: Anuncio;
+   public ad!: Ad;
 
    ngOnInit(): void {
-     if (!this.prod) {
+     if (!this.ad) {
       console.warn('Producto no proporcionado al componente');
      }
    }

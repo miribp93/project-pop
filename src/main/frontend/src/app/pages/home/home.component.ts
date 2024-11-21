@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdService } from '../../services/ad.service';
 import { CommonModule } from '@angular/common';
-import { Anuncio } from '../../interfaces/anuncio.interfaces';
+import { Ad, Anuncio } from '../../interfaces/anuncio.interfaces';
 import { CardComponent } from '../../components/card/card.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
@@ -19,8 +19,8 @@ import { MATERIAL_MODULES } from '../../components/material/material.component';
   providers: [AdService],
 })
 export class HomeComponent implements OnInit {
-  public prod: Anuncio[] = []; // Lista completa de productos
-  public paginatedProd: Anuncio[] = []; // Lista de productos paginados
+  public ads: Ad[] = []; // Lista completa de productos
+  public paginatedProd: Ad[] = []; // Lista de productos paginados
   public pageSize = 12; // Tamaño de la página (productos por página)
   public pageIndex = 0; // Índice de la página actual
   public totalLength = 0; // Total de productos
@@ -31,22 +31,25 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // Cargar los anuncios desde el servicio
-    this.dataService.getAnuncios().subscribe(
-      (prod) => {
-        console.log('Datos recibidos:', prod);
-        this.prod = prod;
-        this.totalLength = this.prod.length; // Total de productos
+
+   this.dataService.getAllAds().subscribe(
+      (ads) => {
+        console.log('Datos recibidos:', ads);
+        this.ads = ads;
+        this.totalLength = this.ads.length; // Total de productos
         this.setPaginatedProducts(); // Establecer productos paginados
       },
       (error) => console.error('Error en la carga de datos:', error)
     );
   }
 
+
+
   // Establece los productos que se mostrarán según la página actual y tamaño
   setPaginatedProducts(): void {
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.paginatedProd = this.prod.slice(startIndex, endIndex); // Segmento de productos a mostrar
+    this.paginatedProd = this.ads.slice(startIndex, endIndex); // Segmento de productos a mostrar
   }
 
   // Método que maneja el cambio de página y tamaño de página
@@ -58,13 +61,13 @@ export class HomeComponent implements OnInit {
 
   // // Función para ordenar los productos por fecha (más reciente primero)
   // ordenarPorFecha(): void {
-  //   this.prod.sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
+  //   this.ads.sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
   //   this.setPaginatedProducts(); // Actualizar la paginación después de ordenar
   // }
 
   // // Función para ordenar los productos alfabéticamente
   // ordenarAlfabeticamente(): void {
-  //   this.prod.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  //   this.ads.sort((a, b) => a.nombre.localeCompare(b.nombre));
   //   this.setPaginatedProducts(); // Actualizar la paginación después de ordenar
   // }
 }

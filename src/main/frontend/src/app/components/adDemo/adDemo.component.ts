@@ -22,7 +22,7 @@ export class AdDemoComponent implements OnInit {
   }
 
   findAdAll() {
-    this.dataService.getAdAll().subscribe(
+    this.dataService.getAllAds().subscribe(
       (ads) => {
         this.ads = ads;
         console.log('Conexión a la base de datos exitosa. Anuncios obtenidos:', ads);
