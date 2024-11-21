@@ -249,6 +249,7 @@ public class UserService extends BaseService<User, Long, UserRepository> {
             throw new IllegalArgumentException("No se puede bloquear este usuario.");
         }
         Set<UserRole> role = user.getUserRoles();
+        role.remove(UserRole.USER);
         role.add(UserRole.BLOCKED);
         userRepository.save(user);
     }
@@ -258,6 +259,7 @@ public class UserService extends BaseService<User, Long, UserRepository> {
         User user = userRepository.findById(idUser).orElseThrow(UserNotExistsException::new);
         Set<UserRole> role = user.getUserRoles();
         role.remove(UserRole.BLOCKED);
+        role.add(UserRole.USER);
         user.setUserRoles(role);
         userRepository.save(user);
     }
