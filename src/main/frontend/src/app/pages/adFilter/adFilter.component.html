@@ -20,7 +20,7 @@
 
 
 <div class="anuncios-container text-center row g-4 pt-2 mt-2">
-  <h2>Anuncios de {{ categoria || 'todos' }}</h2>
+  <h2>Anuncios de {{ categoria}}   {{tipoAd }} </h2>
 
   <div *ngIf="ads.length === 0">No hay anuncios disponibles para esta categoría.</div>
   <mat-divider></mat-divider>

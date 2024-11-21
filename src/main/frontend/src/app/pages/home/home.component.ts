@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdService } from '../../services/ad.service';
 import { CommonModule } from '@angular/common';
-import { Ad, Anuncio } from '../../interfaces/anuncio.interfaces';
+import { Ad } from '../../interfaces/anuncio.interfaces';
 import { CardComponent } from '../../components/card/card.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
@@ -27,12 +27,12 @@ export class HomeComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined; // Referencia al paginator
 
-  constructor(private dataService: AdService) {}
+  constructor(private adService: AdService) {}
 
   ngOnInit(): void {
     // Cargar los anuncios desde el servicio
 
-   this.dataService.getAllAds().subscribe(
+   this.adService.getAllAds().subscribe(
       (ads) => {
         console.log('Datos recibidos:', ads);
         this.ads = ads;

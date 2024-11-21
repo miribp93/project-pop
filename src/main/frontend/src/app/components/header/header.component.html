@@ -24,20 +24,13 @@
     <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="register">Registrar</button>
 
     <!-- Botón Mi Perfil solo si está autenticado y no está bloqueado -->
-    <button *ngIf="isAuthenticated && userRole === 'USER'" mat-stroked-button color="primary" routerLink="profile">Mi
-      Perfil</button>
-    <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mmat-stroked-button color="primary"
-      routerLink="admin">Administrador</button>
+    <button *ngIf="isAuthenticated && userRole === 'USER'" mat-stroked-button color="primary" routerLink="profile">Mi Perfil</button>
+    <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mmat-stroked-button color="primary" routerLink="admin">Administrador</button>
     <button *ngIf="isAuthenticated" mat-stroked-button color="primary" (click)="logout()">LogOut</button>
 
-
-
-
-
-    <!-- Botones para tipos de anuncios -->
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ tipo: 'PRODUCT' }">Productos</button>
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ tipo: 'SERVICE' }">Servicios</button>
-    <!-- Botones para categorías de animales -->
+
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Perros' }">Perros</button>
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Gatos' }">Gatos</button>
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Aves' }">Aves</button>
@@ -48,9 +41,7 @@
 
 <!-- Barra de navegación completa para pantallas grandes -->
 <mat-toolbar color="primary" class="nav-bar" *ngIf="!isSmallScreen">
-  <button mat-button [matMenuTriggerFor]="servicesMenu">
-    <mat-icon>menu</mat-icon>Categorias
-  </button>
+  <button mat-button [matMenuTriggerFor]="servicesMenu"><mat-icon>menu</mat-icon>Categorias</button>
 
   <mat-menu #servicesMenu="matMenu">
     <!-- Botones para categorías de animales -->
@@ -64,7 +55,6 @@
   <!-- Botones para tipos de anuncios -->
   <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ tipo: 'PRODUCT' }">Productos</button>
   <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ tipo: 'SERVICE' }">Servicios</button>
-
   <button mat-button routerLink="/about">Acerca de nosotros</button>
   <button mat-button routerLink="/contacto">Contáctanos</button>
 </mat-toolbar>

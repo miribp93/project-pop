@@ -6,6 +6,8 @@ import { User } from '../../interfaces/user.interface';
 import { CommonModule } from '@angular/common';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { FormsModule } from '@angular/forms';
+import { Ad } from '../../interfaces/anuncio.interfaces';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-userProfile',
@@ -24,9 +26,15 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private dataService: AdService,
+    private adService: AdService,
     private router: Router
   ) {}
+
+  public ads: Ad[] = []; // Lista completa de productos
+  public paginatedProd: Ad[] = []; // Lista de productos paginados
+  public pageSize = 12; // Tamaño de la página (productos por página)
+  public pageIndex = 0; // Índice de la página actual
+  public totalLength = 0; // Total de productos
 
   ngOnInit(): void {
     // Cargar datos del usuario
@@ -59,12 +67,6 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
-  loadAnuncios(): void {
-    this.dataService.getAnuncios().subscribe(
-      (anuncios) => (this.anuncios = anuncios),
-      (error) => console.error('Error al cargar anuncios:', error)
-    );
-  }
 
   modificarDatos(): void {
     this.router.navigate(['/register'], { queryParams: { editMode: true } });
@@ -130,6 +132,18 @@ export class UserProfileComponent implements OnInit {
     this.isFileSelected = !this.isFileSelected;
   }
 
+  loadAnuncios(): void {
+    this.adService.getAllAds().subscribe(
+      (ads) => {
+        console.log('Datos recibidos:', ads);
+        this.ads = ads;
+        this.totalLength = this.ads.length; // Total de productos
+        this.setPaginatedProducts(); // Establecer productos paginados
+      },
+      (error) => console.error('Error en la carga de datos:', error)
+    );
+  }
+
   adAnonces(){
     this.router.navigate(['/usercreateads']);
   }
@@ -142,4 +156,21 @@ export class UserProfileComponent implements OnInit {
   eliminarAnuncio(anuncioId: number): void {
     console.log('Anuncio borrado');
   }
+
+  // Establece los productos que se mostrarán según la página actual y tamaño
+  setPaginatedProducts(): void {
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedProd = this.ads.slice(startIndex, endIndex); // Segmento de productos a mostrar
+  }
+
+  // Método que maneja el cambio de página y tamaño de página
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.setPaginatedProducts(); // Actualizar los productos paginados
+  }
 }
+
+
+

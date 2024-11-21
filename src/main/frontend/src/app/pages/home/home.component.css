@@ -44,3 +44,10 @@ mat-paginator {
   margin-top: 20px;
   padding: 10px 0;
 }
+
+.banner {
+  width: 100%; /* Ocupa todo el ancho de la página */
+  height: auto; /* Mantiene la proporción original de la imagen */
+
+
+}

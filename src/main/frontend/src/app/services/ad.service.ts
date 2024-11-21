@@ -1,131 +1,78 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';  // Asegúrate de importar HttpClient
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, of, throwError } from 'rxjs';
-import { Anuncio, Ad } from '../interfaces/anuncio.interfaces';  // Asegúrate de tener esta interfaz
-import { environments } from '../../environments/environments';  // Revisa que esta ruta sea válida
+import { Ad } from '../interfaces/anuncio.interfaces'; // Revisa que esta ruta sea válida
+import { environments } from '../../environments/environments'; // Revisa que esta ruta sea válida
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdService {
-
   private baseUrl: string = environments.baseUrl;
 
-  constructor(private http: HttpClient) {}  // HttpClient está siendo inyectado aquí
+  constructor(private http: HttpClient) {} // Inyecta HttpClient
 
-  getAnuncios(): Observable<Anuncio[]> {
-    return this.http.get<Anuncio[]>(`${this.baseUrl}/anuncios`);
-  }
-
-  getAnuncioById( id: string ): Observable<Anuncio|undefined> {
-    return this.http.get<Anuncio>(`${ this.baseUrl }/anuncios/${ id }`)
-    .pipe(
-      catchError( error => of(undefined) )
-    );
-  }
-
-  getAnunciosByCategoria(categoria: string): Observable<Anuncio[]> {
-    console.log('URL solicitada:', `${this.baseUrl}/anuncios?tipo_anuncio=${categoria}`);  // Verifica la URL generada
-    return this.http.get<Anuncio[]>(`${this.baseUrl}/anuncios?tipo_anuncio=${categoria}`).pipe(
+  // Método para obtener todos los anuncios
+  getAllAds(): Observable<Ad[]> {
+    return this.http.get<Ad[]>(`/api/ad/all`).pipe(
       catchError(error => {
-        console.error('Error al obtener anuncios por categoría:', error);  // Para capturar errores
-        return of([]);  // Devuelve un array vacío si hay un error
+        console.error('Error al obtener todos los anuncios:', error);
+        return of([]); // Devuelve un array vacío en caso de error
       })
     );
   }
 
-  getAnunciosByAnimal(animal: string): Observable<Anuncio[]> {
-    console.log('URL solicitada:', `${this.baseUrl}/anuncios?tipo_animal=${animal}`);  // Imprime la URL para asegurarte
-    return this.http.get<Anuncio[]>(`${this.baseUrl}/anuncios?tipo_animal=${animal}`).pipe(
+  // Método para obtener anuncios por categoría
+  getAdsByCategory(category: string): Observable<Ad[]> {
+    return this.http.get<Ad[]>(`${this.baseUrl}/api/ad/category/${category}`).pipe(
       catchError(error => {
-        console.error('Error al obtener anuncios por tipo de animal:', error);  // Captura el error si algo sale mal
-        return of([]);  // Devuelve un array vacío si hay un error
+        console.error('Error al obtener anuncios por categoría:', error);
+        return of([]); // Devuelve un array vacío en caso de error
       })
     );
   }
 
+  // Método para obtener anuncios por tipo
+  getAdsByType(typeAd: string): Observable<Ad[]> {
+    return this.http.get<Ad[]>(`/api/ad/type/${typeAd}`).pipe(
+      catchError(error => {
+        console.error('Error al obtener anuncios por tipo:', error);
+        return of([]); // Devuelve un array vacío en caso de error
+      })
+    );
+  }
 
+  // Método para obtener anuncios por tipo y categoría
+  getAdsByTypeAndCategory(typeAd: string, category: string): Observable<Ad[]> {
+    return this.http.get<Ad[]>(`/api/ad/type/${typeAd}/category/${category}`).pipe(
+      catchError(error => {
+        console.error('Error al obtener anuncios por tipo y categoría:', error);
+        return of([]); // Devuelve un array vacío en caso de error
+      })
+    );
+  }
 
+  // Método para obtener un anuncio completo por ID
+  getAdComplete(idAd: number): Observable<Ad | undefined> {
+    return this.http.get<Ad>(`/api/ad/complete/${idAd}`).pipe(
+      catchError(error => {
+        console.error('Error al obtener el anuncio completo:', error);
+        return of(undefined); // Devuelve undefined en caso de error
+      })
+    );
+  }
 
+  // Método para obtener un anuncio por ID
+  getAdById(id: number): Observable<Ad | undefined> {
+    return this.http.get<Ad>(`/api/ad/id/${id}`).pipe(
+      catchError(error => {
+        console.error('Error al obtener anuncio por ID:', error);
+        return of(undefined); // Devuelve undefined en caso de error
+      })
+    );
+  }
 
-
-//   //Metodo para visualizar todos los anuncios
-//   getAllAds(): Observable<Ad[]> {
-//   return this.http.get<Ad[]>('/api/ad/all').pipe(
-//     catchError(error => {
-//       console.error('Error al obtener todos los anuncios:', error);
-//       return of([]); // Devuelve un array vacío en caso de error
-//     })
-//   );
-// }
-
-
-//  //Metodo para visualizar de acuerdo a la categoria
-//  getAdByCategory(category: string): Observable<Ad[]> {
-//   console.log('URL solicitada:', `user/category?=${category}`);
-//   return this.http.get<Ad[]>(`api/ad/category?=${category}`).pipe(
-//     catchError(error => {
-//       console.error('Error al obtener anuncios por categoría:', error);  // Para capturar errores
-//       return of([]);  // Devuelve un array vacío si hay un error
-//     })
-//   );
-// }
-// getAdById( id: string ): Observable<Anuncio|undefined> {
-//   return this.http.get<Anuncio>(`api/ad/anuncios/${ id }`)
-//   .pipe(
-//     catchError( error => of(undefined) )
-//   );
-// }
-
-
-getAllAds(): Observable<Ad[]> {
-  return this.http.get<Ad[]>('/api/ad/all').pipe(
-    catchError(error => {
-      console.error('Error al obtener todos los anuncios:', error);
-      return of([]); // Devuelve un array vacío en caso de error
-    })
-  );
-}
-
-
-getAdsByCategory(category: string): Observable<Ad[]> {
-  return this.http.get<Ad[]>(`/api/ad/category/${category}`).pipe(
-    catchError(error => {
-      console.error('Error al obtener anuncios por categoría:', error);
-      return of([]); // Devuelve un array vacío en caso de error
-    })
-  );
-}
-
-getAdsByType(typeAd: string): Observable<Ad[]> {
-  return this.http.get<Ad[]>(`/api/ad/type/${typeAd}`).pipe(
-    catchError(error => {
-      console.error('Error al obtener anuncios por tipo:', error);
-      return of([]); // Devuelve un array vacío en caso de error
-    })
-  );
-}
-
-getAdsByTypeAndCategory(typeAd: string, category: string): Observable<Ad[]> {
-  return this.http.get<Ad[]>(`/api/ad/type/${typeAd}/category/${category}`).pipe(
-    catchError(error => {
-      console.error('Error al obtener anuncios por tipo y categoría:', error);
-      return of([]); // Devuelve un array vacío en caso de error
-    })
-  );
-}
-
-getAdComplete(idAd: number): Observable<Ad | undefined> {
-  return this.http.get<Ad>(`/api/ad/complete/${idAd}`).pipe(
-    catchError(error => {
-      console.error('Error al obtener el anuncio completo:', error);
-      return of(undefined); // Devuelve undefined en caso de error
-    })
-  );
-}
-
-
-  //Metodo para crear anuncios
+  // Método para crear un anuncio
   createAd(ad: Ad, files: File[]): Observable<Ad> {
     const formData = new FormData();
 
@@ -133,7 +80,7 @@ getAdComplete(idAd: number): Observable<Ad | undefined> {
     formData.append('ad', JSON.stringify(ad));
 
     // Agregar cada archivo al FormData bajo el nombre `photos`
-    files.forEach((file, index) => {
+    files.forEach(file => {
       formData.append('photos', file, file.name);
     });
 
@@ -141,10 +88,12 @@ getAdComplete(idAd: number): Observable<Ad | undefined> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.post<Ad>(`api/ad/create`, formData, { headers });
+    return this.http.post<Ad>(`${this.baseUrl}/api/ad/create`, formData, { headers }).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  //Metodo para modificar anuncios
+  // Método para modificar un anuncio
   updateAd(ad: Ad): Observable<Ad> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<Ad>(`/api/ad/${ad.id_ad}`, ad, { headers }).pipe(
@@ -152,21 +101,16 @@ getAdComplete(idAd: number): Observable<Ad | undefined> {
     );
   }
 
+  // Método para eliminar un anuncio
   deleteAd(id_ad: number): Observable<void> {
     return this.http.delete<void>(`/api/ad/${id_ad}`).pipe(
       catchError(this.handleError)
     );
   }
 
-
-
-
   // Función para manejar errores de respuesta HTTP
- private handleError(error: HttpErrorResponse): Observable<never> {
+  private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('Error en la solicitud:', error);
     return throwError(() => new Error(`Error en la solicitud: ${error.message}`));
   }
-
-
-
 }
