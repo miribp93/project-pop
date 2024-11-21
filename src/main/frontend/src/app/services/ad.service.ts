@@ -24,7 +24,7 @@ export class AdService {
 
   // Método para obtener anuncios por categoría
   getAdsByCategory(category: string): Observable<Ad[]> {
-    return this.http.get<Ad[]>(`${this.baseUrl}/api/ad/category/${category}`).pipe(
+    return this.http.get<Ad[]>(`/api/ad/category/${category}`).pipe(
       catchError(error => {
         console.error('Error al obtener anuncios por categoría:', error);
         return of([]); // Devuelve un array vacío en caso de error

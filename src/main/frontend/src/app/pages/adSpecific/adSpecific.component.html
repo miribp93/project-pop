@@ -11,8 +11,8 @@
   <mat-card class="col-12 sm:col-6 mt-3">
 
     <mat-card-header>
-      <mat-card-title>{{ anun.tipo_anuncio }}</mat-card-title>
-      <mat-card-subtitle>{{ anun.tipo_animal }}</mat-card-subtitle>
+      <mat-card-title>{{ anun.title }}</mat-card-title>
+      <mat-card-subtitle>{{ anun.type }}</mat-card-subtitle>
     </mat-card-header>
 
   </mat-card>
@@ -21,15 +21,15 @@
 
     <mat-card-header>
       <mat-card-title>Información</mat-card-title>
-      <mat-card-subtitle>{{ anun.nombre}}</mat-card-subtitle>
+      <mat-card-subtitle>{{ anun.title}}</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
       <mat-list>
-        <mat-list-item>{{ anun.tipo_animal }}</mat-list-item>
-        <mat-list-item>{{ anun.descripcion }}</mat-list-item>
+        <mat-list-item>{{ anun.type }}</mat-list-item>
+        <mat-list-item>{{ anun.description }}</mat-list-item>
 
-        <mat-list-item>{{ anun.precio | currency:'EUR':'symbol' }}</mat-list-item>
+        <mat-list-item>{{ anun.price | currency:'EUR':'symbol' }}</mat-list-item>
       </mat-list>
 
       <!-- Botones con mejor estilo y separación -->
