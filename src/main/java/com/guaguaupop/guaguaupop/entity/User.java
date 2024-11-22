@@ -31,19 +31,19 @@ public class User implements UserDetails {
     @Column(name = "id_user", nullable = false, updatable = false)
     private Long idUser;
 
-    @Column(name = "username", unique = true, nullable = false)
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "last_name1", nullable = false)
+    @Column(name = "last_name1")
     private String lastName1;
 
-    @Column(name = "last_name2", nullable = false)
+    @Column(name = "last_name2")
     private String lastName2;
 
     @Column(name = "email", unique = true, nullable = false)
@@ -55,10 +55,10 @@ public class User implements UserDetails {
     @Column(name = "street")
     private String street;
 
-    @Column(name = "city", nullable = false)
+    @Column(name = "city")
     private String city;
 
-    @Column(name = "postal_code", nullable = false)
+    @Column(name = "postal_code")
     @Pattern(regexp = "\\d{5}", message = "El código postal debe tener 5 dígitos")
     private String postalCode;
 
