@@ -81,12 +81,8 @@ public class AdController {
     // VER ANUNCIO COMPLETO
     @GetMapping("/complete/{idAd}")
     public ResponseEntity<GetAdCompleteDTO> getAdComplete(
-            @PathVariable Long idAd,
-            @AuthenticationPrincipal CustomUserDetails userDetails){
+            @PathVariable Long idAd){
 
-        if (userDetails == null){
-            return ResponseEntity.status(401).build();
-        }
         GetAdCompleteDTO ad = adService.getAdComplete(idAd);
         return ResponseEntity.ok(ad);
     }
