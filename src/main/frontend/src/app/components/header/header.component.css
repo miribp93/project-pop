@@ -3,13 +3,22 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+
+
+}
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+
+
 }
 
 .logo {
-  height: 130px;
-  padding-top: 50px;
+  height: 180px;
+  padding-top: 75px;
   padding-bottom: 10px;
-  margin: 20px
+  margin: 30px
 
 }
 
@@ -22,12 +31,7 @@
   gap: 10px;
 }
 
-.nav-bar {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
 
-}
 
 /* Estilos para pantallas pequeñas */
 @media (max-width: 768px) {

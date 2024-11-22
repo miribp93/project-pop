@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Ad } from '../../interfaces/anuncio.interfaces';
-import { RouterModule } from '@angular/router';
+  import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MATERIAL_MODULES } from '../material/material.component';
+import { User } from '../../interfaces/user.interface';
 
  @Component({
    selector: 'app-card',
@@ -24,6 +24,7 @@ import { MATERIAL_MODULES } from '../material/material.component';
     ]
   };
   imageUrl: string | undefined;
+
 
   ngOnInit(): void {
     if (this.ad.photos && this.ad.photos.length > 0) {

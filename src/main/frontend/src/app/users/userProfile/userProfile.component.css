@@ -14,7 +14,7 @@
 }
 
 /* Contenedor principal */
-.container {
+.user-profile {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 20px;

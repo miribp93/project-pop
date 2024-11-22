@@ -1,5 +1,6 @@
 .card {
   max-width: 200px;
+  align-items: center;
 }
 
 .header-image {
