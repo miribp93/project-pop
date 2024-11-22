@@ -132,6 +132,9 @@ export class UserProfileComponent implements OnInit {
     this.isFileSelected = !this.isFileSelected;
   }
 
+
+//METODSOS PARA ANUNCIOS
+
   loadAnuncios(): void {
     this.adService.getAllAds().subscribe(
       (ads) => {
@@ -144,7 +147,7 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
-  adAnonces(){
+  userAd(){
     this.router.navigate(['/usercreateads']);
   }
 

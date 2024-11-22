@@ -10,7 +10,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { PayComponent } from './components/pay/pay.component';
 import { UserProfileComponent } from './users/userProfile/userProfile.component';
 import { AdminDashboardComponent } from './users/adminDashboard/adminDashboard.component';
-import { ResetPasswordComponent } from './auth/reset-password/resetPassword.component';
+import { ResetPasswordComponent } from './auth/resetPassword/resetPassword.component';
 import { ForgotPasswordComponent } from './auth/forgotPassword/forgotPassword.component';
 import { AdDemoComponent } from './components/adDemo/adDemo.component';
 import { UserAdComponent } from './users/userAd/userAd.component';
@@ -22,13 +22,13 @@ export const routes: Routes = [
     children: [
       { path: '', component: HomeComponent }, //pagina principal
       { path: 'home', redirectTo: '', pathMatch: 'full' }, // Redirigir '/home' a la página principal
-      { path: 'product/:id', component: AdSpecificComponent },
+      { path: 'adspecific/:id', component: AdSpecificComponent },
       { path: 'adfilter', component: AdFilterComponent },
       { path: 'about', component: AboutComponent },
       { path: 'contacto', component: ContactComponent },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
-      { path: 'reset-password', component: ResetPasswordComponent },
+      { path: 'resetpass', component: ResetPasswordComponent },
       { path: 'pay', component: PayComponent },
       { path: 'profile', component: UserProfileComponent },
       { path: 'admin', component: AdminDashboardComponent },

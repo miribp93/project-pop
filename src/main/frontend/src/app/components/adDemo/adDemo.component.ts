@@ -47,7 +47,7 @@ export class AdDemoComponent implements OnInit {
       () => {
         alert('Anuncio eliminado con éxito');
         // Actualizar la lista después de eliminar
-        this.ads = this.ads?.filter((ad) => ad.id_ad !== id_ad);
+        this.ads = this.ads?.filter((ad) => ad.idAd !== id_ad);
       },
       (error) => console.error('Error al eliminar Anuncio:', error)
     );

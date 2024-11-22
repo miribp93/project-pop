@@ -9,7 +9,7 @@ export interface Anuncio {
 }
 
 export interface Ad {
-  id_ad: number;
+  idAd: number;
   category: string;
   city: string;
   condition: string;

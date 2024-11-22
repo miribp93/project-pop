@@ -25,7 +25,7 @@ export class ForgotPasswordComponent {
     this.authService.sendEmailPassword(this.email).subscribe(
       () => {
         alert('Correo de restablecimiento enviado si el usuario existe.');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/home']);
       },
       (error) => console.error('Error al enviar el correo de recuperación:', error)
     );

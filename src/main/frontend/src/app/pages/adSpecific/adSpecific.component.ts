@@ -24,14 +24,14 @@ export class AdSpecificComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dataService: AdService,
+    private adService: AdService,
     private authService: AuthService // Inyectamos AuthService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
-        switchMap(({ id }) => this.dataService.getAdById(+id)) // Convierte el `id` a número
+        switchMap(({ id }) => this.adService.getAdComplete(+id)) // Convierte el `id` a número
       )
       .subscribe({
         next: (anun) => {
@@ -60,7 +60,7 @@ export class AdSpecificComponent implements OnInit {
     } else {
       // Redirigir al login con queryParams indicando el producto y la ruta de redirección
       this.router.navigate(['/login'], {
-        queryParams: { redirect: 'pay', productId: this.anun?.id_ad}
+        queryParams: { redirect: 'pay', productId: this.anun?.idAd}
       });
     }
   }

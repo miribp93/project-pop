@@ -1,18 +1,17 @@
 
-  <mat-card *ngIf="ad; else noProduct" class="card" appearance="outlined" [routerLink]="['/product', ad.id_ad]">
+<mat-card *ngIf="ad; else noProduct" class="card" appearance="outlined" [routerLink]="['/adspecific', ad.idAd]">
   <mat-card-header class="m-2">
     <div mat-card-avatar class="header-image"></div>
     <mat-card-title></mat-card-title>
     <mat-card-subtitle>{{ ad.title }}</mat-card-subtitle>
   </mat-card-header>
 
-  <mat-card-content class="mt-3-">
-    <img mat-card-image src="mia.jpg" alt="Fotos productos" >
-    <p class="mt-3">{{ ad.price | currency:'EUR':'symbol' }}</p>
+  <mat-card-content>
+    <img mat-card-image [src]="imageUrl || 'mia.jpg'" alt="Foto del producto">
+    <p>{{ ad.price | currency: 'EUR':'symbol' }}</p>
   </mat-card-content>
-  <mat-card-footer class="text-center m-3">
 
-  </mat-card-footer>
+  <mat-card-footer class="text-center m-3"></mat-card-footer>
 </mat-card>
 
 <ng-template #noProduct>

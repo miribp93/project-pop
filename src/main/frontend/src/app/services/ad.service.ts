@@ -96,14 +96,14 @@ export class AdService {
   // Método para modificar un anuncio
   updateAd(ad: Ad): Observable<Ad> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<Ad>(`/api/ad/${ad.id_ad}`, ad, { headers }).pipe(
+    return this.http.put<Ad>(`/api/ad/${ad.idAd}`, ad, { headers }).pipe(
       catchError(this.handleError)
     );
   }
 
   // Método para eliminar un anuncio
   deleteAd(id_ad: number): Observable<void> {
-    return this.http.delete<void>(`/api/ad/${id_ad}`).pipe(
+    return this.http.delete<void>(`/api/ad/complete/{idAd}`).pipe(
       catchError(this.handleError)
     );
   }

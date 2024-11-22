@@ -47,14 +47,14 @@
   <div class="ads-section m-3">
     <h4 class="text-center">Mis Pedidos</h4>
     <div class="nav-bar button mb-3">
-      <button mat-button color="primary" class="buttons" (click)="adAnonces()">Agregar Anuncio</button>
+      <button mat-button color="primary" class="buttons" (click)="userAd()">Agregar Anuncio</button>
       <button mat-button color="primary" class="buttons">Compra</button>
       <button mat-button color="primary" class="buttons">Venta</button>
     </div>
 
     <mat-card *ngFor="let anuncio of anuncios" class="ad-card mt-2">
-      <mat-card-title>{{ anuncio.titulo }}</mat-card-title>
-      <mat-card-content>{{ anuncio.descripcion }}</mat-card-content>
+      <mat-card-title>{{ anuncio.title }}</mat-card-title>
+      <mat-card-content>{{ anuncio.description }}</mat-card-content>
 
       <div class="buttons">
         <button mat-stroked-button color="primary" (click)="modificarAnuncio(anuncio.id)">

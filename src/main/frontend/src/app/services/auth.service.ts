@@ -87,7 +87,7 @@ export class AuthService {
   resetPassword(email: string, newPassword: string) {
 
     const headers = new HttpHeaders({'Content-Type': 'application/json',});
-    return this.http.post(`/reset-password`, { email, newPassword }, {headers});
+    return this.http.post(`/auth/reset-password`, { email, newPassword }, {headers});
   }
 
 
@@ -193,14 +193,13 @@ export class AuthService {
   // Eliminar usuario
   deleteUser(): Observable<User> {
     const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     if (!token) {
       return throwError(
         () => new Error('No se encontró el token de autenticación')
       );
     }
-
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     return this.http
       .delete<User>(`/api/user/delete`, { headers }) // Envía los datos del usuario
