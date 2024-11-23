@@ -250,6 +250,7 @@ public class UserService extends BaseService<User, Long, UserRepository> {
         }
         Set<UserRole> role = user.getUserRoles();
         role.add(UserRole.BLOCKED);
+        role.remove(UserRole.USER);
         userRepository.save(user);
     }
 
@@ -257,6 +258,7 @@ public class UserService extends BaseService<User, Long, UserRepository> {
     public void unblockUser(Long idUser){
         User user = userRepository.findById(idUser).orElseThrow(UserNotExistsException::new);
         Set<UserRole> role = user.getUserRoles();
+        role.add(UserRole.USER);
         role.remove(UserRole.BLOCKED);
         user.setUserRoles(role);
         userRepository.save(user);

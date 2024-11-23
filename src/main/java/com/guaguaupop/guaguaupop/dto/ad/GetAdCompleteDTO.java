@@ -1,5 +1,6 @@
 package com.guaguaupop.guaguaupop.dto.ad;
 
+import com.guaguaupop.guaguaupop.dto.user.GetSimpleUserDTO;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +21,5 @@ public class GetAdCompleteDTO {
     private String condition;
     private Set<TypeAd> typeAd;
     private List<byte[]> photos;
+    private GetSimpleUserDTO creator;
 }
