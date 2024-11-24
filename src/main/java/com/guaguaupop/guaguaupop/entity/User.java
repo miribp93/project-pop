@@ -49,7 +49,7 @@ public class User implements UserDetails {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "phone", length = 15)
+    @Column(name = "phone", length = 15, nullable = true)
     private Integer phone;
 
     @Column(name = "street")
@@ -59,7 +59,6 @@ public class User implements UserDetails {
     private String city;
 
     @Column(name = "postal_code")
-    @Pattern(regexp = "\\d{5}", message = "El código postal debe tener 5 dígitos")
     private String postalCode;
 
     @Column(name = "profile_photo", columnDefinition = "BYTEA")

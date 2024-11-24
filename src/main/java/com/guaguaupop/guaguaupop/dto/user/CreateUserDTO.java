@@ -31,7 +31,6 @@ public class CreateUserDTO {
     private Integer phone;
     private String street;
     private String city;
-    @Pattern(regexp = "\\d{5}", message = "El código postal debe tener 5 dígitos.")
     @JsonProperty("postal_code")
     private String postalCode;
     private Set<String> roles;

@@ -14,8 +14,8 @@ public class JwtUserResponse extends GetSimpleUserDTO {
     private Set<String> roles;
 
     @Builder(builderMethodName = "jwtUserResponseBuilder")
-    public JwtUserResponse(Long idUser, String username, String token, Set<String> roles) {
-        super(idUser, username);
+    public JwtUserResponse(Long idUser, String username, String email, byte[] profilePhoto, String token, Set<String> roles) {
+        super(idUser, username, email, profilePhoto);
         this.token = token;
         this.roles = roles;
     }

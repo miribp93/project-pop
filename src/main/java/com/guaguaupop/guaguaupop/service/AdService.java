@@ -4,6 +4,8 @@ import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdCompleteDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
 import com.guaguaupop.guaguaupop.dto.ad.UpdateAdDTO;
+import com.guaguaupop.guaguaupop.dto.user.GetSimpleUserDTO;
+import com.guaguaupop.guaguaupop.dto.user.UserDTOConverter;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
 import com.guaguaupop.guaguaupop.entity.User;
@@ -26,6 +28,7 @@ public class AdService {
 
     private final AdRepository adRepository;
     private final UserRepository userRepository;
+    private final UserDTOConverter userDTOConverter;
 
     // Definición de las categorías disponibles
     @Getter
@@ -56,6 +59,7 @@ public class AdService {
                 .photos(ad.getPhotos())
                 .duration(ad.getDuration())
                 .price(ad.getPrice())
+                .creator(userDTOConverter.convertUserToGetUserDTO(ad.getUser()))
                 .build();
     }
 
@@ -121,18 +125,7 @@ public class AdService {
     // OBTENER DATOS COMPLETOS ANUNCIO
     public GetAdCompleteDTO getAdComplete(Long idAd){
         Ad ad = adRepository.findById(idAd).orElseThrow(()->new RuntimeException("No se puede abrir el anuncio"));
-        return GetAdCompleteDTO.builder()
-                .idAd(ad.getIdAd())
-                .title(ad.getTitle())
-                .duration(ad.getDuration())
-                .description(ad.getDescription())
-                .condition(ad.getCondition())
-                .price(ad.getPrice())
-                .typeAd(ad.getTypeAd())
-                .photos(ad.getPhotos())
-                .category(ad.getCategory())
-                .city(ad.getCity())
-                .build();
+        return toGetAdCompleteDTO(ad);
     }
 
     // ADMIN: BORRAR ANUNCIO POR ID

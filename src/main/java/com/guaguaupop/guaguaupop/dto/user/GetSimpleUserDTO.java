@@ -13,4 +13,7 @@ public class GetSimpleUserDTO {
     @JsonProperty("id_user")
     private Long idUser;
     private String username;
+    private String email;
+    @JsonProperty("profile_photo")
+    private byte[] profilePhoto;
 }

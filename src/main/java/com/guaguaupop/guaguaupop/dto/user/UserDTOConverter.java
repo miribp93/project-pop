@@ -23,7 +23,11 @@ public class UserDTOConverter {
     public GetSimpleUserDTO convertUserToGetUserDTO(User user){
 
         return GetSimpleUserDTO.builder()
-                .username(user.getUsername()).build();
+                .username(user.getUsername())
+                .idUser(user.getIdUser())
+                .profilePhoto(user.getProfilePhoto())
+                .email(user.getEmail())
+                .build();
     }
 
     public GetUserDTOAdmin convertUserToGetUserDTOProfile(User user){
