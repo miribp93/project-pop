@@ -17,6 +17,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -67,7 +75,26 @@ public class AdService {
     public Ad createAd(CreateAdDTO createAdDTO, MultipartFile[] files, Long idUser) throws IOException {
         List<byte[]> photos = new ArrayList<>();
         for (MultipartFile file : files) {
-            photos.add(file.getBytes());
+            // Leer la imagen desde el archivo subido
+            BufferedImage inputImage = ImageIO.read(file.getInputStream());
+            // Obtener el escritor de imagen para JPG
+            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+            ImageWriter writer = writers.next();
+            // Crear un OutputStream en memoria para la imagen comprimida
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageOutputStream ios = ImageIO.createImageOutputStream(baos);
+            writer.setOutput(ios);
+            // Configurar los parámetros de compresión
+            ImageWriteParam params = writer.getDefaultWriteParam();
+            params.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            params.setCompressionQuality(0.5f); //Ajusta la calidad de compresión según sea necesario
+            // Escribir la imagen comprimida en el OutputStream
+            writer.write(null, new IIOImage(inputImage, null, null), params);
+            // Cerrar el OutputStream y el escritor
+            ios.close();
+            writer.dispose();
+            // Añadir la imagen comprimida a la lista de fotos
+            photos.add(baos.toByteArray());
         }
 
         User user = userRepository.findById(idUser).orElseThrow(UserNotExistsException::new);
