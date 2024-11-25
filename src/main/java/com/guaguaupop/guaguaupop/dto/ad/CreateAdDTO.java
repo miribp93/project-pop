@@ -31,10 +31,8 @@ public class CreateAdDTO {
     @NotBlank(message = "Este campo no puede estar en blanco")
     private String city;
 
-    @NotNull(message = "Este campo no puede estar en blanco")
     private int duration;
 
-    @NotBlank(message = "Este campo no puede estar en blanco")
     private String condition;
 
     @NotNull(message = "Señale uno")

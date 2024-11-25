@@ -40,10 +40,10 @@ public class Ad implements Serializable {
     @Column(name = "photos", columnDefinition = "BYTEA")
     private List<byte[]> photos;
 
-    @Column(nullable = false)
+    @Column(name = "duration")
     private int duration;
 
-    @Column(length = 50)
+    @Column(length = 50, name = "condition")
     private String condition;
 
     @ElementCollection(fetch = FetchType.EAGER)

@@ -5,6 +5,7 @@ import com.guaguaupop.guaguaupop.entity.User;
 import com.guaguaupop.guaguaupop.entity.UserRole;
 import com.guaguaupop.guaguaupop.exception.EmailAlreadyExistsException;
 import com.guaguaupop.guaguaupop.exception.NewUserWithDifferentPasswordsException;
+import com.guaguaupop.guaguaupop.service.AdService;
 import com.guaguaupop.guaguaupop.service.CustomUserDetails;
 import com.guaguaupop.guaguaupop.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -28,6 +30,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserDTOConverter userDTOConverter;
+    private final AdService adService;
 
     // Registrar al MANAGER
     @PostMapping("/register-manager")
@@ -81,7 +84,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        this.userService.deleteById(userDetails.getIdUser());
+        Optional<User> userOptional = userService.findById(userDetails.getIdUser());
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        User user = userOptional.get();
+        adService.deleteAdsByUser(user);
+        userService.deleteById(userDetails.getIdUser());
         return ResponseEntity.noContent().build();
     }
 

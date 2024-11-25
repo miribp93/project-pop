@@ -4,7 +4,6 @@ import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdCompleteDTO;
 import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
 import com.guaguaupop.guaguaupop.dto.ad.UpdateAdDTO;
-import com.guaguaupop.guaguaupop.dto.user.GetSimpleUserDTO;
 import com.guaguaupop.guaguaupop.dto.user.UserDTOConverter;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
@@ -12,6 +11,7 @@ import com.guaguaupop.guaguaupop.entity.User;
 import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
 import com.guaguaupop.guaguaupop.repository.AdRepository;
 import com.guaguaupop.guaguaupop.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class AdService {
     // Definición de las categorías disponibles
     @Getter
     private final Set<String> categories = Set.of(
-            "Perros", "Gatos", "Aves", "Reptiles", "Conejos / Cobayas", "Animales Exóticos", "Otros Animales"
+            "Perros", "Gatos", "Aves", "Reptiles", "Roedores", "Animales Exóticos", "Otros Animales"
     );
 
     //Convertir Ad a AdSimpleDTO
@@ -140,6 +140,12 @@ public class AdService {
             throw new RuntimeException("No tienes permiso para borrar el anuncio");
         }
         adRepository.delete(ad);
+    }
+
+    //BORRAR ANUNCIOS DE USUARIO CUANDO SE DA DE BAJA
+    @Transactional
+    public void deleteAdsByUser(User user) {
+        adRepository.deleteByUser(user);
     }
 
     // MIS ANUNCIOS --(usuario ve sus anuncios)

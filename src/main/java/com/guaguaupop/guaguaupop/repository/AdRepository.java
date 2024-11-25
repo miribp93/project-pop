@@ -2,6 +2,7 @@ package com.guaguaupop.guaguaupop.repository;
 
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
+import com.guaguaupop.guaguaupop.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +11,8 @@ import java.util.List;
 
 @Repository
 public interface AdRepository extends JpaRepository<Ad, Long> {
+
+    void deleteByUser(User user);
 
     List<Ad> findByUserIdUser(Long idUser);
 

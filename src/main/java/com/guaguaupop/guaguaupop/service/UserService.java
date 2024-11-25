@@ -145,13 +145,17 @@ public class UserService extends BaseService<User, Long, UserRepository> {
     }
 
     // ADMINISTRATOR: BORRAR POR ID UN USUARIO NO LOGUEADO
-    @Override
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
+    @Transactional
+    public void deleteById(Long idUser) {
+        userRepository.deleteById(idUser);
     }
 
     public Optional<User> getUser(Long id) {
         return userRepository.findById(id);
+    }
+
+    public Optional<User> findById(Long idUser) {
+        return userRepository.findById(idUser);
     }
 
     // ACTUALIZAR DATOS PERSONALES USUARIO
