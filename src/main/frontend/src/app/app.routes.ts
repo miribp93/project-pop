@@ -12,7 +12,6 @@ import { UserProfileComponent } from './users/userProfile/userProfile.component'
 import { AdminDashboardComponent } from './users/adminDashboard/adminDashboard.component';
 import { ResetPasswordComponent } from './auth/resetPassword/resetPassword.component';
 import { ForgotPasswordComponent } from './auth/forgotPassword/forgotPassword.component';
-import { AdDemoComponent } from './components/adDemo/adDemo.component';
 import { UserAdComponent } from './users/userAd/userAd.component';
 
 export const routes: Routes = [
@@ -33,7 +32,6 @@ export const routes: Routes = [
       { path: 'profile', component: UserProfileComponent },
       { path: 'admin', component: AdminDashboardComponent },
       { path: 'forgotpass', component: ForgotPasswordComponent },
-      { path: 'addemo', component: AdDemoComponent }, //pagina demo para probar traer anuncios
       { path: 'usercreateads', component: UserAdComponent },
     ],
   },

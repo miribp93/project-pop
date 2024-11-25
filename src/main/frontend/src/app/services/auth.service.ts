@@ -156,11 +156,11 @@ export class AuthService {
   // Método para bloquear usuario
   blockUser(userId: number): Observable<void> {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', });
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` , 'Content-Type': 'application/json',});
 
     return this.http
-      .put<void>(`/api/user/block/${userId}`,{},  { headers })
-      .pipe(catchError(this.handleError));
+    .put<void>(`/api/user/block/${userId}`, {}, { headers, responseType: 'text' as 'json' })
+    .pipe(catchError(this.handleError));
   }
 
   // Método para desbloquear usuario
@@ -169,8 +169,8 @@ export class AuthService {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', });
 
     return this.http
-      .put<void>(`/api/user/unblock/${userId}`, {}, { headers })
-      .pipe(catchError(this.handleError));
+    .put<void>(`/api/user/unblock/${userId}`, {}, { headers, responseType: 'text' as 'json' })
+    .pipe(catchError(this.handleError));
   }
 
   // Actualización de datos del usuario

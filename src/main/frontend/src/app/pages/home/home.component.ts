@@ -30,18 +30,20 @@ export class HomeComponent implements OnInit {
   constructor(private adService: AdService) {}
 
   ngOnInit(): void {
-    // Cargar los anuncios desde el servicio
-
-   this.adService.getAllAds().subscribe(
+    this.adService.getAllAds().subscribe(
       (ads) => {
         console.log('Datos recibidos:', ads);
-        this.ads = ads;
-        this.totalLength = this.ads.length; // Total de productos
-        this.setPaginatedProducts(); // Establecer productos paginados
+        this.ads = ads.map(ad => ({
+          ...ad,
+          photos: ad.photos || [] // Asegúrate de que photos siempre esté definido como array
+        }));
+        this.totalLength = this.ads.length;
+        this.setPaginatedProducts();
       },
       (error) => console.error('Error en la carga de datos:', error)
     );
   }
+
 
 
 

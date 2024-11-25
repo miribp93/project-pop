@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -19,23 +19,27 @@ import { Router } from '@angular/router';
   templateUrl: './userAd.component.html',
   styleUrl: './userAd.component.css',
 })
-export class UserAdComponent {
+export class UserAdComponent implements OnInit {
   adForm!: FormGroup;
-  //categories: string[] = ['Perro', 'Gato', 'Aves', 'Animales Exoticos']; // Ejemplo de categorías
   selectedFiles: File[] = [];
-  editMode: boolean= false; // Cambia según el modo en el que estés , lo uso al igual que el formulario de registro , me redirige aqui si quiero modificar los datos del producto
+  editMode = false;
 
-  constructor(private fb: FormBuilder, private dataService: AdService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private adService: AdService,
+    private router: Router
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.adForm = this.fb.group({
+      adType: ['', Validators.required], //fallo por que esta en otra tabla
+      category: ['', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
-      category: ['', Validators.required],
       city: ['', Validators.required],
       price: ['', [Validators.required, Validators.min(0)]],
-      duration: ['', Validators.required],
-      condition: ['', Validators.required],
+      duration: [''],
+      condition: [''],
     });
   }
 
@@ -43,42 +47,43 @@ export class UserAdComponent {
     return this.adForm.controls;
   }
 
-  onFileSelect(event: Event) {
+  onFileSelect(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input?.files) {
       this.selectedFiles = Array.from(input.files);
     }
   }
 
-  onAdSubmit() {
+  onAdSubmit(): void {
     if (this.adForm.invalid) {
       return;
     }
+
     const ad: Ad = this.adForm.value;
 
     if (this.editMode) {
-      // Si estamos en modo edición, actualizamos el perfil
-      this.dataService.updateAd(ad).subscribe(
-        (response) => {
-          alert('Perfil actualizado exitosamente');
-          this.router.navigate(['/user-profile']); // Redirige al perfil del usuario
+      this.adService.updateAd(ad).subscribe({
+        next: () => {
+          alert('Anuncio actualizado exitosamente');
+          this.router.navigate(['/user-profile']);
         },
-        (error) => {
-          console.error('Error al actualizar el perfil', error);
-          const errorMsg =
-            error.error?.message || 'Error al actualizar el perfil';
-          alert(errorMsg);
-        }
-      );
+        error: (err) => {
+          console.error('Error al actualizar el anuncio:', err);
+          alert('Error al actualizar el anuncio');
+        },
+      });
     } else {
-    this.dataService.createAd(ad, this.selectedFiles).subscribe({
-      next: (response) => {
-        console.log('Anuncio creado:', response);
-      },
-      error: (error) => {
-        console.error('Error al crear anuncio:', error);
-      },
-    });
+      this.adService.createAd(ad, this.selectedFiles).subscribe({
+        next: (response) => {
+          console.log('Anuncio creado:', response);
+          alert('Anuncio creado exitosamente');
+          this.router.navigate(['/user-profile']);
+        },
+        error: (err) => {
+          console.error('Error al crear anuncio:', err);
+          alert('Error al crear anuncio');
+        },
+      });
+    }
   }
-}
 }

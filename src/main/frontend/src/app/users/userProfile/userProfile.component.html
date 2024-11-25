@@ -51,20 +51,23 @@
   <div class="ads-section m-3 ">
     <h4 class="text-center">Mis Pedidos</h4>
     <div class="nav-bar button mb-3">
-      <button mat-button color="primary" class="buttons" (click)="userAd()">Agregar Anuncio</button>
-      <button mat-button color="primary" class="buttons">Compra</button>
-      <button mat-button color="primary" class="buttons">Venta</button>
+      <button mat-button color="primary" class="buttons" (click)="userCreateAd()">Agregar Anuncio</button>
+
+
+        <!-- POSIBLES BOTONES PARA FILTRAR POR ANNCIOS DE VENTA O COMPRA -->
+      <!-- <button mat-button color="primary" class="buttons">Compra</button>
+      <button mat-button color="primary" class="buttons">Venta</button> -->
     </div>
 
-    <mat-card *ngFor="let anuncio of anuncios" class="ad-card mt-2">
-      <mat-card-title>{{ anuncio.title }}</mat-card-title>
-      <mat-card-content>{{ anuncio.description }}</mat-card-content>
+    <mat-card *ngFor="let ad of ads" class="ad-card mt-2">
+
+      <mat-card-content>Id: {{ad.idAd}} - Nombre:{{ ad.title }} - Precio:{{ ad.price }} </mat-card-content>
 
       <div class="buttons">
-        <button mat-stroked-button color="primary" (click)="modificarAnuncio(anuncio.id)">
+        <button mat-stroked-button color="primary" (click)="modificarAnuncio(ad.idAd)">
           Modificar
         </button>
-        <button mat-fab color="warn" (click)="eliminarAnuncio(anuncio.id)">
+        <button mat-fab color="warn" (click)="deleteAd(ad.idAd)">
           <mat-icon>delete</mat-icon>
         </button>
       </div>

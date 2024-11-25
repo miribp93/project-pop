@@ -1,13 +1,12 @@
-
 <mat-card *ngIf="ad; else noProduct" class="card" appearance="outlined" [routerLink]="['/adspecific', ad.idAd]">
   <mat-card-header class="m-2"> </mat-card-header>
 
   <mat-card-content>
-    <img mat-card-image [src]="imageUrl || 'GGP1.png'" alt="Foto del producto">
+    <!-- Usamos la cadena base64 directamente como fuente de la imagen -->
+    <!-- <img mat-card-image [src]="imageUrl || 'assets/default-image.jpg'" alt="Foto del producto"> -->
     <mat-card-subtitle>{{ ad.title }}</mat-card-subtitle>
     <p>{{ ad.price | currency: 'EUR':'symbol' }}</p>
   </mat-card-content>
-
 
   <mat-card-footer class="text-center m-3"></mat-card-footer>
 </mat-card>

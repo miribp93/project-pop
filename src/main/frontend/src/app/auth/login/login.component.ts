@@ -77,6 +77,8 @@ export class LoginComponent implements OnInit {
       error => {
         console.error('Error en el inicio de sesión', error);
         alert('Usuario o contraseña incorrectos');
+
+        this.password = '';
       }
     );
   }

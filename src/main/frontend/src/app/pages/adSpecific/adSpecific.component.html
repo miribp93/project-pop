@@ -6,52 +6,49 @@
   </mat-grid-list>
 </ng-template>
 
-<div *ngIf="anun; else divLoading" class="form-prod grid p-2 container">
+<ng-template #errorTemplate>
+  <div class="error-container">
+    <mat-card>
+      <mat-card-title>Error</mat-card-title>
+      <mat-card-content>
+        <p>{{ errorMessage }}</p>
+        <button mat-flat-button color="warn" (click)="retryLoad()">Reintentar</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-template>
 
-  <mat-card class="col-12 sm:col-6 mt-3">
-
-    <mat-card-header>
-      <mat-card-title>{{ anun.title }}</mat-card-title>
-      <mat-card-subtitle>{{ anun.type }}</mat-card-subtitle>
-    </mat-card-header>
-
-  </mat-card>
-
-  <mat-card class="col-12 sm:col-6 mt-3">
-
-    <mat-card-header>
-      <mat-card-title>Información</mat-card-title>
-      <mat-card-subtitle>{{ anun.title}}</mat-card-subtitle>
-    </mat-card-header>
-
-    <mat-card-content>
-      <mat-list>
-        <mat-list-item>{{ anun.type }}</mat-list-item>
-        <mat-list-item>{{ anun.description }}</mat-list-item>
-
-        <mat-list-item>{{ anun.price | currency:'EUR':'symbol' }}</mat-list-item>
-      </mat-list>
-
-      <!-- Botones con mejor estilo y separación -->
-      <div style="display: flex; gap: 10px; margin-top: 20px;">
-        <button
-          mat-stroked-button
-          color="warn"
-          (click)="regresar()"
-        >
-          Regresar
-        </button>
-
-        <button
-          mat-flat-button
-          color="primary"
-          (click)="comprar()"
-
-        >
-          Comprar
-        </button>
-      </div>
-
-    </mat-card-content>
-  </mat-card>
+<div *ngIf="isLoading; else content">
+  <ng-container *ngTemplateOutlet="divLoading"></ng-container>
 </div>
+
+<ng-template #content>
+  <div *ngIf="anun; else errorTemplate" class="form-prod grid p-2">
+    <mat-card class="container col-12 sm:col-6 mt-3">
+      <mat-card-header class="m-3">
+        <mat-card-title>
+          <span>Titulo: </span>{{ anun.title }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          <span>Tipo:</span> {{ anun.type }}
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-list>
+          <mat-card-title>Información</mat-card-title>
+          <mat-card-subtitle class="mt-3">{{ anun.title }}</mat-card-subtitle>
+          <mat-list-item><span>Tipo: </span>{{ anun.type }}</mat-list-item>
+          <mat-list-item><span>Descripción: </span>{{ anun.description }}</mat-list-item>
+          <mat-list-item><span>Precio: </span>{{ anun.price | currency:'EUR':'symbol' }}</mat-list-item>
+        </mat-list>
+
+        <div class="button-container">
+          <button mat-stroked-button color="warn" (click)="regresar()">Regresar</button>
+          <button mat-flat-button color="primary" (click)="comprar()">Comprar</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-template>
+

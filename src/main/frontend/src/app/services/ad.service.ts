@@ -42,7 +42,7 @@ export class AdService {
     );
   }
 
-  // Método para obtener anuncios por tipo y categoría
+  // Método para obtener anuncios por tipo y categoría //NO LO USO
   getAdsByTypeAndCategory(typeAd: string, category: string): Observable<Ad[]> {
     return this.http.get<Ad[]>(`/api/ad/type/${typeAd}/category/${category}`).pipe(
       catchError(error => {
@@ -62,7 +62,22 @@ export class AdService {
     );
   }
 
-  // Método para obtener un anuncio por ID
+  //Metodo para obtener los anuncios de cada usuario
+  getMyAds(): Observable<Ad[]> {
+
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+
+    return this.http.get<Ad[]>(`/api/ad/myads` , { headers }).pipe(
+      catchError(error => {
+        console.error('Error al obtener todos los anuncios:', error);
+        return of([]); // Devuelve un array vacío en caso de error
+      })
+    );
+  }
+
+  // Método para obtener un anuncio por ID //
   getAdById(id: number): Observable<Ad | undefined> {
     return this.http.get<Ad>(`/api/ad/id/${id}`).pipe(
       catchError(error => {
@@ -102,8 +117,8 @@ export class AdService {
   }
 
   // Método para eliminar un anuncio
-  deleteAd(id_ad: number): Observable<void> {
-    return this.http.delete<void>(`/api/ad/complete/{idAd}`).pipe(
+  deleteAd(id : number): Observable<void> {
+    return this.http.delete<void>(`/api/ad/delete-my-ad/{idAd}`).pipe(
       catchError(this.handleError)
     );
   }

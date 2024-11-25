@@ -1,13 +1,3 @@
-export interface Anuncio {
-  id: number;
-  nombre: string;
-  descripcion: string;
-  tipo_animal: string;
-  tipo_anuncio: TipoAnuncio;
-  precio: number;
-  img: string;
-}
-
 export interface Ad {
   idAd: number;
   category: string;
@@ -18,7 +8,7 @@ export interface Ad {
   price: number;
   title: string;
   id_user: number;
-  photos?: Ad_photo[];  // Propiedad opcional para fotos
+  photos?: string[];  // Propiedad opcional para fotos
   type?: Ad_type;
 }
 

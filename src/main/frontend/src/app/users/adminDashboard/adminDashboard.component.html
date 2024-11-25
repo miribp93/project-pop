@@ -4,7 +4,7 @@
 
 <div class="container">
   <div *ngFor="let user of pagedUsers" class="user-details">
-    <p>{{ user.username }} - Rol: {{ user.roles }} - {{ user.name }} - {{ user.email }}</p>
+    <p>{{user.id_user}}{{ user.username }} - Rol: {{ user.roles }} - {{ user.name }} - {{ user.email }}</p>
     <div class="user-actions">
       <!-- Verifica el rol del usuario para decidir el texto del botón -->
       <button mat-stroked-button color="primary" (click)="BlockUser(user)">

@@ -3,72 +3,82 @@
     <h2>{{ editMode ? 'Modificar Anuncio' : 'Crear Anuncio' }}</h2>
 
     <form [formGroup]="adForm" (ngSubmit)="onAdSubmit()">
+      <!-- Tipo de Anuncio -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Tipo de Anuncio</mat-label>
+        <mat-select formControlName="adType" >
+          <mat-option value="PRODUCT">Producto</mat-option>
+          <mat-option value="SERVICE">Servicio</mat-option>
+        </mat-select>
+        <mat-error *ngIf="f['adType']?.hasError('required')">Tipo de Anuncio requerido</mat-error>
+      </mat-form-field>
+
+      <!-- Categoría -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Categoría</mat-label>
+        <mat-select formControlName="category" required>
+          <mat-option value="Perro">Perro</mat-option>
+          <mat-option value="Gato">Gato</mat-option>
+          <mat-option value="Aves">Aves</mat-option>
+          <mat-option value="Animales_exoticos">Animales Exóticos</mat-option>
+          <mat-option value="Otros_animales">Otros Animales</mat-option>
+        </mat-select>
+        <mat-error *ngIf="f['category']?.hasError('required')">Categoría es requerida</mat-error>
+      </mat-form-field>
+
+      <!-- Título -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Título</mat-label>
         <input matInput formControlName="title" required>
-        <mat-error *ngIf="f['title'].hasError('required')">Título es requerido</mat-error>
+        <mat-error *ngIf="f['title']?.hasError('required')">Título es requerido</mat-error>
       </mat-form-field>
 
+      <!-- Descripción -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Descripción</mat-label>
         <textarea matInput formControlName="description" required></textarea>
-        <mat-error *ngIf="f['description'].hasError('required')">Descripción es requerida</mat-error>
+        <mat-error *ngIf="f['description']?.hasError('required')">Descripción es requerida</mat-error>
       </mat-form-field>
 
-
-      <!-- Este campo lo dejo comentado por si podemos extraer las categorias prefijadas  -->
-      <!-- <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Categoría</mat-label>
-        <mat-select formControlName="category" required>
-          <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="f['category'].hasError('required')">Categoría es requerida</mat-error>
-      </mat-form-field> -->
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Categoria</mat-label>
-        <input matInput formControlName="category" required>
-        <mat-error *ngIf="f['city'].hasError('required')">Categoria requerida</mat-error>
-      </mat-form-field>
-
-
+      <!-- Ciudad -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Ciudad</mat-label>
         <input matInput formControlName="city" required>
-        <mat-error *ngIf="f['city'].hasError('required')">Ciudad es requerida</mat-error>
+        <mat-error *ngIf="f['city']?.hasError('required')">Ciudad es requerida</mat-error>
       </mat-form-field>
 
+      <!-- Precio -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Precio</mat-label>
-        <input matInput formControlName="price" type="number" required>
-        <mat-error *ngIf="f['price'].hasError('required')">Precio es requerido</mat-error>
-        <mat-error *ngIf="f['price'].hasError('min')">El precio debe ser mayor a 0</mat-error>
+        <input matInput type="number" formControlName="price" required>
+        <mat-error *ngIf="f['price']?.hasError('required')">Precio es requerido</mat-error>
+        <mat-error *ngIf="f['price']?.hasError('min')">El precio debe ser mayor a 0</mat-error>
       </mat-form-field>
 
+      <!-- Duración -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Duración</mat-label>
-        <input matInput formControlName="duration" required>
-        <mat-error *ngIf="f['duration'].hasError('required')">Duración es requerida</mat-error>
-      </mat-form-field>
+        <input matInput formControlName="duration" >
+             </mat-form-field>
 
+      <!-- Condición -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Condición</mat-label>
-        <input matInput formControlName="condition" required>
-        <mat-error *ngIf="f['condition'].hasError('required')">Condición es requerida</mat-error>
-      </mat-form-field>
+        <input matInput formControlName="condition">
+        </mat-form-field>
 
       <!-- Selección de archivos -->
-      <!-- Entrada de archivos sin mat-form-field -->
-<div class="full-width">
-  <label for="file-input">Fotos</label>
-  <input id="file-input" type="file" (change)="onFileSelect($event)" multiple>
-</div>
+      <div class="full-width">
+        <label for="file-input">Fotos </label>
+        <input id="file-input" type="file" (change)="onFileSelect($event)" multiple>
+      </div>
 
+      <!-- Acciones del formulario -->
       <div class="form-actions mt-3">
         <button mat-raised-button color="primary" type="submit" [disabled]="adForm.invalid">
           {{ editMode ? 'Actualizar' : 'Crear' }}
         </button>
-        <button mat-raised-button color="warn" type="reset">Cancelar</button>
+        <button mat-raised-button color="warn" type="button" (click)="adForm.reset()">Cancelar</button>
       </div>
     </form>
   </mat-card>

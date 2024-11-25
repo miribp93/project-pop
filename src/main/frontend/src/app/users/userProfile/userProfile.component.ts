@@ -136,9 +136,9 @@ export class UserProfileComponent implements OnInit {
 //METODSOS PARA ANUNCIOS
 
   loadAnuncios(): void {
-    this.adService.getAllAds().subscribe(
+    this.adService.getMyAds().subscribe(
       (ads) => {
-        console.log('Datos recibidos:', ads);
+        console.log('Datos recibidos de anuncios privados:', ads);
         this.ads = ads;
         this.totalLength = this.ads.length; // Total de productos
         this.setPaginatedProducts(); // Establecer productos paginados
@@ -147,7 +147,7 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
-  userAd(){
+  userCreateAd(){
     this.router.navigate(['/usercreateads']);
   }
 
@@ -156,8 +156,15 @@ export class UserProfileComponent implements OnInit {
     console.log(`Modificar anuncio ${id_ad}`);
   }
 
-  eliminarAnuncio(anuncioId: number): void {
-    console.log('Anuncio borrado');
+  deleteAd(idAd: number): void {
+
+    this.adService.deleteAd(idAd).subscribe(
+      () => {
+        alert('Anucio eliminado con exito');
+
+      },
+      (error) => console.error('Error al eliminar usuario:', error)
+    );
   }
 
   // Establece los productos que se mostrarán según la página actual y tamaño
