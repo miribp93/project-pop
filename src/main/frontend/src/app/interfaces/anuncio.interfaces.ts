@@ -1,4 +1,5 @@
 export interface Ad {
+  createdAt: string | number | Date; // ESTA LA HE CREADO PROVISIONALMETE POR QUE NO LA HAY EN LA BBDD
   idAd: number;
   category: string;
   city: string;

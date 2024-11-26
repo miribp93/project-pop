@@ -59,7 +59,24 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // Añadimos un atributo para almacenar el criterio de orden
+public ordenCriterio: string = '';
 
+ordenarAnuncios(event: any): void {
+  const criterio = event.target.value; // Obtener el criterio seleccionado
+  this.ordenCriterio = criterio; // Guardar el criterio para referencia
+
+  if (criterio === 'fecha') {
+    this.ads.sort((a, b) => +new Date(a.createdAt) - +new Date(b.createdAt)); // Ordenar por fecha
+  } else if (criterio === 'precio') {
+    this.ads.sort((a, b) => a.price - b.price); // Ordenar por precio
+  } else if (criterio === 'nombre') {
+    this.ads.sort((a, b) => a.title.localeCompare(b.title)); // Ordenar alfabéticamente
+  }
+
+  // Una vez ordenado, actualiza los productos paginados
+  this.setPaginatedProducts();
+}
 
 
   // Establece los productos que se mostrarán según la página actual y tamaño
@@ -76,15 +93,5 @@ export class HomeComponent implements OnInit {
     this.setPaginatedProducts(); // Actualizar los productos paginados
   }
 
-  // // Función para ordenar los productos por fecha (más reciente primero)
-  // ordenarPorFecha(): void {
-  //   this.ads.sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
-  //   this.setPaginatedProducts(); // Actualizar la paginación después de ordenar
-  // }
 
-  // // Función para ordenar los productos alfabéticamente
-  // ordenarAlfabeticamente(): void {
-  //   this.ads.sort((a, b) => a.nombre.localeCompare(b.nombre));
-  //   this.setPaginatedProducts(); // Actualizar la paginación después de ordenar
-  // }
 }

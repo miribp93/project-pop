@@ -19,7 +19,7 @@
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
-          <input matInput type="text" id="email" name="email" [(ngModel)]="nombre" required>
+          <input matInput type="text" id="email" name="email" [(ngModel)]="email" required>
         </mat-form-field>
       </div>
 
@@ -34,20 +34,26 @@
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Direccion</mat-label>
-          <input matInput type="text" id="direccion" name="direccion" [(ngModel)]="direccion" required>
+          <input matInput type="text"  id="direccion" name="direccion" [(ngModel)]="direccion" required>
         </mat-form-field>
       </div>
 
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Comentario</mat-label>
-          <input matInput type="text-area" id="comentario" name="comentario" [(ngModel)]="comentario" required>
-
+          <textarea matInput
+                    style="height: 100px; width: 100%;"
+                    id="comentario"
+                    name="comentario"
+                    [(ngModel)]="comentario"
+                    required>
+          </textarea>
         </mat-form-field>
       </div>
+
       <div class="form-actions">
         <button mat-raised-button color="primary" type="submit">Enviar</button>
-        <button mat-raised-button color="warn" type="reset">Cancelar</button>
+        <button mat-raised-button color="warn" type="reset" routerLink="/">Cancelar</button>
       </div>
 
 

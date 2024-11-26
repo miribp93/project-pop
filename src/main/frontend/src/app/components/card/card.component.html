@@ -4,7 +4,7 @@
   <mat-card-content>
 
     <!-- Usamos la cadena base64 directamente como fuente de la imagen -->
-    <!-- <img mat-card-image [src]="imageUrl || 'assets/default-image.jpg'" alt="Foto del producto"> -->
+     <img mat-card-image [src]="imageUrl || 'favicon.ico'" alt="Foto del producto">
     <mat-card-subtitle>{{ ad.title }}</mat-card-subtitle>
     <p>{{ ad.price | currency: 'EUR':'symbol' }}</p>
   </mat-card-content>

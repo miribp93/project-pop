@@ -21,6 +21,7 @@ comentario: any;
 direccion: any;
 telefono: any;
 apellido: any;
+email: any
 
 
 

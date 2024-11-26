@@ -120,3 +120,26 @@ mat-paginator {
     display: none; /* Oculta el contenedor del banner */
   }
 }
+
+/* Personaliza el botón de ordenar */
+.ordenar-boton {
+  font-size: 16px; /* Aumenta el tamaño de la fuente */
+  padding: 10px 20px; /* Añade espaciado */
+  margin-right: 20px; /* Alinea hacia la derecha */
+}
+
+/* Personaliza el menú desplegable */
+.custom-menu {
+  min-width: 200px; /* Aumenta el ancho mínimo del menú */
+  font-size: 18px; /* Aumenta el tamaño del texto dentro del menú */
+}
+
+.custom-menu button {
+  padding: 15px 20px; /* Aumenta el tamaño de los botones dentro del menú */
+}
+
+/* Alinea el botón del menú hacia la derecha */
+div[style*="text-align: right;"] {
+  display: flex;
+  justify-content: flex-end;
+}

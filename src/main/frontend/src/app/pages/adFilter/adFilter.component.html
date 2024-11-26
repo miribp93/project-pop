@@ -25,6 +25,22 @@
   <div *ngIf="ads.length === 0">No hay anuncios disponibles para esta categoría.</div>
   <mat-divider></mat-divider>
 
+  <div class="selector m-3">
+    <mat-menu #ordenMenu="matMenu" class="custom-menu ">
+      <div style="display: flex; flex-direction: column; width: 100%;">
+        <button mat-button (click)="ordenarAnuncios('fecha')">Fecha</button>
+        <button mat-button (click)="ordenarAnuncios('precio')">Precio</button>
+        <button mat-button (click)="ordenarAnuncios('nombre')">A-Z</button>
+      </div>
+    </mat-menu>
+
+    <div style="text-align: right;">
+      <button mat-raised-button [matMenuTriggerFor]="ordenMenu" class="ordenar-boton">
+        Ordenar por <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+    </div>
+    </div>
+
   <div class="flex-container">
     <div *ngFor="let ad of paginaAds" class="producto-card">
       <app-card [ad]="ad"></app-card>
