@@ -9,6 +9,7 @@ import com.guaguaupop.guaguaupop.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -63,7 +64,7 @@ public class AdController {
     public ResponseEntity<GetAdPhotosDTO> getAdPhotos(@PathVariable Long idAd) {
         try {
             GetAdPhotosDTO getAdPhotosDTO = adService.getAdPhotos(idAd);
-            return ResponseEntity.ok(getAdPhotosDTO);
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body((GetAdPhotosDTO) getAdPhotosDTO.getPhotos());
         } catch (RuntimeException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

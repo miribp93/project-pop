@@ -114,7 +114,8 @@ public class AdService {
     @Transactional
     public GetAdPhotosDTO getAdPhotos(Long idAd) {
         Ad ad = adRepository.findById(idAd).orElseThrow(() -> new RuntimeException("Ad not found"));
-        return new GetAdPhotosDTO(ad.getPhotos()); }
+        return new GetAdPhotosDTO(ad.getPhotos());
+    }
 
     // OBTENER ANUNCIOS POR FILTRADO DE CATEGORIA
     public List<GetAdSimpleDTO> getAdsByCategory(String category) {
