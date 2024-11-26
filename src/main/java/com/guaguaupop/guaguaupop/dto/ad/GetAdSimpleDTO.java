@@ -13,6 +13,6 @@ public class GetAdSimpleDTO {
     private Long idAd;
     private String title;
     private Double price;
-    private List<byte[]> photos;
+    private List<GetAdPhotosDTO> photos;
 
 }

@@ -3,6 +3,7 @@ package com.guaguaupop.guaguaupop.service;
 import com.guaguaupop.guaguaupop.dto.ad.*;
 import com.guaguaupop.guaguaupop.dto.user.UserDTOConverter;
 import com.guaguaupop.guaguaupop.entity.Ad;
+import com.guaguaupop.guaguaupop.entity.PhotoAds;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
 import com.guaguaupop.guaguaupop.entity.User;
 import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
@@ -45,7 +46,6 @@ public class AdService {
         return GetAdSimpleDTO.builder()
                 .idAd(ad.getIdAd())
                 .title(ad.getTitle())
-                .photos(ad.getFirstPhoto())
                 .price(ad.getPrice())
                 .build();
     }
@@ -62,8 +62,18 @@ public class AdService {
                 .city(ad.getCity())
                 .duration(ad.getDuration())
                 .price(ad.getPrice())
+                .photos(ad.getPhotos()
+                        .stream()
+                        .map(this::toGetAdPhotosDTO)
+                        .collect(Collectors.toList()))
                 .creator(userDTOConverter.convertUserToGetUserDTO(ad.getUser()))
                 .build();
+    }
+
+    private GetAdPhotosDTO toGetAdPhotosDTO(PhotoAds photoAd) {
+        return GetAdPhotosDTO.builder()
+            .idPhoto(photoAd.getIdPhoto())
+            .build();
     }
 
     // CREAR ANUNCIO
@@ -106,7 +116,7 @@ public class AdService {
             ios.close();
             writer.dispose(); photos.add(baos.toByteArray());
         }
-        ad.setPhotos(photos);
+        //ad.setPhotos();
         adRepository.save(ad);
     }
 
@@ -114,7 +124,7 @@ public class AdService {
     @Transactional
     public GetAdPhotosDTO getAdPhotos(Long idAd) {
         Ad ad = adRepository.findById(idAd).orElseThrow(() -> new RuntimeException("Ad not found"));
-        return new GetAdPhotosDTO(ad.getPhotos());
+        return new GetAdPhotosDTO();
     }
 
     // OBTENER ANUNCIOS POR FILTRADO DE CATEGORIA
@@ -205,7 +215,7 @@ public class AdService {
         updateAdDTO.getPrice().ifPresent(ad::setPrice);
         updateAdDTO.getTitle().ifPresent(ad::setTitle);
         updateAdDTO.getCity().ifPresent(ad::setCity);
-        updateAdDTO.getPhotos().ifPresent(ad::setPhotos);
+        //updateAdDTO.getPhotos().ifPresent(ad::setPhotos);
 
         adRepository.save(ad);
         return toGetAdCompleteDTO(ad);

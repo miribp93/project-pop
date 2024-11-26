@@ -52,14 +52,27 @@ public class AdController {
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestParam("photos") MultipartFile[] files) {
         try {
+            for (MultipartFile file : files) {
+                if (file.isEmpty()) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Empty file uploaded");
+                }
+                if (!isValidFileType(file)) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file type uploaded");
+                }
+            }
             adService.addPhotosToAd(idAd, files, userDetails.getIdUser());
             return ResponseEntity.ok().build();
         } catch (IOException e) {
-            return ResponseEntity.status(500).body("Error uploading photos");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading photos");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
+    } private boolean isValidFileType(MultipartFile file) {
+        String fileType = file.getContentType();
+        return fileType != null && (fileType.equals("image/jpeg") || fileType.equals("image/png"));
     }
 
-    // OBTENER FOTOS ANUNCIOS
+    /*// OBTENER FOTOS ANUNCIOS
     @GetMapping("/photos/{idAd}")
     public ResponseEntity<GetAdPhotosDTO> getAdPhotos(@PathVariable Long idAd) {
         try {
@@ -68,7 +81,7 @@ public class AdController {
         } catch (RuntimeException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-    }
+    }*/
 
     // VER ANUNCIOS FILTRADOS
     @GetMapping("/category/{category}")

@@ -1,5 +1,6 @@
 package com.guaguaupop.guaguaupop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
@@ -35,9 +36,9 @@ public class Ad implements Serializable {
     @Column(nullable = false, length = 100)
     private String city;
 
-    @ElementCollection
-    @Column(name = "photos", columnDefinition = "BYTEA")
-    private List<byte[]> photos;
+    @OneToMany(mappedBy = "ad")
+    @JsonIgnore
+    private List<PhotoAds> photos;
 
     @Column(name = "duration")
     private int duration;
@@ -64,12 +65,5 @@ public class Ad implements Serializable {
         }
     }
 
-    public List<byte[]> getFirstPhoto(){
-
-        if (photos != null && !photos.isEmpty()){
-            return Collections.singletonList(photos.getFirst());
-        }
-        return Collections.singletonList(new byte[0]);
-    }
 
 }

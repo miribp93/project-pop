@@ -1,5 +1,6 @@
 package com.guaguaupop.guaguaupop.dto.ad;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.guaguaupop.guaguaupop.dto.user.GetSimpleUserDTO;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Data
 public class GetAdCompleteDTO {
 
+    @JsonProperty("id_photo")
     private Long idAd;
     private String title;
     private String description;
@@ -19,6 +21,8 @@ public class GetAdCompleteDTO {
     private String city;
     private int duration;
     private String condition;
+    @JsonProperty("type_ad")
     private Set<TypeAd> typeAd;
     private GetSimpleUserDTO creator;
+    private List<GetAdPhotosDTO> photos;
 }

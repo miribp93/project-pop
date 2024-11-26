@@ -12,5 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 public class GetAdPhotosDTO {
 
-    @JsonProperty("ad_photos")
-    private List<byte[]> photos;}
+    @JsonProperty("id_photo")
+    private Long idPhoto;
+    private byte[] photos;
+
+}
