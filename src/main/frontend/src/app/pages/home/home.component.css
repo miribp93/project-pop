@@ -20,6 +20,8 @@
   .producto-card {
     flex: 1 1 45%; /* En tabletas, cada tarjeta ocupa el 45% del ancho */
   }
+
+
 }
 
 /* Pantalla de escritorio (PC) */
@@ -27,6 +29,7 @@
   .producto-card {
     flex: 1 1 18%; /* En pantallas de escritorio, cada tarjeta ocupa el 18% */
   }
+
 }
 
 /* Responsividad de las tarjetas en pantallas grandes */
@@ -34,6 +37,8 @@
   .producto-card {
     flex: 1 1 18%; /* Ajustar a 5 tarjetas en una fila */
   }
+
+
 }
 
 /* Paginador */
@@ -62,6 +67,7 @@ mat-paginator {
 /* Overlay */
 .overlay-text {
   position: absolute;
+  width: 25%;
   top: 50%;
   left: 25%;
   transform: translate(-50%, -50%);
@@ -88,8 +94,28 @@ mat-paginator {
   margin: 10px auto;
 }
 
+@media (min-width: 768px) and (max-width: 1024px) {
+  .overlay-text {
+    width: 30%;
+    height: auto;
+    top: 50%; /* Centrado vertical */
+    left: 20%; /* Centrado horizontal */
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (min-width: 727px) and (max-width: 768px) {
+  .overlay-text {
+    width: 30%; /* El overlay ocupará el 40% del ancho de la pantalla */
+    height: auto; /* Ajusta la altura según el contenido */
+    margin-left: 20px;
+    top: 50%; /* Centrado vertical */
+    left: 20%; /* Centrado horizontal */
+    transform: translate(-50%, -50%);
+  }
+}
 /* Media query para ocultar el banner en pantallas pequeñas */
-@media (max-width: 576px) {
+@media (max-width: 740px) {
   .banner-container {
     display: none; /* Oculta el contenedor del banner */
   }

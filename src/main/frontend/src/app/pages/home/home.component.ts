@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
 
   vender(): void {
     if (this.authService.isAuthenticated()) {
-      this.router.navigateByUrl('pay'); // Redirigir a la plataforma de pago si está logueado
+      this.router.navigateByUrl('profile'); // Redirigir a la plataforma de pago si está logueado
     } else {
       // Redirigir al login con queryParams indicando el producto y la ruta de redirección
       this.router.navigate(['/login'], {
