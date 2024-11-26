@@ -5,6 +5,8 @@ import { Ad } from '../../interfaces/anuncio.interfaces';
 import { CardComponent } from '../../components/card/card.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
+import { AuthService } from '../../services/auth.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +18,7 @@ import { MATERIAL_MODULES } from '../../components/material/material.component';
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [AdService],
+  providers: [AdService, AuthService],
 })
 export class HomeComponent implements OnInit {
   public ads: Ad[] = []; // Lista completa de productos
@@ -27,7 +29,9 @@ export class HomeComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined; // Referencia al paginator
 
-  constructor(private adService: AdService) {}
+  constructor(private adService: AdService ,
+              private authService: AuthService,
+              private router:Router) {}
 
   ngOnInit(): void {
     this.adService.getAllAds().subscribe(
@@ -42,6 +46,17 @@ export class HomeComponent implements OnInit {
       },
       (error) => console.error('Error en la carga de datos:', error)
     );
+  }
+
+  vender(): void {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigateByUrl('pay'); // Redirigir a la plataforma de pago si está logueado
+    } else {
+      // Redirigir al login con queryParams indicando el producto y la ruta de redirección
+      this.router.navigate(['/login'], {
+
+      });
+    }
   }
 
 
