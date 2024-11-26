@@ -1,10 +1,7 @@
 package com.guaguaupop.guaguaupop.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
-import com.guaguaupop.guaguaupop.dto.ad.GetAdCompleteDTO;
-import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
-import com.guaguaupop.guaguaupop.dto.ad.UpdateAdDTO;
+import com.guaguaupop.guaguaupop.dto.ad.*;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
 import com.guaguaupop.guaguaupop.service.AdService;
@@ -35,14 +32,40 @@ public class AdController {
     @PostMapping("/create")
     public ResponseEntity<Ad> createAd(
             @RequestPart("ad") String adJson,
-            @RequestPart("photos") MultipartFile[] files,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             CreateAdDTO createAdDTO = objectMapper.readValue(adJson, CreateAdDTO.class);
-            Ad ad = adService.createAd(createAdDTO, files, userDetails.getIdUser());            return ResponseEntity.ok(ad);
+            Ad ad = adService.createAd(createAdDTO, userDetails.getIdUser());
+            return ResponseEntity.ok(ad);
+
         } catch (IOException e) {
             return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    // SUBIR FOTOS
+    @PostMapping("/upload-photos/{idAd}")
+    public ResponseEntity<?> uploadPhotos(
+            @PathVariable Long idAd,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestParam("photos") MultipartFile[] files) {
+        try {
+            adService.addPhotosToAd(idAd, files, userDetails.getIdUser());
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("Error uploading photos");
+        }
+    }
+
+    // OBTENER FOTOS ANUNCIOS
+    @GetMapping("/photos/{idAd}")
+    public ResponseEntity<GetAdPhotosDTO> getAdPhotos(@PathVariable Long idAd) {
+        try {
+            GetAdPhotosDTO getAdPhotosDTO = adService.getAdPhotos(idAd);
+            return ResponseEntity.ok(getAdPhotosDTO);
+        } catch (RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 

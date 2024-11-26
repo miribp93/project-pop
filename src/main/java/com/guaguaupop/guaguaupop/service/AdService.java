@@ -1,9 +1,6 @@
 package com.guaguaupop.guaguaupop.service;
 
-import com.guaguaupop.guaguaupop.dto.ad.CreateAdDTO;
-import com.guaguaupop.guaguaupop.dto.ad.GetAdCompleteDTO;
-import com.guaguaupop.guaguaupop.dto.ad.GetAdSimpleDTO;
-import com.guaguaupop.guaguaupop.dto.ad.UpdateAdDTO;
+import com.guaguaupop.guaguaupop.dto.ad.*;
 import com.guaguaupop.guaguaupop.dto.user.UserDTOConverter;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
@@ -17,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
@@ -72,32 +68,10 @@ public class AdService {
     }
 
     // CREAR ANUNCIO
-    public Ad createAd(CreateAdDTO createAdDTO, MultipartFile[] files, Long idUser) throws IOException {
-        List<byte[]> photos = new ArrayList<>();
-        for (MultipartFile file : files) {
-            // Leer la imagen desde el archivo subido
-            BufferedImage inputImage = ImageIO.read(file.getInputStream());
-            // Obtener el escritor de imagen para JPG
-            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
-            ImageWriter writer = writers.next();
-            // Crear un OutputStream en memoria para la imagen comprimida
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageOutputStream ios = ImageIO.createImageOutputStream(baos);
-            writer.setOutput(ios);
-            // Configurar los parámetros de compresión
-            ImageWriteParam params = writer.getDefaultWriteParam();
-            params.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-            params.setCompressionQuality(0.5f); //Ajusta la calidad de compresión según sea necesario
-            // Escribir la imagen comprimida en el OutputStream
-            writer.write(null, new IIOImage(inputImage, null, null), params);
-            // Cerrar el OutputStream y el escritor
-            ios.close();
-            writer.dispose();
-            // Añadir la imagen comprimida a la lista de fotos
-            photos.add(baos.toByteArray());
-        }
+    public Ad createAd(CreateAdDTO createAdDTO, Long idUser) throws IOException {
 
         User user = userRepository.findById(idUser).orElseThrow(UserNotExistsException::new);
+
         Ad ad = Ad.builder()
                 .title(createAdDTO.getTitle())
                 .price(createAdDTO.getPrice())
@@ -107,7 +81,6 @@ public class AdService {
                 .typeAd(Collections.singleton(createAdDTO.getTypeAd()))
                 .condition(createAdDTO.getCondition())
                 .duration(createAdDTO.getDuration())
-                .photos(photos)
                 .user(user)
                 .build();
 
@@ -115,6 +88,34 @@ public class AdService {
         log.info("Anuncio guardado correctamente: {}", savedAd);
         return savedAd;
     }
+
+    // SUBIR FOTOS ANUNCIO
+    @Transactional
+    public void addPhotosToAd(Long idAd, MultipartFile[] files, Long idUser) throws IOException {
+        Ad ad = adRepository.findById(idAd).orElseThrow(()-> new RuntimeException("Ad not found"));
+        List<byte[]> photos = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            BufferedImage inputImage = ImageIO.read(file.getInputStream());
+            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+            ImageWriter writer = writers.next();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageOutputStream ios = ImageIO.createImageOutputStream(baos);
+            writer.setOutput(ios); ImageWriteParam params = writer.getDefaultWriteParam();
+            params.setCompressionMode(ImageWriteParam.MODE_EXPLICIT); params.setCompressionQuality(0.5f);
+            writer.write(null, new IIOImage(inputImage, null, null), params);
+            ios.close();
+            writer.dispose(); photos.add(baos.toByteArray());
+        }
+        ad.setPhotos(photos);
+        adRepository.save(ad);
+    }
+
+    // OBTENER FOTOS DE ANUNCIO
+    @Transactional
+    public GetAdPhotosDTO getAdPhotos(Long idAd) {
+        Ad ad = adRepository.findById(idAd).orElseThrow(() -> new RuntimeException("Ad not found"));
+        return new GetAdPhotosDTO(ad.getPhotos()); }
 
     // OBTENER ANUNCIOS POR FILTRADO DE CATEGORIA
     public List<GetAdSimpleDTO> getAdsByCategory(String category) {
