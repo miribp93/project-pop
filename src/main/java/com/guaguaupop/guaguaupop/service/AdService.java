@@ -60,7 +60,6 @@ public class AdService {
                 .typeAd(ad.getTypeAd())
                 .description(ad.getDescription())
                 .city(ad.getCity())
-                .photos(ad.getPhotos())
                 .duration(ad.getDuration())
                 .price(ad.getPrice())
                 .creator(userDTOConverter.convertUserToGetUserDTO(ad.getUser()))
