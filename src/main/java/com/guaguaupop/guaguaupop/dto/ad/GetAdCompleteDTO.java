@@ -20,6 +20,5 @@ public class GetAdCompleteDTO {
     private int duration;
     private String condition;
     private Set<TypeAd> typeAd;
-    private List<byte[]> photos;
     private GetSimpleUserDTO creator;
 }

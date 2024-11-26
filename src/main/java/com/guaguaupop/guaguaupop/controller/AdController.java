@@ -152,8 +152,7 @@ public class AdController {
             @RequestParam Optional<String> city,
             @RequestParam Optional<Integer> duration,
             @RequestParam Optional<String> condition,
-            @RequestParam Optional<Set<TypeAd>> typeAd,
-            @RequestParam Optional<List<MultipartFile>> photos) {
+            @RequestParam Optional<Set<TypeAd>> typeAd) {
                 if (userDetails == null) {
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
                 }
@@ -167,14 +166,6 @@ public class AdController {
                     updatedAd.setDuration(duration);
                     updatedAd.setCondition(condition);
                     updatedAd.setTypeAd(typeAd);
-                    List<byte[]> photoBytes = photos.map(files -> files.stream() .map(file -> {
-                        try {
-                            return file.getBytes();
-                        } catch (Exception e) {
-                            throw new RuntimeException("Error al procesar el archivo", e);
-                        }
-                    }) .collect(Collectors.toList())) .orElse(null);
-                    updatedAd.setPhotos(Optional.ofNullable(photoBytes));
                     GetAdCompleteDTO ad = adService.updateAd(idAd, userDetails.getIdUser(), updatedAd);
                     return ResponseEntity.ok(ad);
                 } catch (Exception e) {
