@@ -91,30 +91,6 @@ export class RegisterComponent {
     this.showPassword2 = !this.showPassword2;
   }
 
- /* ngOnInit(): void {
-    // Revisamos si estamos en modo edición
-    this.route.queryParams.subscribe((params) => {
-      this.editMode = params['editMode'] === 'true'; // Detectamos el parámetro editMode
-      if (this.editMode) {
-        // Si estamos en modo edición, cargamos los datos del usuario
-        this.loadUserData();
-
-        // En modo edición, eliminamos la validación de contraseña
-        this.registerForm.get('password')?.clearValidators();
-        this.registerForm.get('password2')?.clearValidators();
-        this.registerForm.get('password')?.updateValueAndValidity();
-        this.registerForm.get('password2')?.updateValueAndValidity();
-      } else {
-        // Si no estamos en modo edición, activamos las validaciones de contraseña
-        this.registerForm.get('password')?.setValidators([Validators.required, Validators.minLength(8)]);
-        this.registerForm.get('password2')?.setValidators([Validators.required]);
-        this.registerForm.get('password')?.updateValueAndValidity();
-        this.registerForm.get('password2')?.updateValueAndValidity();
-      }
-    });
-  }*/
-
-
     ngOnInit(): void {
       this.route.queryParams.subscribe((params) => {
         this.editMode = params['editMode'] === 'true';

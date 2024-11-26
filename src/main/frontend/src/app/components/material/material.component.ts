@@ -13,6 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import {MatSidenavModule} from '@angular/material/sidenav';
 
+
 export const MATERIAL_MODULES = [
   MatCardModule,
   MatIconModule,
@@ -29,6 +30,7 @@ export const MATERIAL_MODULES = [
   MatProgressSpinnerModule,
   MatSelectModule,
   MatSidenavModule,
+
 
 ];
 

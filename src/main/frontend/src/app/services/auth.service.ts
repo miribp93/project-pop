@@ -3,6 +3,7 @@ import {
   HttpClient,
   HttpHeaders,
   HttpErrorResponse,
+  HttpParams,
 } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
@@ -84,11 +85,24 @@ export class AuthService {
   }
 
   //Restablecer contraseña
-  resetPassword(email: string, newPassword: string) {
+  /*resetPassword(email: string, newPassword: string) {
 
     const headers = new HttpHeaders({'Content-Type': 'application/json',});
+
     return this.http.post(`/auth/reset-password`, { email, newPassword }, {headers});
-  }
+  }*/
+
+    resetPassword(email: string, newPassword: string) {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+      });
+
+      const body = new HttpParams()
+        .set('email', email)
+        .set('newPassword', newPassword);
+
+      return this.http.post(`/auth/reset-password`, body.toString(), { headers,responseType: 'text' as 'json' });
+    }
 
 
   // Método para obtener el rol del usuario
@@ -227,9 +241,7 @@ export class AuthService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     return this.http
-      .post<{ photoUrl: string }>('/api/user/upload-profile-photo', photoData, {
-        headers,
-      })
+      .post<{ photoUrl: string }>('/api/user/upload-profile-photo', photoData, { headers,responseType: 'text' as 'json' })
       .pipe(
         catchError(this.handleError),
         tap((response) => {

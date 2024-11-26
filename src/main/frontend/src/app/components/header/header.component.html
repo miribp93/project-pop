@@ -1,11 +1,13 @@
 <mat-toolbar color="primary" class="top-bar">
   <img src="chango2.webp" alt="logo" class="logo" routerLink="/" />
+  <img src="chango2.webp" alt="Logo pequeño" class="logo-small" routerLink="/">
 
   <span class="spacer"></span>
 
   <!-- Botones de usuario (Login, Registro, Perfil, etc.) -->
   <div class="user-buttons m-3" *ngIf="!isSmallScreen">
-    <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="login">LogIn</button>
+
+    <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="login" >LogIn</button>
     <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="register">Registrar</button>
     <button *ngIf="isAuthenticated && userRole === 'BLOCKED'" mat-stroked-button color="primary" routerLink="login">LogIn</button>
     <button *ngIf="isAuthenticated && userRole === 'USER'" mat-stroked-button color="primary" routerLink="profile">Mi Perfil</button>
@@ -20,13 +22,14 @@
 
   <!-- Menú en pantallas pequeñas -->
   <mat-menu #mobileMenu="matMenu">
-    <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="login">LogIn</button>
-    <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="register">Registrar</button>
+    <div style="display: flex; flex-direction: column; width: 100%;">
+    <button mat-button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="login">LogIn</button>
+    <button mat-button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="register">Registrar</button>
 
     <!-- Botón Mi Perfil solo si está autenticado y no está bloqueado -->
-    <button *ngIf="isAuthenticated && userRole === 'USER'" mat-stroked-button color="primary" routerLink="profile">Mi Perfil</button>
-    <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mmat-stroked-button color="primary" routerLink="admin">Administrador</button>
-    <button *ngIf="isAuthenticated" mat-stroked-button color="primary" (click)="logout()">LogOut</button>
+    <button mat-button  *ngIf="isAuthenticated && userRole === 'USER'" routerLink="profile">Mi Perfil</button>
+    <button mat-button *ngIf="isAuthenticated && userRole === 'MANAGER'"  routerLink="admin">Administrador</button>
+    <button mat-button *ngIf="isAuthenticated"  (click)="logout()">LogOut</button>
 
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ tipo: 'PRODUCT' }">Productos</button>
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ tipo: 'SERVICE' }">Servicios</button>
@@ -35,7 +38,9 @@
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Gatos' }">Gatos</button>
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Aves' }">Aves</button>
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Reptiles' }">Reptiles</button>
-    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Otros' }">Otros</button>
+    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Animales Exoticos' }">Animales Exoticos</button>
+    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Otros' }">Otros Animales</button>
+  </div>
   </mat-menu>
 </mat-toolbar>
 
@@ -44,12 +49,15 @@
   <button mat-button [matMenuTriggerFor]="servicesMenu"><mat-icon>menu</mat-icon>Categorias</button>
 
   <mat-menu #servicesMenu="matMenu">
+    <div style="display: flex; flex-direction: column; width: 100%;">
     <!-- Botones para categorías de animales -->
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Perros' }">Perros</button>
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Gatos' }">Gatos</button>
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Aves' }">Aves</button>
     <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Reptiles' }">Reptiles</button>
-    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Otros' }">Otros</button>
+    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Animales Exoticos' }">Animales Exoticos</button>
+    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Otros' }">Otros Animales</button>
+  </div>
   </mat-menu>
 
   <!-- Botones para tipos de anuncios -->

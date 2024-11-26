@@ -7,8 +7,8 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Tipo de Anuncio</mat-label>
         <mat-select formControlName="adType" >
-          <mat-option value="PRODUCT">Producto</mat-option>
-          <mat-option value="SERVICE">Servicio</mat-option>
+          <mat-option value="PRODUCT">Productos</mat-option>
+          <mat-option value="SERVICE">Servicios</mat-option>
         </mat-select>
         <mat-error *ngIf="f['adType']?.hasError('required')">Tipo de Anuncio requerido</mat-error>
       </mat-form-field>
@@ -17,9 +17,9 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Categoría</mat-label>
         <mat-select formControlName="category" required>
-          <mat-option value="Perro">Perro</mat-option>
-          <mat-option value="Gato">Gato</mat-option>
-          <mat-option value="Aves">Aves</mat-option>
+          <mat-option value="Perros">Perros</mat-option>
+          <mat-option value="Gatos">Gatos</mat-option>
+          <mat-option value="Avess">Aves</mat-option>
           <mat-option value="Animales_exoticos">Animales Exóticos</mat-option>
           <mat-option value="Otros_animales">Otros Animales</mat-option>
         </mat-select>

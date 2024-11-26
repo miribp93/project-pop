@@ -1,4 +1,3 @@
-
 /* Contenedor principal con Flexbox */
 .flex-container {
   display: flex;
@@ -45,9 +44,53 @@ mat-paginator {
   padding: 10px 0;
 }
 
+/* Estilos generales del contenedor del banner */
+.banner-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+/* Imagen del banner */
 .banner {
-  width: 100%; /* Ocupa todo el ancho de la página */
-  height: auto; /* Mantiene la proporción original de la imagen */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay */
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
 
 
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Estilo adicional para la tarjeta dentro del overlay */
+.vende {
+  background-color: #f1f2f7d3;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.btn {
+  width: 80%;
+  display: block;
+  margin: 10px auto;
+}
+
+/* Media query para ocultar el banner en pantallas pequeñas */
+@media (max-width: 576px) {
+  .banner-container {
+    display: none; /* Oculta el contenedor del banner */
+  }
 }

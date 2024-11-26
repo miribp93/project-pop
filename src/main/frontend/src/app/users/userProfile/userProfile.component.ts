@@ -117,7 +117,9 @@ export class UserProfileComponent implements OnInit {
             // Recargar el usuario para obtener la foto actualizada
             this.authService.getCurrentUser().subscribe((user) => {
               this.usuario = user;
-              this.photoPreview = user.profile_photo; // Asume que `profile_photo` es la URL de la foto en los datos del usuario
+              this.photoPreview = user.profile_photo;
+
+              location.reload();
             });
           }
         },
@@ -161,6 +163,7 @@ export class UserProfileComponent implements OnInit {
     this.adService.deleteAd(idAd).subscribe(
       () => {
         alert('Anucio eliminado con exito');
+        this.loadAnuncios();
 
       },
       (error) => console.error('Error al eliminar usuario:', error)

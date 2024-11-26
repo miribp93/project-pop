@@ -103,7 +103,7 @@ export class AdService {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.post<Ad>(`${this.baseUrl}/api/ad/create`, formData, { headers }).pipe(
+    return this.http.post<Ad>(`/api/ad/create`, formData, { headers }).pipe(
       catchError(this.handleError)
     );
   }
@@ -118,7 +118,11 @@ export class AdService {
 
   // Método para eliminar un anuncio
   deleteAd(id : number): Observable<void> {
-    return this.http.delete<void>(`/api/ad/delete-my-ad/{idAd}`).pipe(
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+
+    return this.http.delete<void>(`/api/ad/delete-my-ad/${id}`, {headers}).pipe(
       catchError(this.handleError)
     );
   }
