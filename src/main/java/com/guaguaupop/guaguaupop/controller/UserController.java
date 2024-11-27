@@ -101,6 +101,12 @@ public class UserController {
         if (!userService.existsById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
+        Optional<User> userOptional = userService.findById(id);
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        User user = userOptional.get();
+        adService.deleteAdsByUser(user);
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

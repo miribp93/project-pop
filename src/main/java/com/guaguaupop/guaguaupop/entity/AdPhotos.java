@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name="ad_photos")
 public class AdPhotos {
 
     @Id
@@ -16,7 +17,6 @@ public class AdPhotos {
     @Column(name = "id_photo", nullable = false, updatable = false)
     private Long idPhoto;
 
-    @Lob
     @Column(name = "photos", columnDefinition = "BYTEA")
     private byte[] photos;
 

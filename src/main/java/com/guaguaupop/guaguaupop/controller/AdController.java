@@ -3,6 +3,7 @@ package com.guaguaupop.guaguaupop.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guaguaupop.guaguaupop.dto.ad.*;
 import com.guaguaupop.guaguaupop.entity.Ad;
+import com.guaguaupop.guaguaupop.entity.AdPhotos;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
 import com.guaguaupop.guaguaupop.service.AdService;
 import com.guaguaupop.guaguaupop.service.CustomUserDetails;
@@ -59,7 +60,7 @@ public class AdController {
                 }
             }
             adService.addPhotosToAd(idAd, files, userDetails.getIdUser());
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body("Photos uploaded successfully");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading photos");
         } catch (Exception e) {
@@ -70,16 +71,17 @@ public class AdController {
         return fileType != null && (fileType.equals("image/jpeg") || fileType.equals("image/png"));
     }
 
-    /*// OBTENER FOTOS ANUNCIOS
+    // OBTENER FOTOS ANUNCIOS
     @GetMapping("/photos/{idAd}")
-    public ResponseEntity<GetAdPhotosDTO> getAdPhotos(@PathVariable Long idAd) {
+    public ResponseEntity<List<GetAdPhotosDTO>> getAdPhotos(
+            @PathVariable Long idAd) {
         try {
-            GetAdPhotosDTO getAdPhotosDTO = adService.getAdPhotos(idAd);
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body((GetAdPhotosDTO) getAdPhotosDTO.getPhotos());
+            List<GetAdPhotosDTO> getAdPhotosDTOList = adService.getAdPhotos(idAd);
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(getAdPhotosDTOList);
         } catch (RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-    }*/
+    }
 
     // VER ANUNCIOS FILTRADOS
     @GetMapping("/category/{category}")

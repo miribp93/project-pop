@@ -132,9 +132,16 @@ public class AdService {
 
     // OBTENER FOTOS DE ANUNCIO
     @Transactional
-    public GetAdPhotosDTO getAdPhotos(Long idAd) {
-        Ad ad = adRepository.findById(idAd).orElseThrow(() -> new RuntimeException("Ad not found"));
-        return new GetAdPhotosDTO();
+    public List<GetAdPhotosDTO> getAdPhotos(Long idAd) {
+        Ad ad = adRepository.findById(idAd).orElseThrow(()
+                -> new RuntimeException("Ad not found"));
+        List<AdPhotos> photoAds = photoAdRepository.findByAd(ad);
+        return photoAds.stream() .map(photoAd -> {
+            GetAdPhotosDTO getAdPhotosDTO = new GetAdPhotosDTO();
+            getAdPhotosDTO.setIdPhoto(photoAd.getIdPhoto());
+            getAdPhotosDTO.setPhotos(photoAd.getPhotos());
+            return getAdPhotosDTO;
+        }) .collect(Collectors.toList());
     }
 
     // OBTENER ANUNCIOS POR FILTRADO DE CATEGORIA
