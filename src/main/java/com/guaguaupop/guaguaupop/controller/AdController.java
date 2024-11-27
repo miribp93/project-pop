@@ -5,6 +5,8 @@ import com.guaguaupop.guaguaupop.dto.ad.*;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.AdPhotos;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
+import com.guaguaupop.guaguaupop.repository.AdRepository;
+import com.guaguaupop.guaguaupop.repository.PhotoAdRepository;
 import com.guaguaupop.guaguaupop.service.AdService;
 import com.guaguaupop.guaguaupop.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.Set;
 
 @Slf4j
@@ -29,8 +30,9 @@ import java.util.Set;
 public class AdController {
 
     private final AdService adService;
+    private final PhotoAdRepository photoAdRepository;
 
-    // CREAR ANUNCIO
+    /*// CREAR ANUNCIO
     @PostMapping("/create")
     public ResponseEntity<?> createAd(
             @RequestBody CreateAdDTO createAdDTO,
@@ -41,6 +43,40 @@ public class AdController {
 
         } catch (IOException e) {
             return ResponseEntity.status(500).body(null);
+        }
+    }*/
+
+    //Ivan
+    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createAd(
+            @RequestPart("createAdDTO") String createAdDTOJson,
+            @RequestPart("photos") MultipartFile[] files,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            CreateAdDTO createAdDTO = objectMapper.readValue(createAdDTOJson, CreateAdDTO.class);
+            for (MultipartFile file : files) {
+                if (file.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Empty file uploaded");
+                }
+                if (!isValidFileType(file)) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file type uploaded");
+                }
+            }
+            // Crear el anuncio
+            Ad ad = adService.createAd(createAdDTO, userDetails.getIdUser());
+            // Agregar las fotos al anuncio
+            adService.addPhotosToAd(ad.getIdAd(), files, userDetails.getIdUser());
+            // Devolver el anuncio creado como respuesta
+            return ResponseEntity.ok(ad);
+
+        } catch (IOException e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading photos: " + e.getMessage());
+
+        } catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
         }
     }
 
@@ -69,6 +105,14 @@ public class AdController {
     } private boolean isValidFileType(MultipartFile file) {
         String fileType = file.getContentType();
         return fileType != null && (fileType.equals("image/jpeg") || fileType.equals("image/png"));
+    }
+
+    //Ivan
+    @GetMapping("/photo/ad/{idAd}")
+    public ResponseEntity<?> getAdPhoto (@PathVariable Long idAd) {
+
+        AdPhotos photos = photoAdRepository.getReferenceById(idAd);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(photos.getPhotos());
     }
 
     // OBTENER FOTOS ANUNCIOS
