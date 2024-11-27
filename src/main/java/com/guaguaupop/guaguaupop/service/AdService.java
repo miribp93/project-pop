@@ -3,11 +3,12 @@ package com.guaguaupop.guaguaupop.service;
 import com.guaguaupop.guaguaupop.dto.ad.*;
 import com.guaguaupop.guaguaupop.dto.user.UserDTOConverter;
 import com.guaguaupop.guaguaupop.entity.Ad;
-import com.guaguaupop.guaguaupop.entity.PhotoAds;
+import com.guaguaupop.guaguaupop.entity.AdPhotos;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
 import com.guaguaupop.guaguaupop.entity.User;
 import com.guaguaupop.guaguaupop.exception.UserNotExistsException;
 import com.guaguaupop.guaguaupop.repository.AdRepository;
+import com.guaguaupop.guaguaupop.repository.PhotoAdRepository;
 import com.guaguaupop.guaguaupop.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdService {
 
+    private final PhotoAdRepository photoAdRepository;
     private final AdRepository adRepository;
     private final UserRepository userRepository;
     private final UserDTOConverter userDTOConverter;
@@ -47,6 +49,8 @@ public class AdService {
                 .idAd(ad.getIdAd())
                 .title(ad.getTitle())
                 .price(ad.getPrice())
+                .typeAd(ad.getTypeAd())
+                .condition(ad.getCondition())
                 .build();
     }
 
@@ -70,7 +74,7 @@ public class AdService {
                 .build();
     }
 
-    private GetAdPhotosDTO toGetAdPhotosDTO(PhotoAds photoAd) {
+    private GetAdPhotosDTO toGetAdPhotosDTO(AdPhotos photoAd) {
         return GetAdPhotosDTO.builder()
             .idPhoto(photoAd.getIdPhoto())
             .build();
@@ -102,7 +106,7 @@ public class AdService {
     @Transactional
     public void addPhotosToAd(Long idAd, MultipartFile[] files, Long idUser) throws IOException {
         Ad ad = adRepository.findById(idAd).orElseThrow(()-> new RuntimeException("Ad not found"));
-        List<byte[]> photos = new ArrayList<>();
+        List<AdPhotos> photoAds = new ArrayList<>();
 
         for (MultipartFile file : files) {
             BufferedImage inputImage = ImageIO.read(file.getInputStream());
@@ -110,14 +114,20 @@ public class AdService {
             ImageWriter writer = writers.next();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageOutputStream ios = ImageIO.createImageOutputStream(baos);
-            writer.setOutput(ios); ImageWriteParam params = writer.getDefaultWriteParam();
-            params.setCompressionMode(ImageWriteParam.MODE_EXPLICIT); params.setCompressionQuality(0.5f);
+            writer.setOutput(ios);
+            ImageWriteParam params = writer.getDefaultWriteParam();
+            params.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            params.setCompressionQuality(0.5f);
             writer.write(null, new IIOImage(inputImage, null, null), params);
             ios.close();
-            writer.dispose(); photos.add(baos.toByteArray());
+            writer.dispose();
+            byte[] photoBytes = baos.toByteArray();
+            AdPhotos photoAd = new AdPhotos();
+            photoAd.setAd(ad);
+            photoAd.setPhotos(photoBytes);
+            photoAds.add(photoAd);
         }
-        //ad.setPhotos();
-        adRepository.save(ad);
+        photoAdRepository.saveAll(photoAds);
     }
 
     // OBTENER FOTOS DE ANUNCIO
@@ -163,7 +173,18 @@ public class AdService {
     // OBTENER DATOS COMPLETOS ANUNCIO
     public GetAdCompleteDTO getAdComplete(Long idAd){
         Ad ad = adRepository.findById(idAd).orElseThrow(()->new RuntimeException("No se puede abrir el anuncio"));
-        return toGetAdCompleteDTO(ad);
+        List<AdPhotos> photoAds = photoAdRepository.findByAd(ad);
+        GetAdCompleteDTO adCompleteDTO = toGetAdCompleteDTO(ad);
+        List<GetAdPhotosDTO> photosDTO = photoAds.stream()
+                .map(photoAd -> {
+                    GetAdPhotosDTO getAdPhotosDTO = new GetAdPhotosDTO();
+                    getAdPhotosDTO.setIdPhoto(photoAd.getIdPhoto());
+                    getAdPhotosDTO.setPhotos(photoAd.getPhotos());
+                    return getAdPhotosDTO;
+                }).collect(Collectors.toList());
+
+        adCompleteDTO.setPhotos(photosDTO);
+        return adCompleteDTO;
     }
 
     // ADMIN: BORRAR ANUNCIO POR ID

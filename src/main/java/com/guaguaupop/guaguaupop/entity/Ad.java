@@ -1,10 +1,10 @@
 package com.guaguaupop.guaguaupop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +18,7 @@ public class Ad implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
+    @Column(name= "id_ad", nullable = false, updatable = false)
     private Long idAd;
 
     @Column(nullable = false, length = 50)
@@ -36,9 +36,8 @@ public class Ad implements Serializable {
     @Column(nullable = false, length = 100)
     private String city;
 
-    @OneToMany(mappedBy = "ad")
-    @JsonIgnore
-    private List<PhotoAds> photos;
+    @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AdPhotos> photos = new ArrayList<>();
 
     @Column(name = "duration")
     private int duration;
