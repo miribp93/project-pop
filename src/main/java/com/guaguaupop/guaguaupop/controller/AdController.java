@@ -31,12 +31,10 @@ public class AdController {
 
     // CREAR ANUNCIO
     @PostMapping("/create")
-    public ResponseEntity<Ad> createAd(
-            @RequestPart("ad") String adJson,
+    public ResponseEntity<?> createAd(
+            @RequestBody CreateAdDTO createAdDTO,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            CreateAdDTO createAdDTO = objectMapper.readValue(adJson, CreateAdDTO.class);
             Ad ad = adService.createAd(createAdDTO, userDetails.getIdUser());
             return ResponseEntity.ok(ad);
 
