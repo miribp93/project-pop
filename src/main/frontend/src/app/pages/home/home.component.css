@@ -35,7 +35,7 @@
 /* Responsividad de las tarjetas en pantallas grandes */
 @media (min-width: 1200px) {
   .producto-card {
-    flex: 1 1 18%; /* Ajustar a 5 tarjetas en una fila */
+    flex: 1 1 20%; /* Ajustar a 5 tarjetas en una fila */
   }
 
 

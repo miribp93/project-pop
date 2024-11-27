@@ -78,32 +78,30 @@ export class AuthService {
       'Content-Type': 'application/json',
     });
 
-    return this.http.post(`/auth/forgot-password?email=${encodeURIComponent(email)}`,{}, { headers, responseType: 'text' } // Cambiar el tipo de respuesta a texto
-    ).pipe(
-      catchError(this.handleError)
-    );
+    return this.http
+      .post(
+        `/auth/forgot-password?email=${encodeURIComponent(email)}`,
+        {},
+        { headers, responseType: 'text' } // Cambiar el tipo de respuesta a texto
+      )
+      .pipe(catchError(this.handleError));
   }
 
   //Restablecer contraseña
-  /*resetPassword(email: string, newPassword: string) {
+  resetPassword(email: string, newPassword: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+    });
 
-    const headers = new HttpHeaders({'Content-Type': 'application/json',});
+    const body = new HttpParams()
+      .set('email', email)
+      .set('newPassword', newPassword);
 
-    return this.http.post(`/auth/reset-password`, { email, newPassword }, {headers});
-  }*/
-
-    resetPassword(email: string, newPassword: string) {
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded',
-      });
-
-      const body = new HttpParams()
-        .set('email', email)
-        .set('newPassword', newPassword);
-
-      return this.http.post(`/auth/reset-password`, body.toString(), { headers,responseType: 'text' as 'json' });
-    }
-
+    return this.http.post(`/auth/reset-password`, body.toString(), {
+      headers,
+      responseType: 'text' as 'json',
+    });
+  }
 
   // Método para obtener el rol del usuario
   getUserRole(): string {
@@ -170,21 +168,35 @@ export class AuthService {
   // Método para bloquear usuario
   blockUser(userId: number): Observable<void> {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` , 'Content-Type': 'application/json',});
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
 
     return this.http
-    .put<void>(`/api/user/block/${userId}`, {}, { headers, responseType: 'text' as 'json' })
-    .pipe(catchError(this.handleError));
+      .put<void>(
+        `/api/user/block/${userId}`,
+        {},
+        { headers, responseType: 'text' as 'json' }
+      )
+      .pipe(catchError(this.handleError));
   }
 
   // Método para desbloquear usuario
   unblockUser(userId: number): Observable<void> {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', });
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
 
     return this.http
-    .put<void>(`/api/user/unblock/${userId}`, {}, { headers, responseType: 'text' as 'json' })
-    .pipe(catchError(this.handleError));
+      .put<void>(
+        `/api/user/unblock/${userId}`,
+        {},
+        { headers, responseType: 'text' as 'json' }
+      )
+      .pipe(catchError(this.handleError));
   }
 
   // Actualización de datos del usuario
@@ -197,7 +209,10 @@ export class AuthService {
       );
     }
 
-    const headers = new HttpHeaders({Authorization: `Bearer ${token}`,'Content-Type': 'application/json', });
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
 
     return this.http
       .put<User>(`/api/user/update`, user, { headers }) // Envía los datos del usuario
@@ -227,7 +242,7 @@ export class AuthService {
     return this.http
       .delete<void>(`/api/user/delete/${userId}`, { headers })
       .pipe(catchError(this.handleError));
-}
+  }
 
   //subir foto, modificacion 19/11/24
   uploadPhoto(photoData: FormData): Observable<{ photoUrl: string }> {
@@ -241,13 +256,23 @@ export class AuthService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     return this.http
-      .post<{ photoUrl: string }>('/api/user/upload-profile-photo', photoData, { headers,responseType: 'text' as 'json' })
+      .post<{ photoUrl: string }>('/api/user/upload-profile-photo', photoData, {
+        headers,
+        responseType: 'text' as 'json',
+      })
       .pipe(
         catchError(this.handleError),
         tap((response) => {
           console.log('Respuesta de la API:', response);
         })
       );
+  }
+
+  //Enviar email de contacto
+  sendContactEmail(data: any): Observable<any> {
+    return this.http
+    .delete<User>(`/api/user/contacto`, data) // Envía los datos del usuario
+    .pipe(catchError(this.handleError));
   }
 
   // Función para manejar errores de respuesta HTTP

@@ -5,13 +5,16 @@ import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from '../../services/notification.service';
+
 
 @Component({
   selector: 'app-adminDashboard',
   standalone: true,
   imports: [
     MATERIAL_MODULES,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './adminDashboard.component.html',
   styleUrls: ['./adminDashboard.component.css']
@@ -23,7 +26,7 @@ export class AdminDashboardComponent implements OnInit {
   pageSize = 10;  // Tamaño de página predeterminado
   pageIndex = 0;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,private alert: NotificationService) {}
 
   ngOnInit(): void {
     this.authService.getdAll().subscribe(
@@ -59,7 +62,7 @@ export class AdminDashboardComponent implements OnInit {
   deleteUserAdmin(userId: number): void {
     this.authService.deleteUserAdmin(userId).subscribe(
       () => {
-        alert('Cuenta eliminada con éxito');
+        this.alert.show('Cuenta eliminada con éxito');
         this.users = this.users.filter(user => user.id_user !== userId);
         this.totalLength = this.users.length;  // Actualiza el total
         this.updatePagedUsers();  // Actualiza los usuarios en pantalla
@@ -73,7 +76,7 @@ export class AdminDashboardComponent implements OnInit {
       this.authService.unblockUser(user.id_user).subscribe(
         () => {
           user.roles = 'USER';  // Cambia el rol a usuario normal tras desbloquear
-          alert('El usuario ha sido desbloqueado');
+          this.alert.show('El usuario ha sido desbloqueado');
         },
         (error: any) => console.error('Error al desbloquear el usuario:', error)
       );
@@ -81,7 +84,7 @@ export class AdminDashboardComponent implements OnInit {
       this.authService.blockUser(user.id_user).subscribe(
         () => {
           user.roles = 'BLOCKED';  // Cambia el rol a bloqueado tras bloquear
-          alert('El usuario ha sido bloqueado');
+          this.alert.show('El usuario ha sido bloqueado');
         },
         (error: any) => console.error('Error al bloquear el usuario:', error)
       );

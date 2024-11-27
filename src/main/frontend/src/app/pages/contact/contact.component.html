@@ -2,24 +2,24 @@
 
   <mat-card class="form-card">
     <h4>Formulario de Contacto</h4>
-    <form id="contactForm">
+    <form [formGroup]="contactForm" (ngSubmit)="onAdSubmit()">
 
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nombre</mat-label>
-          <input matInput type="text" id="nombre" name="nombre" [(ngModel)]="nombre" required>
+          <input matInput type="text"  formControlName="nombre" required>
         </mat-form-field>
       </div>
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Apellido</mat-label>
-          <input matInput type="text" id="nombre" name="nombre" [(ngModel)]="apellido" required>
+          <input matInput type="text"  formControlName="apellido" required>
         </mat-form-field>
       </div>
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
-          <input matInput type="text" id="email" name="email" [(ngModel)]="email" required>
+          <input matInput type="text"  formControlName="email" required>
         </mat-form-field>
       </div>
 
@@ -28,13 +28,13 @@
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Telefono</mat-label>
-          <input matInput type="text" id="telefono" name="telefono" [(ngModel)]="telefono" required>
+          <input matInput type="text"  formControlName="telefono" required>
         </mat-form-field>
       </div>
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Direccion</mat-label>
-          <input matInput type="text"  id="direccion" name="direccion" [(ngModel)]="direccion" required>
+          <input matInput type="text"   formControlName="direccion" required>
         </mat-form-field>
       </div>
 
@@ -43,9 +43,8 @@
           <mat-label>Comentario</mat-label>
           <textarea matInput
                     style="height: 100px; width: 100%;"
-                    id="comentario"
-                    name="comentario"
-                    [(ngModel)]="comentario"
+
+                    formControlName="comentario"
                     required>
           </textarea>
         </mat-form-field>
@@ -53,7 +52,7 @@
 
       <div class="form-actions">
         <button mat-raised-button color="primary" type="submit">Enviar</button>
-        <button mat-raised-button color="warn" type="reset" routerLink="/">Cancelar</button>
+        <button mat-raised-button color="warn" type="reset" (click)="cancelar()">Cancelar</button>
       </div>
 
 

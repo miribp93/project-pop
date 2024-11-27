@@ -7,6 +7,7 @@ import { CardComponent } from '../../components/card/card.component';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-adFilter',
@@ -17,6 +18,7 @@ import { MATERIAL_MODULES } from '../../components/material/material.component';
     RouterModule,
     CommonModule,
     CardComponent,
+
     MATERIAL_MODULES
   ],
   providers: [AdService],
@@ -28,6 +30,8 @@ export class AdFilterComponent implements OnInit {
   public tipoAd!: string;
   public AdPorId!: Ad | undefined;
 
+
+
   // Variables de paginación
   public pageSize = 8;  // Tamaño de la página (número de ads por página)
   public pageIndex = 0;  // Índice de la página actual
@@ -37,7 +41,8 @@ export class AdFilterComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private dataService: AdService
+    private dataService: AdService,
+
   ) {}
 
   ngOnInit(): void {

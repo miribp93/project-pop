@@ -6,11 +6,20 @@
       <!-- Tipo de Anuncio -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Tipo de Anuncio</mat-label>
-        <mat-select formControlName="adType" >
+        <mat-select formControlName="adType">
           <mat-option value="PRODUCT">Productos</mat-option>
           <mat-option value="SERVICE">Servicios</mat-option>
         </mat-select>
         <mat-error *ngIf="f['adType']?.hasError('required')">Tipo de Anuncio requerido</mat-error>
+      </mat-form-field>
+
+      <!-- Condicion -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Condición</mat-label>
+        <mat-select formControlName="condition">
+          <mat-option value="Nuevo">Nuevo</mat-option>
+          <mat-option value="Usado">Usado</mat-option>
+        </mat-select>
       </mat-form-field>
 
       <!-- Categoría -->
@@ -58,27 +67,25 @@
       <!-- Duración -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Duración</mat-label>
-        <input matInput formControlName="duration" >
-             </mat-form-field>
+        <input matInput formControlName="duration">
+      </mat-form-field>
 
-      <!-- Condición -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Condición</mat-label>
-        <input matInput formControlName="condition">
-        </mat-form-field>
+
+
 
       <!-- Selección de archivos -->
-      <div class="full-width">
+      <!-- <div class="full-width">
         <label for="file-input">Fotos </label>
         <input id="file-input" type="file" (change)="onFileSelect($event)" multiple>
-      </div>
+      </div> -->
+
 
       <!-- Acciones del formulario -->
       <div class="form-actions mt-3">
         <button mat-raised-button color="primary" type="submit" [disabled]="adForm.invalid">
           {{ editMode ? 'Actualizar' : 'Crear' }}
         </button>
-        <button mat-raised-button color="warn" type="button" (click)="adForm.reset()">Cancelar</button>
+        <button mat-raised-button color="warn" type="button" (click)="cancelar()">Cancelar</button>
       </div>
     </form>
   </mat-card>
