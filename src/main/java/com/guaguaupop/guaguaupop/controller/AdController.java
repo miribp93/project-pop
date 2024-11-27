@@ -77,9 +77,8 @@ public class AdController {
             @PathVariable Long idAd) {
         try {
             List<GetAdPhotosDTO> getAdPhotosDTOList = adService.getAdPhotos(idAd);
-            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(getAdPhotosDTOList);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(getAdPhotosDTOList);
+        } catch (RuntimeException e) { return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 

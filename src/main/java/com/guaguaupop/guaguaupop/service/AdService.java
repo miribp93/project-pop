@@ -139,9 +139,9 @@ public class AdService {
         return photoAds.stream() .map(photoAd -> {
             GetAdPhotosDTO getAdPhotosDTO = new GetAdPhotosDTO();
             getAdPhotosDTO.setIdPhoto(photoAd.getIdPhoto());
-            getAdPhotosDTO.setPhotos(photoAd.getPhotos());
-            return getAdPhotosDTO;
-        }) .collect(Collectors.toList());
+        getAdPhotosDTO.setPhotos(photoAd.getPhotos());
+        return getAdPhotosDTO;
+        }).collect(Collectors.toList());
     }
 
     // OBTENER ANUNCIOS POR FILTRADO DE CATEGORIA
