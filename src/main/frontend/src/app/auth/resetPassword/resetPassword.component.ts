@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -26,7 +27,8 @@ export class ResetPasswordComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private alert: NotificationService
   ) {
     this.resetPasswordForm = this.fb.group(
       {
@@ -83,14 +85,14 @@ export class ResetPasswordComponent {
 
     this.authService.resetPassword(resetData.email, resetData.newPass).subscribe(
       (response) => {
-        alert('Contraseña actualizada exitosamente');
+        this.alert.show('Contraseña actualizada exitosamente');
         this.router.navigate(['/login']); // Redirige al login después de la recuperación
       },
       (error) => {
         console.error('Error al restablecer contraseña', error);
         const errorMsg =
           error.error?.message || 'Error al restablecer la contraseña';
-        alert(errorMsg);
+        this.alert.show(errorMsg);
       }
     );
   }

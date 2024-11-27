@@ -8,6 +8,7 @@ import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { FormsModule } from '@angular/forms';
 import { Ad } from '../../interfaces/anuncio.interfaces';
 import { PageEvent } from '@angular/material/paginator';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-userProfile',
@@ -27,7 +28,8 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private adService: AdService,
-    private router: Router
+    private router: Router,
+    private alert: NotificationService
   ) {}
 
   public ads: Ad[] = []; // Lista completa de productos
@@ -76,7 +78,7 @@ export class UserProfileComponent implements OnInit {
     if (this.usuario) {
       this.authService.deleteUser().subscribe(
         () => {
-          alert('Cuenta eliminada con éxito');
+          this.alert.show('Cuenta eliminada con éxito');
           this.router.navigate(['/home']);
         },
         (error) => console.error('Error al eliminar usuario:', error)
@@ -109,7 +111,7 @@ export class UserProfileComponent implements OnInit {
 
       this.authService.uploadPhoto(formData).subscribe({
         next: (response) => {
-          alert('Foto de perfil actualizada correctamente');
+          this.alert.show('Foto de perfil actualizada correctamente');
           if (response.photoUrl) {
             this.photoPreview = response.photoUrl;
             this.isFileSelected = false;
@@ -123,7 +125,7 @@ export class UserProfileComponent implements OnInit {
             });
           }
         },
-        error: (err) => alert('Error al subir la foto de perfil: ' + err.message),
+        error: (err) => this.alert.show('Error al subir la foto de perfil: ' + err.message),
       });
     }
   }
@@ -153,16 +155,16 @@ export class UserProfileComponent implements OnInit {
     this.router.navigate(['/usercreateads']);
   }
 
-  modificarAnuncio(id_ad: number): void {
+  modificarAnuncio(idAd: number): void {
     this.router.navigate(['/usercreateads'], { queryParams: { editMode: true } });
-    console.log(`Modificar anuncio ${id_ad}`);
+    console.log(`Modificar anuncio ${idAd}`);
   }
 
   deleteAd(idAd: number): void {
 
     this.adService.deleteAd(idAd).subscribe(
       () => {
-        alert('Anucio eliminado con exito');
+        this.alert.show('Anucio eliminado con exito');
         this.loadAnuncios();
 
       },

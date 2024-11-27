@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-registro',
@@ -28,7 +29,7 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute // Inyectamos ActivatedRoute para obtener parámetros de URL
+    private route: ActivatedRoute,private alert: NotificationService
   ) {
     this.registerForm = this.fb.group(
       {
@@ -146,33 +147,36 @@ export class RegisterComponent {
         // Actualizar perfil
         this.authService.updateUser(userData).subscribe(
           () => {
-            alert('Perfil actualizado exitosamente');
+            this.alert.show('Perfil actualizado exitosamente');
             this.router.navigate(['/profile']);
           },
           (error) => {
             console.error('Error al actualizar perfil:', error);
-            alert('Error al actualizar perfil');
+            this.alert.show('Error al actualizar perfil');
           }
         );
       } else {
         // Registrar nuevo usuario
         this.authService.register(userData).subscribe(
           () => {
-            alert('Registro exitoso');
+            this.alert.show('Registro exitoso');
             this.router.navigate(['/login']);
           },
           (error) => {
             console.error('Error al registrar usuario:', error);
-            alert('Error al registrar usuario');
+            this.alert.show('Error al registrar usuario');
           }
         );
       }
     }
 
-
-
-
-
+    cancelar(){
+      if(this.editMode== true){
+        this.router.navigate(['/profile'])
+      }else {
+        this.router.navigate(['/'])
+      }
+    }
 
   loadUserData(): void {
     // Aquí se debería cargar la información del usuario logueado
@@ -193,7 +197,7 @@ export class RegisterComponent {
       },
       (error) => {
         console.error('Error al cargar datos de usuario:', error);
-        alert('No se pudieron cargar los datos del usuario.');
+        this.alert.show('No se pudieron cargar los datos del usuario.');
       }
     );
   }

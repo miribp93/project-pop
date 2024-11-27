@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { AuthService } from '../../services/auth.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,private alert: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +56,7 @@ export class LoginComponent implements OnInit {
 
           // Verificar si el usuario tiene el rol "Bloqueado"
           if (userRole === 'BLOCKED') {
-            alert('Usuario Bloqueado');
+            this.alert.show('Usuario Bloqueado');
             // Limpiar el almacenamiento para evitar accesos no autorizados
             localStorage.removeItem('token');
             localStorage.removeItem('role');
@@ -71,12 +72,12 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/home']);
           }
         } else {
-          alert('Inicio de sesión exitoso, pero no se recibió un token.');
+          this.alert.show('Inicio de sesión exitoso, pero no se recibió un token.');
         }
       },
       error => {
         console.error('Error en el inicio de sesión', error);
-        alert('Usuario o contraseña incorrectos');
+        this.alert.show('Usuario o contraseña incorrectos');
 
         this.password = '';
       }

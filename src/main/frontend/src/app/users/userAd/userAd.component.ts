@@ -10,6 +10,7 @@ import { AdService } from '../../services/ad.service';
 import { Ad } from '../../interfaces/anuncio.interfaces';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../services/notification.service';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class UserAdComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private adService: AdService,
-    private router: Router
+    private router: Router,
+    private alert: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -64,26 +66,30 @@ export class UserAdComponent implements OnInit {
     if (this.editMode) {
       this.adService.updateAd(ad).subscribe({
         next: () => {
-          alert('Anuncio actualizado exitosamente');
-          this.router.navigate(['/user-profile']);
+          this.alert.show('Anuncio actualizado exitosamente');
+          this.router.navigate(['/profile']);
         },
         error: (err) => {
           console.error('Error al actualizar el anuncio:', err);
-          alert('Error al actualizar el anuncio');
+          this.alert.show('Error al actualizar el anuncio');
         },
       });
     } else {
-      this.adService.createAd(ad, this.selectedFiles).subscribe({
+      this.adService.createAd(ad).subscribe({
         next: (response) => {
           console.log('Anuncio creado:', response);
-          alert('Anuncio creado exitosamente');
-          this.router.navigate(['/user-profile']);
+          this.alert.show('Anuncio creado exitosamente');
+          this.router.navigate(['/profile']);
         },
         error: (err) => {
           console.error('Error al crear anuncio:', err);
-          alert('Error al crear anuncio');
+          this.alert.show('Error al crear anuncio');
         },
       });
     }
+  }
+
+  cancelar(){
+    this.router.navigate(['/profile'])
   }
 }

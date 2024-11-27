@@ -21,10 +21,17 @@ export class CardComponent implements OnInit, OnDestroy {
   ad: Ad | undefined; // Asegúrate de que la propiedad 'ad' es del tipo 'Ad'
   imageUrl: string | undefined;
 
+
+
+
   ngOnInit(): void {
     if (this.ad && this.ad.photos && this.ad.photos.length > 0) {
       this.imageUrl = this.ad.photos[0];  // La primera foto es una cadena base64
     }
+  }
+
+  if () {
+
   }
 
 ngOnDestroy(): void {

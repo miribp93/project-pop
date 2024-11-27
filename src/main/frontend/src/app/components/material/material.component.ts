@@ -11,7 +11,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule} from '@angular/material/sidenav';
+
 
 
 export const MATERIAL_MODULES = [
@@ -30,6 +31,8 @@ export const MATERIAL_MODULES = [
   MatProgressSpinnerModule,
   MatSelectModule,
   MatSidenavModule,
+
+
 
 
 ];

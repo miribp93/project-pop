@@ -81,7 +81,7 @@
         <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
           {{ editMode ? 'Actualizar' : 'Registrar' }}
         </button>
-        <button mat-raised-button color="warn" type="reset">Cancelar</button>
+        <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
       </div>
     </form>
   </mat-card>

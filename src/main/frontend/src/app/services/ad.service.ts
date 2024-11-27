@@ -88,33 +88,27 @@ export class AdService {
   }
 
   // Método para crear un anuncio
-  createAd(ad: Ad, files: File[]): Observable<Ad> {
-    const formData = new FormData();
+  createAd(AdData: Ad): Observable<Ad> {
 
-    // Convertir el objeto `ad` a JSON y añadirlo al FormData como `ad`
-    formData.append('ad', JSON.stringify(ad));
-
-    // Agregar cada archivo al FormData bajo el nombre `photos`
-    files.forEach(file => {
-      formData.append('photos', file, file.name);
-    });
-
-    // Configurar el encabezado de autorización
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    return this.http.post<Ad>(`/api/ad/create`, formData, { headers }).pipe(
-      catchError(this.handleError)
-    );
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+    return this.http
+      .post<Ad>(`/api/ad/create`, AdData, { headers })
+      .pipe(catchError(this.handleError));
   }
 
-  // Método para modificar un anuncio
+
+
   updateAd(ad: Ad): Observable<Ad> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<Ad>(`/api/ad/${ad.idAd}`, ad, { headers }).pipe(
       catchError(this.handleError)
     );
   }
+
 
   // Método para eliminar un anuncio
   deleteAd(id : number): Observable<void> {
