@@ -1,30 +1,19 @@
 export interface Ad {
-  createdAt: string | number | Date; // ESTA LA HE CREADO PROVISIONALMETE POR QUE NO LA HAY EN LA BBDD
+  createdAt: string | number | Date;
   idAd: number;
   category: string;
   city: string;
   condition: string;
   description: string;
-  duration: string;
+  duration: number;
   price: number;
   title: string;
   id_user: number;
-  photos?: string[];  // Propiedad opcional para fotos
-  typeAd: string;
+  photos?: string[] | null ;
   type_ad: string;
 }
 
-export interface Ad_photo{
-  ad_id_ad: number;
-  photos: string;
-}
-
-export interface Ad_type{
-  id_ad: number;
-  type_ad: ImageBitmap;
-}
-
-export enum TipoAnuncio {
-  Producto = 'Producto',
-  Servicio = 'Servicio',
+export interface Ad_photo {
+  id_photo: number;
+  photos: string; // URL de la foto
 }

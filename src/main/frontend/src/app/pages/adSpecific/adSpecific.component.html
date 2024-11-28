@@ -25,10 +25,25 @@
 <ng-template #content>
   <div *ngIf="anun; else errorTemplate" class="form-prod grid p-2">
 
+
     <div class="container">
-      <div class="image-container">
-        <img src="chango2.webp" alt="">
+
+
+      <div class="image-container" *ngIf="anun?.photos?.length">
+        <img
+          *ngFor="let photo of anun.photos"
+          [src]="photo"
+          alt="Imagen del producto"
+          class="ad-photo"
+        />
       </div>
+
+
+
+
+
+
+
       <mat-card class="card">
         <mat-card-content>
           <mat-card-title class="title">
@@ -36,14 +51,13 @@
           </mat-card-title>
 
           <mat-list>
-            <mat-list-item *ngIf="anun.type_ad == 'PRODUCT'">Tipo: Producto</mat-list-item>
-            <mat-list-item *ngIf="anun.type_ad == 'SERVICE'">Tipo: Servicio</mat-list-item>
+            <mat-list-item *ngIf="anun?.type_ad === 'PRODUCT'">Tipo: Producto</mat-list-item>
+            <mat-list-item *ngIf="anun?.type_ad === 'SERVICE'">Tipo: Servicio</mat-list-item>
             <mat-list-item><span>Estado: </span>{{ anun.condition }}</mat-list-item>
             <mat-list-item><span>Categoría: </span>{{ anun.category }}</mat-list-item>
             <mat-list-item><span>Descripción: </span>{{ anun.description }}</mat-list-item>
             <mat-list-item><span>Precio: </span>{{ anun.price | currency:'EUR':'symbol' }}</mat-list-item>
           </mat-list>
-
 
           <div class="button-container">
             <button mat-stroked-button color="warn" (click)="regresar()">Regresar</button>
@@ -52,7 +66,5 @@
         </mat-card-content>
       </mat-card>
     </div>
-
-
   </div>
 </ng-template>

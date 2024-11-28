@@ -16,27 +16,28 @@ import { Ad } from '../../interfaces/anuncio.interfaces';
   styleUrls: ['./card.component.css'],
 })
 export class CardComponent implements OnInit, OnDestroy {
-  @Input()
+  @Input() ad: Ad | undefined; // Asegúrate de que la propiedad 'ad' es del tipo 'Ad'
+  imageUrl: string | undefined; // Variable para almacenar la URL de la imagen principal
 
-  ad: Ad | undefined; // Asegúrate de que la propiedad 'ad' es del tipo 'Ad'
-  imageUrl: string | undefined;
-
-
-
-
+  /**
+   * Lógica que se ejecuta al inicializar el componente
+   */
   ngOnInit(): void {
-    if (this.ad && this.ad.photos && this.ad.photos.length > 0) {
-      this.imageUrl = this.ad.photos[0];  // La primera foto es una cadena base64
+    // Verifica si existe 'ad' y si tiene fotos
+    if (this.ad?.photos?.length) {
+      // Asigna la URL de la primera foto al atributo 'imageUrl'
+      //this.imageUrl = this.ad.photos[0].photos;
+    } else {
+      // Opcional: define una imagen por defecto si no hay fotos
+      this.imageUrl = 'chango2.png';
     }
   }
 
-  if () {
-
+  /**
+   * Lógica que se ejecuta al destruir el componente
+   */
+  ngOnDestroy(): void {
+    // Realiza la limpieza necesaria al destruir el componente
+    console.log('CardComponent destruido');
   }
-
-ngOnDestroy(): void {
-  // Limpieza si fuera necesario
 }
-}
-
-
