@@ -5,10 +5,10 @@ import com.guaguaupop.guaguaupop.dto.ad.*;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.AdPhotos;
 import com.guaguaupop.guaguaupop.entity.TypeAd;
-import com.guaguaupop.guaguaupop.repository.AdRepository;
 import com.guaguaupop.guaguaupop.repository.PhotoAdRepository;
 import com.guaguaupop.guaguaupop.service.AdService;
 import com.guaguaupop.guaguaupop.service.CustomUserDetails;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public class AdController {
     private final AdService adService;
     private final PhotoAdRepository photoAdRepository;
 
-    /*// CREAR ANUNCIO
+    // CREAR ANUNCIO
     @PostMapping("/create")
     public ResponseEntity<?> createAd(
             @RequestBody CreateAdDTO createAdDTO,
@@ -44,11 +44,11 @@ public class AdController {
         } catch (IOException e) {
             return ResponseEntity.status(500).body(null);
         }
-    }*/
+    }
 
-    //Ivan
-    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> createAd(
+    //CREAR ANUNCIO Ivan
+    @PostMapping(value = "/create1", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createAd1(
             @RequestPart("createAdDTO") String createAdDTOJson,
             @RequestPart("photos") MultipartFile[] files,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -107,10 +107,10 @@ public class AdController {
         return fileType != null && (fileType.equals("image/jpeg") || fileType.equals("image/png"));
     }
 
-    //Ivan
+    //Ivan2
     @GetMapping("/photo/ad/{idAd}")
-    public ResponseEntity<?> getAdPhoto (@PathVariable Long idAd) {
-
+    public ResponseEntity<?> getAdPhoto (
+            @PathVariable Long idAd) {
         AdPhotos photos = photoAdRepository.getReferenceById(idAd);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(photos.getPhotos());
     }
