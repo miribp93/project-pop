@@ -102,6 +102,27 @@ public class AdService {
         return savedAd;
     }
 
+    public Ad createAd1(CreateAdDTO createAdDTO, Long idUser) throws IOException {
+
+        User user = userRepository.findById(idUser).orElseThrow(UserNotExistsException::new);
+
+        Ad ad = Ad.builder()
+                .title(createAdDTO.getTitle())
+                .price(createAdDTO.getPrice())
+                .category(createAdDTO.getCategory())
+                .description(createAdDTO.getDescription())
+                .city(createAdDTO.getCity())
+                .typeAd(Collections.singleton(createAdDTO.getTypeAd()))
+                .condition(createAdDTO.getCondition())
+                .duration(createAdDTO.getDuration())
+                .user(user)
+                .build();
+
+        Ad savedAd = adRepository.save(ad);
+        log.info("Anuncio guardado correctamente: {}", savedAd);
+        return savedAd;
+    }
+
     // SUBIR FOTOS ANUNCIO
     @Transactional
     public void addPhotosToAd(Long idAd, MultipartFile[] files, Long idUser) throws IOException {
