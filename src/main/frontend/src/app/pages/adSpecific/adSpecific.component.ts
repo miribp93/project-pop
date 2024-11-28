@@ -53,6 +53,7 @@ export class AdSpecificComponent implements OnInit {
             this.router.navigateByUrl('home'); // Navega a `home` si no encuentra el anuncio
           } else {
             this.anun = anun;
+            console.log(this.anun)
           }
         },
         error: (err) => {

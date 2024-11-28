@@ -1,33 +1,68 @@
-.error-container {
-  display: flex;
-  justify-content: center;
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Imagen 2/3, Card 1/3 */
+  gap: 10px; /* Espaciado entre elementos */
+  max-height: 500px;
+  max-width: 80%; /* Ancho máximo opcional */
+  aspect-ratio: 1 / 1; /* Forma cuadrada o casi cuadrada */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Sombra opcional */
+}
+
+.image-container {
+  display: flex; /* Centra la imagen */
   align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0; /* Fondo opcional */
+  border-radius: 8px; /* Bordes redondeados opcionales */
+}
+
+.image-container img {
+  width: 100%;
   height: 100%;
-  text-align: center;
+  object-fit: contain; /* La imagen se ajusta completamente sin recortarse */
+  border-radius: 8px; /* Bordes redondeados opcionales */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Espacia el texto y los botones */
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px; /* Bordes redondeados opcionales */
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espaciado entre los elementos */
+  flex-grow: 1;
+  overflow: visible; /* Asegura que todo el contenido sea visible */
+}
+
+.mat-list {
+  flex-grow: 1; /* Permite que el texto crezca según sea necesario */
+  overflow: auto; /* Añade scroll si el contenido es demasiado largo */
+}
+
+.mat-list-item {
+  white-space: normal; /* Permite texto en múltiples líneas */
+  word-wrap: break-word; /* Asegura que las palabras largas no desborden */
+  overflow: visible; /* Asegura que el contenido sea visible */
+}
+
+mat-card-title,
+mat-list-item {
+  text-overflow: unset; /* Desactiva los puntos suspensivos */
+  overflow: visible; /* Permite que todo el contenido sea visible */
 }
 
 .button-container {
   display: flex;
+  justify-content: flex-start; /* Botones alineados a la izquierda */
   gap: 10px;
-  margin-top: 20px;
+  margin-top: auto; /* Empuja los botones hacia la parte inferior */
 }
-
-.form-prod {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+.title{
+  text-align: center;
 }
-
-.grid {
-  width: 100%;
-}
-
-.container {
-  width: 70%;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
-  /* background-image: radial-gradient(circle at 14.64% -11.24%, #fffff4 0, #f6fff0 8.33%, #ecffec 16.67%, #e1ffe8 25%, #d4fce4 33.33%, #c5f7e1 41.67%, #b5f2de 50%, #a4eddd 58.33%, #93e8dd 66.67%, #83e3de 75%, #74dee1 83.33%, #65dae5 91.67%, #59d6e9 100%); */
-}
-
-

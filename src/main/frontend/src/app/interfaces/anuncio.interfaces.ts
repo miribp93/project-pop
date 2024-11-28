@@ -11,6 +11,7 @@ export interface Ad {
   id_user: number;
   photos?: string[];  // Propiedad opcional para fotos
   typeAd: string;
+  type_ad: string;
 }
 
 export interface Ad_photo{

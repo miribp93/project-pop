@@ -24,31 +24,35 @@
 
 <ng-template #content>
   <div *ngIf="anun; else errorTemplate" class="form-prod grid p-2">
-    <mat-card class="container col-12 sm:col-6 mt-3">
 
-      <mat-card-content>
+    <div class="container">
+      <div class="image-container">
+        <img src="chango2.webp" alt="">
+      </div>
+      <mat-card class="card">
+        <mat-card-content>
+          <mat-card-title class="title">
+            <b>{{ anun.title }}</b>
+          </mat-card-title>
 
-        <mat-card-title>
-          <span>Titulo: </span>{{ anun.title }}
-        </mat-card-title>
-        <mat-card-title>
-          <span>Tipo:</span> {{ anun.typeAd }}
-        </mat-card-title>
-        <br>
-        <mat-list>
-          <mat-card-title>Información</mat-card-title>
+          <mat-list>
+            <mat-list-item *ngIf="anun.type_ad == 'PRODUCT'">Tipo: Producto</mat-list-item>
+            <mat-list-item *ngIf="anun.type_ad == 'SERVICE'">Tipo: Servicio</mat-list-item>
+            <mat-list-item><span>Estado: </span>{{ anun.condition }}</mat-list-item>
+            <mat-list-item><span>Categoría: </span>{{ anun.category }}</mat-list-item>
+            <mat-list-item><span>Descripción: </span>{{ anun.description }}</mat-list-item>
+            <mat-list-item><span>Precio: </span>{{ anun.price | currency:'EUR':'symbol' }}</mat-list-item>
+          </mat-list>
 
-          <mat-list-item><span>Tipo: </span>{{ anun.typeAd }}</mat-list-item>
-          <mat-list-item><span>Descripción: </span>{{ anun.description }}</mat-list-item>
-          <mat-list-item><span>Precio: </span>{{ anun.price | currency:'EUR':'symbol' }}</mat-list-item>
-        </mat-list>
 
-        <div class="button-container">
-          <button mat-stroked-button color="warn" (click)="regresar()">Regresar</button>
-          <button mat-flat-button color="primary" (click)="comprar()">Comprar</button>
-        </div>
-      </mat-card-content>
-    </mat-card>
+          <div class="button-container">
+            <button mat-stroked-button color="warn" (click)="regresar()">Regresar</button>
+            <button mat-flat-button color="primary" (click)="comprar()">Comprar</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
   </div>
 </ng-template>
-
