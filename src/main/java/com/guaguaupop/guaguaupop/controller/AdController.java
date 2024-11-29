@@ -1,6 +1,7 @@
 package com.guaguaupop.guaguaupop.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.guaguaupop.guaguaupop.dto.ad.*;
 import com.guaguaupop.guaguaupop.entity.Ad;
 import com.guaguaupop.guaguaupop.entity.AdPhotos;
@@ -9,8 +10,10 @@ import com.guaguaupop.guaguaupop.repository.PhotoAdRepository;
 import com.guaguaupop.guaguaupop.service.AdService;
 import com.guaguaupop.guaguaupop.service.CustomUserDetails;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +27,16 @@ import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
+@RequiredArgsConstructor
+@Data
 @RestController
 @RequestMapping("/api/ad")
-@RequiredArgsConstructor
 public class AdController {
 
     private final AdService adService;
     private final PhotoAdRepository photoAdRepository;
+    private final ObjectMapper objectMapper;
+
 
     // CREAR ANUNCIO
     @PostMapping("/create")
@@ -67,7 +73,6 @@ public class AdController {
             Ad ad = adService.createAd(createAdDTO, userDetails.getIdUser());
             // Agregar las fotos al anuncio
             adService.addPhotosToAd(ad.getIdAd(), files, userDetails.getIdUser());
-            // Devolver el anuncio creado como respuesta
             return ResponseEntity.ok(ad);
 
         } catch (IOException e) {
@@ -102,7 +107,9 @@ public class AdController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
-    } private boolean isValidFileType(MultipartFile file) {
+    }
+
+    private boolean isValidFileType(MultipartFile file) {
         String fileType = file.getContentType();
         return fileType != null && (fileType.equals("image/jpeg") || fileType.equals("image/png"));
     }
@@ -198,37 +205,37 @@ public class AdController {
     }
 
     // ACTUALIZAR ANUNCIO
-    @PutMapping(value = "/update/{idAd}", consumes = "multipart/form-data")
+    @PutMapping(value = "/update/{idAd}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateAd(
             @PathVariable Long idAd,
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestParam Optional<String> title,
-            @RequestParam Optional<String> description,
-            @RequestParam Optional<Double> price,
-            @RequestParam Optional<String> category,
-            @RequestParam Optional<String> city,
-            @RequestParam Optional<Integer> duration,
-            @RequestParam Optional<String> condition,
-            @RequestParam Optional<Set<TypeAd>> typeAd) {
+            @RequestPart("updateAdDTO") String updateAdDTOJson,
+            @RequestPart(value = "photos", required = false) MultipartFile[] files,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+            ) {
                 if (userDetails == null) {
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
                 }
-                try {
-                    UpdateAdDTO updatedAd = new UpdateAdDTO();
-                    updatedAd.setTitle(title);
-                    updatedAd.setDescription(description);
-                    updatedAd.setPrice(price);
-                    updatedAd.setCategory(category);
-                    updatedAd.setCity(city);
-                    updatedAd.setDuration(duration);
-                    updatedAd.setCondition(condition);
-                    updatedAd.setTypeAd(typeAd);
-                    GetAdCompleteDTO ad = adService.updateAd(idAd, userDetails.getIdUser(), updatedAd);
-                    return ResponseEntity.ok(ad);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el anuncio: " + e.getMessage());
-                }
-    }
+        try {
+            UpdateAdDTO updateAdDTO = objectMapper.readValue(updateAdDTOJson, UpdateAdDTO.class);
 
+            if (files != null && files.length > 0) {
+                try {
+
+                    photoAdRepository.deleteByAd_IdAd(idAd);
+                    adService.addPhotosToAd(idAd, files, userDetails.getIdUser());
+
+                } catch (IOException e) {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error subiendo fotos: " + e.getMessage());
+                }
+            }
+            GetAdCompleteDTO ad = adService.updateAd(idAd, userDetails.getIdUser(), updateAdDTO);
+            return ResponseEntity.ok(ad);
+
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error subiendo fotos: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el anuncio: " + e.getMessage());
+        }
+    }
 }
