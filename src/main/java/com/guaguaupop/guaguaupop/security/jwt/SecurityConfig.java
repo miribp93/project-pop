@@ -55,6 +55,16 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement->sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(withDefaults()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
+        /*http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth->auth
+                        .requestMatchers("/api/**"
+                        ).authenticated()
+                        .anyRequest().permitAll())
+                .exceptionHandling(exceptionHandling->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .sessionManagement(sessionManagement->sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(withDefaults()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);*/
+
         return http.build();
     }
 
@@ -65,6 +75,7 @@ public class SecurityConfig {
             public void addCorsMappings(@NotNull CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:4200")
+                        .allowedOrigins("http://guaguapop.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
