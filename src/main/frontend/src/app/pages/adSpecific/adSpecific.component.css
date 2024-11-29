@@ -68,3 +68,48 @@ mat-card-title,
 .title {
   text-align: center;
 }
+
+
+
+.carousel-container {
+  position: relative;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  max-height: 500px; /* Ajustar según sea necesario */
+  overflow: hidden;
+}
+
+.ad-photo {
+width: 100%; /* Ajustar para que se ajuste al contenedor */
+  height: auto;
+  display: none; /* Escondemos las imágenes por defecto */
+}
+
+.ad-photo.active {
+  display: block; /* Solo mostramos la imagen activa */
+}
+
+button.prev, button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+}
+
+button.prev {
+  left: 10px;
+}
+
+button.next {
+  right: 10px;
+}

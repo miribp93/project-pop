@@ -61,7 +61,7 @@
 
     <mat-card *ngFor="let ad of ads" class="ad-card mt-2">
 
-      <mat-card-content>Id: {{ad.idAd}} - Nombre:{{ ad.title }} - Precio:{{ ad.price }} </mat-card-content>
+      <mat-card-content>Id: {{ad.id_ad}} - Nombre:{{ ad.title }} - Precio:{{ ad.price }} </mat-card-content>
 
       <div class="buttons">
         <button mat-stroked-button color="primary" (click)="modificarAnuncio(ad.idAd)">

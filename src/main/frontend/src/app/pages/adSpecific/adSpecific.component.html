@@ -29,18 +29,30 @@
     <div class="container">
 
 
-      <div class="image-container" *ngIf="anun?.photos?.length">
+      <!-- <div class="image-container" *ngIf="anun?.photos?.length">
         <img
           *ngFor="let photo of anun.photos"
           [src]="photo"
           alt="Imagen del producto"
           class="ad-photo"
         />
+      </div> -->
+
+      <div class="carousel-container">
+        <div class="image-container">
+          <!-- Mostramos solo la imagen con el índice activo -->
+          <img
+            *ngFor="let photo of anun.photos; let i = index"
+            [src]="photo"
+            alt="Imagen del producto"
+            class="ad-photo"
+            [class.active]="i === currentIndex"
+          />
+        </div>
+        <!-- Botones de navegación -->
+        <button class="prev" (click)="changeImage(-1)">&#10094;</button>
+        <button class="next" (click)="changeImage(1)">&#10095;</button>
       </div>
-
-
-
-
 
 
 

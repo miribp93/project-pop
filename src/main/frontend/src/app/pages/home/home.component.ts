@@ -7,15 +7,12 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
 import { AuthService } from '../../services/auth.service';
 import { Route, Router } from '@angular/router';
+import { forkJoin, map } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    CommonModule,
-    CardComponent,
-    MATERIAL_MODULES
-  ],
+  imports: [CommonModule, CardComponent, MATERIAL_MODULES],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   providers: [AdService, AuthService],
@@ -29,20 +26,31 @@ export class HomeComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined; // Referencia al paginator
 
-  constructor(private adService: AdService ,
-              private authService: AuthService,
-              private router:Router) {}
+  constructor(
+    private adService: AdService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.adService.getAllAds().subscribe(
       (ads) => {
         console.log('Datos recibidos:', ads);
-        this.ads = ads.map(ad => ({
-          ...ad,
-          photos: ad.photos || [] // Asegúrate de que photos siempre esté definido como array
-        }));
-        this.totalLength = this.ads.length;
-        this.setPaginatedProducts();
+        const adRequests = ads.map((ad) =>
+          this.adService.getAdPhoto(ad.id_ad).pipe(
+            map((photos) => ({ ...ad, photos })) // Combina el anuncio con sus fotos
+          )
+        );
+
+        // Combina todas las llamadas a fotos
+        forkJoin(adRequests).subscribe(
+          (adsWithPhotos) => {
+            this.ads = adsWithPhotos;
+            this.totalLength = this.ads.length;
+            this.setPaginatedProducts();
+          },
+          (error) => console.error('Error al cargar fotos:', error)
+        );
       },
       (error) => console.error('Error en la carga de datos:', error)
     );
@@ -53,31 +61,28 @@ export class HomeComponent implements OnInit {
       this.router.navigateByUrl('profile'); // Redirigir a la plataforma de pago si está logueado
     } else {
       // Redirigir al login con queryParams indicando el producto y la ruta de redirección
-      this.router.navigate(['/login'], {
-
-      });
+      this.router.navigate(['/login'], {});
     }
   }
 
   // Añadimos un atributo para almacenar el criterio de orden
-public ordenCriterio: string = '';
+  public ordenCriterio: string = '';
 
-ordenarAnuncios(event: any): void {
-  const criterio = event.target.value; // Obtener el criterio seleccionado
-  this.ordenCriterio = criterio; // Guardar el criterio para referencia
+  ordenarAnuncios(event: any): void {
+    const criterio = event.target.value; // Obtener el criterio seleccionado
+    this.ordenCriterio = criterio; // Guardar el criterio para referencia
 
-  if (criterio === 'fecha') {
-    this.ads.sort((a, b) => +new Date(a.createdAt) - +new Date(b.createdAt)); // Ordenar por fecha
-  } else if (criterio === 'precio') {
-    this.ads.sort((a, b) => a.price - b.price); // Ordenar por precio
-  } else if (criterio === 'nombre') {
-    this.ads.sort((a, b) => a.title.localeCompare(b.title)); // Ordenar alfabéticamente
+    if (criterio === 'fecha') {
+      this.ads.sort((a, b) => +new Date(a.createdAt) - +new Date(b.createdAt)); // Ordenar por fecha
+    } else if (criterio === 'precio') {
+      this.ads.sort((a, b) => a.price - b.price); // Ordenar por precio
+    } else if (criterio === 'nombre') {
+      this.ads.sort((a, b) => a.title.localeCompare(b.title)); // Ordenar alfabéticamente
+    }
+
+    // Una vez ordenado, actualiza los productos paginados
+    this.setPaginatedProducts();
   }
-
-  // Una vez ordenado, actualiza los productos paginados
-  this.setPaginatedProducts();
-}
-
 
   // Establece los productos que se mostrarán según la página actual y tamaño
   setPaginatedProducts(): void {
@@ -92,6 +97,4 @@ ordenarAnuncios(event: any): void {
     this.pageIndex = event.pageIndex;
     this.setPaginatedProducts(); // Actualizar los productos paginados
   }
-
-
 }

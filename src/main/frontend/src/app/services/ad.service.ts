@@ -70,7 +70,6 @@ export class AdService {
       })
     );
   }
-  // Método para obtener la foto de perfil
   getAdPhoto(id: number): Observable<string[]> {
     return this.http.get<{ photos: string }[]>(`/api/ad/photos/${id}`).pipe(
       map((response) =>
@@ -81,7 +80,8 @@ export class AdService {
 
 
 
-  //Metodo para obtener los anuncios de cada usuario
+  //Metodo para
+  // Método para obtener la foto de perfil obtener los anuncios de cada usuario
   getMyAds(): Observable<Ad[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });

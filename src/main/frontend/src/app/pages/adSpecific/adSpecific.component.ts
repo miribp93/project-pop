@@ -6,12 +6,12 @@ import { AuthService } from '../../services/auth.service';
 import { forkJoin, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MATERIAL_MODULES } from '../../components/material/material.component';
-import { SlickCarouselModule } from 'ngx-slick-carousel';
+
 
 @Component({
   selector: 'app-adSpecific',
   standalone: true,
-  imports: [CommonModule, MATERIAL_MODULES,SlickCarouselModule],
+  imports: [CommonModule, MATERIAL_MODULES],
   templateUrl: './adSpecific.component.html',
   styleUrls: ['./adSpecific.component.css'],
   providers: [AdService],
@@ -20,6 +20,8 @@ export class AdSpecificComponent implements OnInit {
   public anun?: Ad; // Contiene los datos del anuncio
   public isLoading: boolean = true; // Controla el spinner
   public errorMessage: string = ''; // Mensaje de error para el usuario
+
+  public currentIndex: number = 0; // Índice de la imagen actual
 
 
   constructor(
@@ -88,4 +90,11 @@ export class AdSpecificComponent implements OnInit {
       });
     }
   }
+
+    // Función para cambiar de imagen
+    changeImage(direction: number): void {
+      if (this.anun?.photos?.length) {
+        this.currentIndex = (this.currentIndex + direction + this.anun.photos.length) % this.anun.photos.length;
+      }
+    }
 }

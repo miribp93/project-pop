@@ -1,6 +1,7 @@
 export interface Ad {
   createdAt: string | number | Date;
   idAd: number;
+  id_ad: number;
   category: string;
   city: string;
   condition: string;
