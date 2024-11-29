@@ -116,10 +116,16 @@ export class AdService {
       .pipe(catchError(this.handleError));
   }
 
-  updateAd(ad: Ad): Observable<Ad> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  updateAd(id: number ,ad: Ad): Observable<Ad> {
+
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+
     return this.http
-      .put<Ad>(`/api/ad/${ad.idAd}`, ad, { headers })
+      .put<Ad>(`/api/update/${id}`, ad, { headers })
       .pipe(catchError(this.handleError));
   }
 

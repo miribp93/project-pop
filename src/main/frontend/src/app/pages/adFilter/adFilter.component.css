@@ -14,6 +14,7 @@
 .producto-card {
   flex: 1 1 100%; /* En pantallas pequeñas, cada tarjeta ocupa el 100% de la fila */
   max-width: 300px; /* Limita el ancho máximo de las tarjetas */
+  object-fit: contain; /* Ajusta la imagen sin distorsionarla */
 }
 
 /* Pantalla de tablet */

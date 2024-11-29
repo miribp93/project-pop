@@ -46,7 +46,7 @@ export class UserProfileComponent implements OnInit {
         if (user && user.profile_photo) {
           this.photoPreview = user.profile_photo;
         } else {
-          this.loadProfilePhoto();  // Llamada explícita si no hay foto en los datos del usuario
+          this.loadProfilePhoto(); // Llamada explícita si no hay foto en los datos del usuario
         }
       },
       (error) => console.error('Error al cargar usuario:', error)
@@ -68,7 +68,6 @@ export class UserProfileComponent implements OnInit {
       (error) => console.error('Error al cargar la foto de perfil:', error)
     );
   }
-
 
   modificarDatos(): void {
     this.router.navigate(['/register'], { queryParams: { editMode: true } });
@@ -103,7 +102,6 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-
   uploadPhoto(): void {
     if (this.selectedFile) {
       const formData = new FormData();
@@ -125,19 +123,18 @@ export class UserProfileComponent implements OnInit {
             });
           }
         },
-        error: (err) => this.alert.show('Error al subir la foto de perfil: ' + err.message),
+        error: (err) =>
+          this.alert.show('Error al subir la foto de perfil: ' + err.message),
       });
     }
   }
-
 
   // Mostrar el formulario para seleccionar archivo
   selectFile(): void {
     this.isFileSelected = !this.isFileSelected;
   }
 
-
-//METODSOS PARA ANUNCIOS
+  //METODSOS PARA ANUNCIOS
 
   loadAnuncios(): void {
     this.adService.getMyAds().subscribe(
@@ -151,22 +148,22 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
-  userCreateAd(){
+  userCreateAd() {
     this.router.navigate(['/usercreateads']);
   }
 
   modificarAnuncio(idAd: number): void {
-    this.router.navigate(['/usercreateads'], { queryParams: { editMode: true } });
+    this.router.navigate(['/usercreateads'], {
+      queryParams: { editMode: true, id: idAd },
+    });
     console.log(`Modificar anuncio ${idAd}`);
   }
 
   deleteAd(idAd: number): void {
-
     this.adService.deleteAd(idAd).subscribe(
       () => {
         this.alert.show('Anucio eliminado con exito');
         this.loadAnuncios();
-
       },
       (error) => console.error('Error al eliminar usuario:', error)
     );
@@ -186,6 +183,3 @@ export class UserProfileComponent implements OnInit {
     this.setPaginatedProducts(); // Actualizar los productos paginados
   }
 }
-
-
-

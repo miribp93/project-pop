@@ -64,10 +64,10 @@
       <mat-card-content>Id: {{ad.id_ad}} - Nombre:{{ ad.title }} - Precio:{{ ad.price }} </mat-card-content>
 
       <div class="buttons">
-        <button mat-stroked-button color="primary" (click)="modificarAnuncio(ad.idAd)">
+        <button mat-stroked-button color="primary" (click)="modificarAnuncio(ad.id_ad)">
           Modificar
         </button>
-        <button mat-fab color="warn" (click)="deleteAd(ad.idAd)">
+        <button mat-fab color="warn" (click)="deleteAd(ad.id_ad)">
           <mat-icon>delete</mat-icon>
         </button>
       </div>

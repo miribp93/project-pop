@@ -126,18 +126,21 @@ export class AdFilterComponent implements OnInit {
     });
   }
 
-  // Cargar fotos para los anuncios filtrados
-  loadPhotosForAds(ads: Ad[]): void {
-    ads.forEach(ad => {
-      if (ad.id_ad) {
-        this.adService.getAdPhoto(ad.id_ad).subscribe(photos => {
-          ad.photos = photos || []; // Asigna las fotos al anuncio
-        });
-      } else {
-        console.error('El ID del anuncio es undefined:');
-      }
-    });
-  }
+
+  // Cargar fotos para los anuncios filtrados (solo la primera foto)
+loadPhotosForAds(ads: Ad[]): void {
+  ads.forEach(ad => {
+    if (ad.id_ad) {
+      this.adService.getAdPhoto(ad.id_ad).subscribe(photos => {
+        // Asigna solo la primera foto (si existe)
+        ad.photos = photos && photos.length > 0 ? [photos[0]] : [];
+      });
+    } else {
+      console.error('El ID del anuncio es undefined:');
+    }
+  });
+}
+
 
 
   // Configura los anuncios que se mostrarán en la página actual
