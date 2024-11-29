@@ -1,49 +1,49 @@
+/* Estilos generales de la barra superior */
 .top-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-
-
 }
+
+/* Barra de navegación (en pantallas grandes) */
 .nav-bar {
   display: flex;
   justify-content: center;
   gap: 15px;
   color: black;
-
-
 }
 
+/* Estilos del logo */
 .logo {
   height: 180px;
   padding-top: 75px;
   padding-bottom: 10px;
-  margin: 30px
-
+  margin: 30px;
 }
+
 .logo-small {
   display: none; /* Ocultar el logo pequeño por defecto */
   height: 50px; /* Tamaño para el logo pequeño */
-  margin: 0; /* Ajustar márgenes según sea necesario */
+  margin: 0;
 }
 
+/* Espaciador para dividir los elementos en la barra superior */
 .spacer {
   flex-grow: 1;
 }
 
+/* Botones de usuario */
 .user-buttons {
   display: flex;
   gap: 10px;
 }
+
 .mat-menu-item {
   width: 100%; /* Asegurar que cada botón ocupe toda la línea */
-  text-align: left; /* Opcional: Alinear texto a la izquierda */
+  text-align: left;
   margin-bottom: 5px; /* Espaciado entre botones */
 }
-
-
-
 
 /* Estilos para pantallas pequeñas */
 @media (max-width: 850px) {
@@ -54,17 +54,33 @@
   .top-bar .user-buttons {
     display: none; /* Ocultar botones de usuario en pantallas pequeñas */
   }
+
   .logo {
     display: none; /* Ocultar el logo en pantallas pequeñas */
   }
+
   .logo-small {
     display: block; /* Mostrar el logo pequeño en pantallas pequeñas */
   }
-
-
-
 }
 
+/* Estilos para la barra de búsqueda */
+.search {
 
+  flex-grow: 1; /* Permite que el buscador ocupe el espacio disponible */
+  max-width: 900px; /* Ajusta el tamaño máximo del contenedor de búsqueda */
+  width: 600%;
+}
 
+/* Asegurarse de que el formulario de búsqueda tenga un tamaño adecuado */
+.search form {
+  width: 100%;
+  max-width: 500px; /* Ajusta el valor según el tamaño que desees */
+}
 
+/* Estilos para pantallas pequeñas o medianas */
+@media (max-width: 768px) {
+  .search {
+    display: none; /* Ocultar el campo de búsqueda en pantallas medianas o más pequeñas */
+  }
+}

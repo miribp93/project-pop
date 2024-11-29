@@ -38,7 +38,10 @@ export class HomeComponent implements OnInit {
         console.log('Datos recibidos:', ads);
         const adRequests = ads.map((ad) =>
           this.adService.getAdPhoto(ad.id_ad).pipe(
-            map((photos) => ({ ...ad, photos })) // Combina el anuncio con sus fotos
+            map((photos) => ({
+              ...ad,
+              photos: photos.length > 0 ? [photos[0]] : [] // Solo tomar la primera foto, o un array vacío si no hay fotos
+            }))
           )
         );
 
@@ -55,6 +58,7 @@ export class HomeComponent implements OnInit {
       (error) => console.error('Error en la carga de datos:', error)
     );
   }
+
 
   vender(): void {
     if (this.authService.isAuthenticated()) {
