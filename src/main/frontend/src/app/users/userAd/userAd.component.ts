@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AdService } from '../../services/ad.service';
 import { Ad } from '../../interfaces/anuncio.interfaces';
@@ -17,13 +12,13 @@ import { NotificationService } from '../../services/notification.service';
   standalone: true,
   imports: [MATERIAL_MODULES, CommonModule, ReactiveFormsModule],
   templateUrl: './userAd.component.html',
-  styleUrls: ['./userAd.component.css'], // Corregido el nombre
+  styleUrls: ['./userAd.component.css'],
 })
 export class UserAdComponent implements OnInit {
   adForm!: FormGroup;
   selectedFiles: File[] = [];
   editMode = false;
-  adId: number | null = null; // Guardamos el ID del anuncio si estamos en edición
+  adId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +30,7 @@ export class UserAdComponent implements OnInit {
 
   ngOnInit(): void {
     this.adForm = this.fb.group({
-      adType: ['', Validators.required],
+      typeAd: ['', Validators.required],
       category: ['', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -47,16 +42,10 @@ export class UserAdComponent implements OnInit {
 
     this.route.queryParams.subscribe((params) => {
       this.editMode = params['editMode'] === 'true';
+      this.adId = params['id'] ? Number(params['id']) : null;
 
-      // Obtener el ID y convertirlo a número
-      const idParam = params['id'];
-      if (idParam) {
-        this.adId = Number(idParam);  // Convertir de string a number
-      }
-
-      // Si estamos en modo edición y tenemos un ID válido, cargar los datos del anuncio
       if (this.editMode && this.adId) {
-        this.loadAdData(this.adId); // Pasar el ID como número
+        this.loadAdData(this.adId);
       }
     });
   }
@@ -77,30 +66,19 @@ export class UserAdComponent implements OnInit {
       return;
     }
 
-    const ad: Ad = this.adForm.value;
+    const adData: Ad = {
+      ...this.adForm.value,
+    };
 
     if (this.editMode && this.adId) {
-      // Modo edición: actualizar anuncio
-      this.adService.updateAd(this.adId, ad).subscribe({
-        next: () => {
-          this.alert.show('Anuncio actualizado exitosamente');
-          this.router.navigate(['/profile']);
-        },
-        error: (err) => {
-          console.error('Error al actualizar el anuncio:', err);
-          this.alert.show('Error al actualizar el anuncio');
-        },
-      });
+      this.updateAd(this.adId, adData, this.selectedFiles);
     } else {
-      // Modo creación: crear nuevo anuncio
-      this.adService.createAd(ad).subscribe({
+      this.adService.createAd(adData, this.selectedFiles).subscribe({
         next: (response) => {
-          console.log('Anuncio creado:', response);
           this.alert.show('Anuncio creado exitosamente');
           this.router.navigate(['/profile']);
         },
         error: (err) => {
-          console.error('Error al crear anuncio:', err);
           this.alert.show('Error al crear anuncio');
         },
       });
@@ -112,24 +90,35 @@ export class UserAdComponent implements OnInit {
   }
 
   private loadAdData(adId: number): void {
-    if (!this.adId) return;
-
-    this.adService.getAdComplete(this.adId).subscribe({
+    this.adService.getAdComplete(adId).subscribe({
       next: (ad) => {
-        this.adForm.patchValue({
-          adType: ad?.type_ad,
-          category: ad?.category,
-          title: ad?.title,
-          description: ad?.description,
-          city: ad?.city,
-          price: ad?.price,
-          duration: ad?.duration,
-          condition: ad?.condition,
-        });
+        if (ad) {
+          this.adForm.patchValue(ad); // Solo se aplica si 'ad' no es undefined
+        } else {
+          console.error('No se encontró el anuncio con el ID proporcionado.');
+          this.alert.show('No se pudo cargar el anuncio, inténtelo de nuevo.');
+        }
       },
       error: (err) => {
         console.error('Error al cargar datos del anuncio:', err);
         this.alert.show('No se pudieron cargar los datos del anuncio.');
+      },
+    });
+  }
+
+
+  private updateAd(adId: number, adData: Ad, files: File[]): void {
+    const formData = new FormData();
+    formData.append('createAdDTO', JSON.stringify(adData));
+    files.forEach((file) => formData.append('photos', file));
+
+    this.adService.updateAd(adId, formData).subscribe({
+      next: () => {
+        this.alert.show('Anuncio actualizado exitosamente');
+        this.router.navigate(['/profile']);
+      },
+      error: () => {
+        this.alert.show('Error al actualizar el anuncio');
       },
     });
   }

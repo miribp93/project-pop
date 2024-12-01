@@ -105,29 +105,47 @@ export class AdService {
   }
 
   // Método para crear un anuncio
-  createAd(AdData: Ad): Observable<Ad> {
+  // createAd(AdData: Ad): Observable<Ad> {
+  //   const token = localStorage.getItem('token');
+  //   const headers = new HttpHeaders({
+  //     Authorization: `Bearer ${token}`,
+  //     'Content-Type': 'application/json',
+  //   });
+  //   return this.http
+  //     .post<Ad>(`/api/ad/create`, AdData, { headers })
+  //     .pipe(catchError(this.handleError));
+  // }
+
+   // Método para crear anuncio con archivos
+   createAd(adData: Ad, files: File[]): Observable<Ad> {
+    const formData = new FormData();
+    const token = localStorage.getItem('token');
+
+    // Agregar datos del anuncio como JSON
+    formData.append('createAdDTO', JSON.stringify(adData));
+
+    // Agregar fotos
+    files.forEach((file) => formData.append('photos', file));
+
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    return this.http.post<Ad>(`/api/ad/create1`, formData, { headers });
+  }
+
+
+
+
+  updateAd(adId: number, formData: FormData): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    });
-    return this.http
-      .post<Ad>(`/api/ad/create`, AdData, { headers })
-      .pipe(catchError(this.handleError));
-  }
-
-  updateAd(id: number ,ad: Ad): Observable<Ad> {
-
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
     });
 
     return this.http
-      .put<Ad>(`/api/update/${id}`, ad, { headers })
+      .put(`/api/ad/update/${adId}`, formData, { headers })
       .pipe(catchError(this.handleError));
   }
+
 
   // Método para eliminar un anuncio
   deleteAd(id: number): Observable<void> {

@@ -53,8 +53,9 @@
           </mat-card-title>
 
           <mat-list>
-            <mat-list-item *ngIf="anun?.type_ad === 'PRODUCT'">Tipo: Producto</mat-list-item>
-            <mat-list-item *ngIf="anun?.type_ad === 'SERVICE'">Tipo: Servicio</mat-list-item>
+            <mat-list-item><span>ID Anuncio: </span>{{ anun.id_ad }}</mat-list-item>
+            <mat-list-item *ngIf="anun?.type_ad == 'PRODUCT'">Tipo: Producto</mat-list-item>
+            <mat-list-item *ngIf="anun?.type_ad == 'SERVICE'">Tipo: Servicio</mat-list-item>
             <mat-list-item><span>Estado: </span>{{ anun.condition }}</mat-list-item>
             <mat-list-item><span>Categoría: </span>{{ anun.category }}</mat-list-item>
             <mat-list-item><span>Descripción: </span>{{ anun.description }}</mat-list-item>
