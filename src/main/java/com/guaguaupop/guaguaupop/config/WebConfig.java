@@ -1,5 +1,7 @@
 package com.guaguaupop.guaguaupop.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.unit.DataSize;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -24,4 +26,5 @@ public class WebConfig implements WebMvcConfigurer{
         factory.setMaxFileSize(DataSize.parse("10MB"));
         factory.setMaxRequestSize(DataSize.parse("10MB"));
         return factory.createMultipartConfig(); }*/
+
 }

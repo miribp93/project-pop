@@ -11,6 +11,7 @@ import com.guaguaupop.guaguaupop.repository.AdRepository;
 import com.guaguaupop.guaguaupop.repository.PhotoAdRepository;
 import com.guaguaupop.guaguaupop.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Data
 public class AdService {
 
     private final PhotoAdRepository photoAdRepository;
@@ -244,14 +246,18 @@ public class AdService {
     }
 
     // MODIFICAR MIS ANUNCIOS
-    public GetAdCompleteDTO updateAd(Long idAd, Long idUser, UpdateAdDTO updateAdDTO){
+    @Transactional
+    public GetAdCompleteDTO updateAd(Long idAd, Long idUser, UpdateAdDTO updateAdDTO) throws IOException {
+
         Ad ad = adRepository.findById(idAd)
                 .orElseThrow(() -> new RuntimeException("Anuncio no encontrado"));
+
         if (!ad.getUser().getIdUser().equals(idUser)){
             throw new RuntimeException("No tienes permiso para modificar el anuncio.");
         }
 
         updateAdDTO.getCategory().ifPresent(category->{
+
             if(!categories.contains(category)){
                 throw new IllegalArgumentException("Categoría inválida");
             }
@@ -264,7 +270,6 @@ public class AdService {
         updateAdDTO.getPrice().ifPresent(ad::setPrice);
         updateAdDTO.getTitle().ifPresent(ad::setTitle);
         updateAdDTO.getCity().ifPresent(ad::setCity);
-        //updateAdDTO.getPhotos().ifPresent(ad::setPhotos);
 
         adRepository.save(ad);
         return toGetAdCompleteDTO(ad);
