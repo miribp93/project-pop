@@ -56,23 +56,27 @@ public class AdController {
     @PostMapping(value = "/create1", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> createAd1(
             @RequestPart("createAdDTO") String createAdDTOJson,
-            @RequestPart("photos") MultipartFile[] files,
+            @RequestPart(value = "photos", required = false) MultipartFile[] files,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             CreateAdDTO createAdDTO = objectMapper.readValue(createAdDTOJson, CreateAdDTO.class);
-            for (MultipartFile file : files) {
-                if (file.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Empty file uploaded");
-                }
-                if (!isValidFileType(file)) {
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file type uploaded");
+            if (files != null) {
+                for (MultipartFile file : files) {
+                    if (file.isEmpty()) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Empty file uploaded");
+                    }
+                    if (!isValidFileType(file)) {
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file type uploaded");
+                    }
                 }
             }
             // Crear el anuncio
             Ad ad = adService.createAd(createAdDTO, userDetails.getIdUser());
             // Agregar las fotos al anuncio
-            adService.addPhotosToAd(ad.getIdAd(), files, userDetails.getIdUser());
+            if (files != null && files.length > 0) {
+                adService.addPhotosToAd(ad.getIdAd(), files, userDetails.getIdUser());
+            }
             return ResponseEntity.ok(ad);
 
         } catch (IOException e) {
