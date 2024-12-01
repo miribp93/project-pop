@@ -87,27 +87,62 @@ export class AdService {
     );
   }
 
-  // Método para crear un anuncio
-  createAd(AdData: Ad): Observable<Ad> {
+
+  //PRUEBA PARA CREAR ANUNCIO CON FOTO
+  // // Método para crear un anuncio
+  // createAd(AdData: Ad): Observable<Ad> {
+
+  //   const token = localStorage.getItem('token');
+  //   const headers = new HttpHeaders({
+  //     Authorization: `Bearer ${token}`,
+  //     'Content-Type': 'application/json',
+  //   });
+  //   return this.http
+  //     .post<Ad>(`/api/ad/create`, AdData, { headers })
+  //     .pipe(catchError(this.handleError));
+  // }
+
+
+  createAd(adData: Ad, files: File[]): Observable<any> {
+    const formData = new FormData();
+
+    // Añadir el objeto adData como un string JSON
+    formData.append('createAdDTO', JSON.stringify(adData));
+
+    // Añadir los archivos
+    files.forEach((file) => formData.append('photos', file));
 
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
     });
+
     return this.http
-      .post<Ad>(`/api/ad/create`, AdData, { headers })
+      .post(`/api/ad/create1`, formData, { headers })
       .pipe(catchError(this.handleError));
   }
 
 
 
-  updateAd(ad: Ad): Observable<Ad> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<Ad>(`/api/ad/${ad.idAd}`, ad, { headers }).pipe(
-      catchError(this.handleError)
-    );
+  // updateAd(ad: Ad): Observable<Ad> {
+  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  //   return this.http.put<Ad>(`/api/ad/${ad.idAd}`, ad, { headers }).pipe(
+  //     catchError(this.handleError)
+  //   );
+  // }
+
+  updateAd(adId: number, formData: FormData): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http
+      .put(`/api/ad/update/${adId}`, formData, { headers })
+      .pipe(catchError(this.handleError));
   }
+
+
 
 
   // Método para eliminar un anuncio
