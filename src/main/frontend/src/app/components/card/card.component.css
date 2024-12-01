@@ -23,19 +23,33 @@
   height: 200px; /* Controla la altura de la imagen */
   overflow: hidden; /* Para evitar que la imagen sobresalga */
   display: flex;
-  justify-content: center; /* Centra las imágenes */
+  justify-content: center; /* Centra las imágenes horizontalmente */
   align-items: center; /* Centra las imágenes verticalmente */
 }
 
 img.ad-photo {
-  max-width: 100%; /* La imagen no será más ancha que el 100% del contenedor */
-  height: auto; /* Mantiene la proporción original */
-  object-fit: contain; /* Mantiene la proporción sin que la imagen se distorsione */
+  width: 100%; /* La imagen tomará todo el ancho disponible del contenedor */
+  height: 100%; /* La imagen tomará toda la altura disponible del contenedor */
+  object-fit: contain; /* Ajusta la imagen manteniendo la proporción sin distorsionarla */
+  display: block; /* Asegúrate de que la imagen no tenga márgenes */
+  margin: 0 auto; /* Centrar la imagen si es más pequeña que el contenedor */
 }
 
+/* Asegúrate de que las imágenes dentro de mat-card también se ajusten correctamente */
 img[mat-card-image] {
   max-width: 100%; /* La imagen no excederá el ancho de la tarjeta */
+  max-height: 100%; /* La imagen no excederá la altura de la tarjeta */
   height: auto; /* Mantener la proporción */
   display: block; /* Asegúrate de que la imagen no tenga márgenes */
   margin: 0 auto; /* Centrar la imagen si es más pequeña que la tarjeta */
+}
+
+@media (max-width: 576px) {
+  .card {
+    height: auto; /* Para pantallas pequeñas, la tarjeta puede ajustar su altura según el contenido */
+  }
+
+  .image-container {
+    height: 150px; /* Reducir la altura de la imagen en pantallas pequeñas */
+  }
 }

@@ -12,7 +12,8 @@
   justify-content: center;
   background-color: #f0f0f0; /* Fondo opcional */
   border-radius: 8px; /* Bordes redondeados opcionales */
-  max-width: 100%; /* Evita que la imagen sea más grande que su contenedor */
+  width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+  height: 100%; /* Asegura que el contenedor ocupe toda la altura disponible */
   max-height: 500px; /* Altura máxima */
   overflow: hidden; /* Recorta el contenido que se salga del marco */
 }
