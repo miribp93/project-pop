@@ -72,13 +72,12 @@ export class AdService {
   }
   getAdPhoto(id: number): Observable<string[]> {
     return this.http.get<{ photos: string }[]>(`/api/ad/photos/${id}`).pipe(
-      map((response) =>
-        response.map((item) => `data:image/jpeg;base64,${item.photos}`) // Construye la URL Base64
+      map(
+        (response) =>
+          response.map((item) => `data:image/jpeg;base64,${item.photos}`) // Construye la URL Base64
       )
     );
   }
-
-
 
   //Metodo para
   // Método para obtener la foto de perfil obtener los anuncios de cada usuario
@@ -104,20 +103,8 @@ export class AdService {
     );
   }
 
-  // Método para crear un anuncio
-  // createAd(AdData: Ad): Observable<Ad> {
-  //   const token = localStorage.getItem('token');
-  //   const headers = new HttpHeaders({
-  //     Authorization: `Bearer ${token}`,
-  //     'Content-Type': 'application/json',
-  //   });
-  //   return this.http
-  //     .post<Ad>(`/api/ad/create`, AdData, { headers })
-  //     .pipe(catchError(this.handleError));
-  // }
-
-   // Método para crear anuncio con archivos
-   createAd(adData: Ad, files: File[]): Observable<Ad> {
+  // Método para crear anuncio con archivos
+  createAd(adData: Ad, files: File[]): Observable<Ad> {
     const formData = new FormData();
     const token = localStorage.getItem('token');
 
@@ -132,20 +119,21 @@ export class AdService {
     return this.http.post<Ad>(`/api/ad/create1`, formData, { headers });
   }
 
-
-
-
-  updateAd(adId: number, formData: FormData): Observable<any> {
+  //Actualizar anuncios
+  updateAd(adId: number, adData: Ad, files: File[]): Observable<any> {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const formData = new FormData();
+
+    // Agregar datos del anuncio como JSON
+    formData.append('updateAdDTO', JSON.stringify(adData));
+
+    // Agregar fotos
+    files.forEach((file) => formData.append('photos', file));
 
     return this.http
-      .put(`/api/ad/update/${adId}`, formData, { headers })
-      .pipe(catchError(this.handleError));
+      .put(`/api/ad/update/${adId}`, formData, { headers });
   }
-
 
   // Método para eliminar un anuncio
   deleteAd(id: number): Observable<void> {

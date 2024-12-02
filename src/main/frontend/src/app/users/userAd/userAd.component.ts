@@ -93,9 +93,8 @@ export class UserAdComponent implements OnInit {
     this.adService.getAdComplete(adId).subscribe({
       next: (ad) => {
         if (ad) {
-          this.adForm.patchValue(ad); // Solo se aplica si 'ad' no es undefined
+          this.adForm.patchValue(ad); // Rellena el formulario solo si ad no es undefined
         } else {
-          console.error('No se encontró el anuncio con el ID proporcionado.');
           this.alert.show('No se pudo cargar el anuncio, inténtelo de nuevo.');
         }
       },
@@ -107,12 +106,9 @@ export class UserAdComponent implements OnInit {
   }
 
 
-  private updateAd(adId: number, adData: Ad, files: File[]): void {
-    const formData = new FormData();
-    formData.append('createAdDTO', JSON.stringify(adData));
-    files.forEach((file) => formData.append('photos', file));
 
-    this.adService.updateAd(adId, formData).subscribe({
+  private updateAd(adId: number, adData: Ad, files: File[]): void {
+    this.adService.updateAd(adId, adData, files).subscribe({
       next: () => {
         this.alert.show('Anuncio actualizado exitosamente');
         this.router.navigate(['/profile']);
@@ -122,4 +118,5 @@ export class UserAdComponent implements OnInit {
       },
     });
   }
+
 }

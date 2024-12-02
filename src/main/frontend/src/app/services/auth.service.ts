@@ -31,7 +31,6 @@ export class AuthService {
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.username);
 
-        // Asegurarse de que 'roles' existe y es un array, y acceder al primer rol
         const role =
           Array.isArray(data.roles) && data.roles.length > 0
             ? data.roles[0]
@@ -51,17 +50,66 @@ export class AuthService {
       catchError(this.handleError)
     );
   }
+
+  // Método para renovar el token
+  refreshToken(): Observable<string> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!refreshToken) {
+      return throwError(() => new Error('No se encontró el refresh token'));
+    }
+
+    return this.http
+      .post<{ token: string }>(`/auth/refresh-token`, { refreshToken })
+      .pipe(
+        tap((response) => {
+          const newToken = response.token;
+          localStorage.setItem('token', newToken);
+
+          // Actualizamos el BehaviorSubject
+          const currentUser = this.userSubject.value;
+          if (currentUser) {
+            this.userSubject.next({
+              ...currentUser,
+              token: newToken,
+            });
+          }
+        }),
+        map((response) => response.token),
+        catchError(this.handleError)
+      );
+  }
+
+  // Método para verificar si el token ha expirado
+  isTokenExpired(): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return true;
+
+    try {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      const expirationTime = tokenPayload.exp * 1000; // Convertimos a milisegundos
+      return Date.now() > expirationTime;
+    } catch (e) {
+      console.error('Error al analizar el token:', e);
+      return true;
+    }
+  }
+
   // Método para cerrar sesión
   logout(): void {
-    // Limpiar localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('role');
+    localStorage.removeItem('refreshToken');
 
-    // Actualizar el estado del usuario
     this.userSubject.next(null);
-
     console.log('Vuelve pronto');
+    // Redirigir al login
+    window.location.href = '/login';
+  }
+
+  // Método para obtener el token actual
+  getAccessToken(): string | null {
+    return localStorage.getItem('token');
   }
 
   // Registro de un nuevo usuario
