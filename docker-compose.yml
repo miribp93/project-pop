@@ -1,24 +1,34 @@
 version: '3.8'
-
 services:
-  app:
-    image: guaguaupop:0.0.1
-    build:
-      context: .
-    ports:
-      - "80:8080"
+  postgres:
+    image: postgres:14
+    container_name: guaguaupop-postgres-1
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/guaguaupop
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
-    depends_on:
-      - db
-
-  db:
-    image: postgres:13
-    environment:
-      POSTGRES_DB: guaguaupop
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: guaguaupop
     ports:
-      - "5433:5432"
+        - "5433:5432"
+
+  backend:
+    image: backend:1.0
+    container_name: spring-backend
+    ports:
+        - "8080:8080"
+    depends_on:
+        - postgres
+    environment:
+        - SPRING_PROFILES_ACTIVE=docker  # Se activa el perfil docker
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/guaguaupop
+        - SPRING_DATASOURCE_USERNAME=postgres
+        - SPRING_DATASOURCE_PASSWORD=postgres
+
+  frontend:
+      image: frontend:1.0
+      container_name: spring-frontend
+      ports:
+          - "80:80"
+      depends_on:
+          - backend
+      environment:
+          - API_URL=http://backend:8080
