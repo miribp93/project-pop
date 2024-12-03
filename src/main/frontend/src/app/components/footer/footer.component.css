@@ -1,8 +1,44 @@
-.footer-toolbar{
+.footer-toolbar {
   display: flex;
-
-  text-align: center;
+  align-items: center; /* Alinea los elementos verticalmente */
   justify-content: center;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en una nueva línea si es necesario */
+  padding: 10px;
+  width: 70%;
+  margin: 0 auto;
 
+}
 
+.footer-toolbar span {
+  margin: 0 10px;
+}
+
+.footer-toolbar .spacer {
+  flex: 1; /* Espacio flexible que empuja los iconos a la derecha */
+}
+
+.footer-toolbar a {
+  margin: 0 10px;
+}
+
+/* Media queries para hacerlo responsive */
+@media (max-width: 768px) {
+  .footer-toolbar {
+    flex-direction: column; /* Cambia la dirección de los elementos a columna en pantallas pequeñas */
+    text-align: center; /* Centra el contenido */
+  }
+
+  .footer-toolbar .spacer {
+    display: none; /* Elimina el espacio flexible en pantallas pequeñas */
+  }
+
+  .footer-toolbar a {
+    margin: 5px 0; /* Ajusta el espacio entre los iconos */
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-toolbar span {
+    font-size: 14px; /* Reduce el tamaño de la fuente en pantallas muy pequeñas */
+  }
 }

@@ -1,26 +1,34 @@
+.form-card {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid;
+
+}
+.full-width {
+  width: 80%;
+}
+.form-actions button {
+  margin-right: 50px; /* Espacio de 10px entre los botones */
+}
+
+.form-actions button:last-child {
+  margin-right: 0; /* El último botón no necesita margen */
+}
+
+
 /* Estilos Base */
 .contact-form {
   text-align: center;
   margin: 0 auto;
 }
 
-.form-card {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
 h2 {
   font-size: 2rem; /* Tamaño inicial */
   margin-bottom: 20px;
 }
 
-.full-width {
-  width: 100%;
-}
 
 .forgot-password {
   margin-top: 10px;
@@ -46,13 +54,11 @@ h2 {
 }
 
 button {
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   font-size: 1rem;
 }
 
-button:last-child {
-  margin-right: 0;
-}
+
 
 /* Media Queries para Responsividad */
 
