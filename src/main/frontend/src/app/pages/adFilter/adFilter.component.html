@@ -1,15 +1,13 @@
 <div class="container text-center row g-4 pt-2 mt-2">
   <h4>{{ categoria }} {{ tipoAd ? (tipoAd === 'PRODUCT' ? 'Productos' : 'Servicios') : '' }}</h4>
 
-
   <div *ngIf="ads.length === 0">No hay anuncios disponibles para esta categoría.</div>
 
-
   <div class="container m-3">
-    <mat-menu #ordenMenu="matMenu" class="custom-menu ">
-      <div style="display: flex; flex-direction: column; width: 100%">
-        <button mat-button (click)="ordenarAnuncios('fecha')">Fecha</button>
-        <button mat-button (click)="ordenarAnuncios('precio')">Precio</button>
+    <mat-menu #ordenMenu="matMenu" class="custom-menu">
+      <div style="display: flex; flex-direction: column; width: 100%;">
+        <button mat-button (click)="ordenarAnuncios('fecha')">Más reciente primero</button>
+        <button mat-button (click)="ordenarAnuncios('precio')">Precio: De menor a mayor</button>
         <button mat-button (click)="ordenarAnuncios('nombre')">A-Z</button>
       </div>
     </mat-menu>
@@ -19,7 +17,7 @@
         Ordenar por <mat-icon>arrow_drop_down</mat-icon>
       </button>
     </div>
-    </div>
+  </div>
 
   <div class="flex-container">
     <div *ngFor="let ad of paginaAds" class="producto-card">

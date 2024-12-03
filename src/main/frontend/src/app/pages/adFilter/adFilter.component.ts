@@ -126,22 +126,19 @@ export class AdFilterComponent implements OnInit {
     });
   }
 
-
   // Cargar fotos para los anuncios filtrados (solo la primera foto)
-loadPhotosForAds(ads: Ad[]): void {
-  ads.forEach(ad => {
-    if (ad.id_ad) {
-      this.adService.getAdPhoto(ad.id_ad).subscribe(photos => {
-        // Asigna solo la primera foto (si existe)
-        ad.photos = photos && photos.length > 0 ? [photos[0]] : [];
-      });
-    } else {
-      console.error('El ID del anuncio es undefined:');
-    }
-  });
-}
-
-
+  loadPhotosForAds(ads: Ad[]): void {
+    ads.forEach(ad => {
+      if (ad.id_ad) {
+        this.adService.getAdPhoto(ad.id_ad).subscribe(photos => {
+          // Asigna solo la primera foto (si existe)
+          ad.photos = photos && photos.length > 0 ? [photos[0]] : [];
+        });
+      } else {
+        console.error('El ID del anuncio es undefined:');
+      }
+    });
+  }
 
   // Configura los anuncios que se mostrarán en la página actual
   setPaginatedAds(): void {
@@ -158,18 +155,19 @@ loadPhotosForAds(ads: Ad[]): void {
   }
 
   // Método para ordenar los anuncios
-  ordenarAnuncios(event: any): void {
-    const criterio = event.target.value;
-    this.ordenCriterio = criterio;
+  ordenarAnuncios(criterio: string): void {
+    console.log('Ordenando por:', criterio); // Depuración
+
+    this.ordenCriterio = criterio; // Guardar el criterio para referencia
 
     if (criterio === 'fecha') {
-      this.ads.sort((a, b) => +new Date(a.createdAt) - +new Date(b.createdAt));
+      this.ads.sort((a, b) => +new Date(b.id_ad) - +new Date(a.id_ad)); // Ordenar por fecha descendente
     } else if (criterio === 'precio') {
-      this.ads.sort((a, b) => a.price - b.price);
+      this.ads.sort((a, b) => a.price - b.price); // Ordenar por precio
     } else if (criterio === 'nombre') {
-      this.ads.sort((a, b) => a.title.localeCompare(b.title));
+      this.ads.sort((a, b) => a.title.localeCompare(b.title)); // Ordenar alfabéticamente
     }
 
-    this.setPaginatedAds();
+    this.setPaginatedAds(); // Actualizar los productos paginados
   }
 }

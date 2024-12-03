@@ -1,33 +1,32 @@
-
 <!-- Contenedor principal con overlay -->
 <div class="banner-container">
   <!-- Imagen de fondo -->
   <img src="banner6.jpg" alt="banner" class="banner">
 
   <!-- Overlay con texto -->
-  <div class="overlay-text ">
-   <mat-card class="vende">
-    <p class="m-3">¿No lo necesitas? ¡Otro peludo seguro que sí!</p>
-    <button mat-raised-button class="btn mb-3" (click)="vender()">Vende</button>
-    <a href="infoventa">¿Cómo funciona?</a>
-   </mat-card>
+  <div class="overlay-text">
+    <mat-card class="vende">
+      <p class="m-3">¿No lo necesitas? ¡Otro peludo seguro que sí!</p>
+      <button mat-raised-button class="btn mb-3" (click)="vender()">Vende</button>
+      <a href="infoventa">¿Cómo funciona?</a>
+    </mat-card>
   </div>
 </div>
 
 <div class="container m-3">
-<mat-menu #ordenMenu="matMenu" class="custom-menu ">
-  <div style="display: flex; flex-direction: column; width: 100%;">
-    <button mat-button (click)="ordenarAnuncios('fecha')">Fecha</button>
-    <button mat-button (click)="ordenarAnuncios('precio')">Precio</button>
-    <button mat-button (click)="ordenarAnuncios('nombre')">A-Z</button>
-  </div>
-</mat-menu>
+  <mat-menu #ordenMenu="matMenu" class="custom-menu">
+    <div style="display: flex; flex-direction: column; width: 100%;">
+      <button mat-button (click)="ordenarAnuncios('fecha')">Más reciente primero</button>
+      <button mat-button (click)="ordenarAnuncios('precio')">Precio: De menor a mayor</button>
+      <button mat-button (click)="ordenarAnuncios('nombre')">A-Z</button>
+    </div>
+  </mat-menu>
 
-<div style="text-align: right;">
-  <button mat-raised-button [matMenuTriggerFor]="ordenMenu" class="ordenar-boton">
-    Ordenar por <mat-icon>arrow_drop_down</mat-icon>
-  </button>
-</div>
+  <div style="text-align: right;">
+    <button mat-raised-button [matMenuTriggerFor]="ordenMenu" class="ordenar-boton">
+      Ordenar por <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+  </div>
 </div>
 
 <!-- Contenedor flexbox para los productos -->
