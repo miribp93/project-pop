@@ -53,6 +53,10 @@ public class AdService {
                 .price(ad.getPrice())
                 .typeAd(ad.getTypeAd())
                 .condition(ad.getCondition())
+                .photos(ad.getPhotos()
+                        .stream()
+                        .map(this::toGetAdPhotosDTO)
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -84,27 +88,6 @@ public class AdService {
 
     // CREAR ANUNCIO
     public Ad createAd(CreateAdDTO createAdDTO, Long idUser) throws IOException {
-
-        User user = userRepository.findById(idUser).orElseThrow(UserNotExistsException::new);
-
-        Ad ad = Ad.builder()
-                .title(createAdDTO.getTitle())
-                .price(createAdDTO.getPrice())
-                .category(createAdDTO.getCategory())
-                .description(createAdDTO.getDescription())
-                .city(createAdDTO.getCity())
-                .typeAd(Collections.singleton(createAdDTO.getTypeAd()))
-                .condition(createAdDTO.getCondition())
-                .duration(createAdDTO.getDuration())
-                .user(user)
-                .build();
-
-        Ad savedAd = adRepository.save(ad);
-        log.info("Anuncio guardado correctamente: {}", savedAd);
-        return savedAd;
-    }
-
-    public Ad createAd1(CreateAdDTO createAdDTO, Long idUser) throws IOException {
 
         User user = userRepository.findById(idUser).orElseThrow(UserNotExistsException::new);
 
