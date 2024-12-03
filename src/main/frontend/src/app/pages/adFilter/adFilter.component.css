@@ -13,16 +13,6 @@
 .producto-card {
   flex: 1 1 100%; /* En pantallas pequeñas, cada tarjeta ocupa el 100% de la fila */
   max-width: 300px; /* Limita el ancho máximo de las tarjetas */
-  display: flex; /* Flex para alinear el contenido dentro de la tarjeta */
-  flex-direction: column; /* Coloca el contenido de la tarjeta de manera vertical */
-  align-items: center; /* Centra los elementos dentro de la tarjeta */
-}
-
-.producto-card img {
-  width: 100%; /* La imagen ocupa el 100% del ancho del contenedor */
-  height: auto; /* Mantiene la proporción de la imagen */
-  object-fit: contain; /* La imagen se ajusta sin distorsionarse */
-  border-radius: 8px; /* Bordes redondeados opcionales */
 }
 
 /* Pantalla de tablet */
@@ -42,7 +32,7 @@
 /* Responsividad de las tarjetas en pantallas grandes */
 @media (min-width: 1200px) {
   .producto-card {
-    flex: 1 1 18%; /* Ajustar a 5 tarjetas en una fila */
+    flex: 1 1 20%; /* Ajustar a 5 tarjetas en una fila */
   }
 }
 
@@ -77,6 +67,19 @@ div[style*="text-align: right;"] {
   justify-content: flex-end;
 }
 
-.selector {
-  width: 85%;
+/* Nueva clase para las imágenes dentro de las tarjetas */
+/* .producto-card .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  max-height: 500px;
+  overflow: hidden;
 }
+
+.producto-card .image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+} */

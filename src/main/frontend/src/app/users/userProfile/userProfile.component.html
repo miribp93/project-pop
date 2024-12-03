@@ -48,30 +48,23 @@
 
   </div>
 
-  <div class="ads-section m-3 ">
+
+  <div class="ads-section m-3">
     <h4 class="text-center">Mis Anuncios</h4>
+
     <div class="nav-bar button mb-3">
-      <button mat-button color="primary" class="buttons" (click)="userCreateAd()">Agregar Anuncio</button>
-
-
-        <!-- POSIBLES BOTONES PARA FILTRAR POR ANNCIOS DE VENTA O COMPRA -->
-      <!-- <button mat-button color="primary" class="buttons">Compra</button>
-      <button mat-button color="primary" class="buttons">Venta</button> -->
+      <button mat-flat-button color="primary" class="buttons" (click)="userCreateAd()">
+        Agregar Anuncio
+      </button>
     </div>
 
-    <mat-card *ngFor="let ad of ads" class="ad-card mt-2">
 
-      <mat-card-content>Id: {{ad.id_ad}} - Nombre:{{ ad.title }} - Precio:{{ ad.price }} </mat-card-content>
+    <div class="flex-container">
 
-      <div class="buttons">
-        <button mat-stroked-button color="primary" (click)="modificarAnuncio(ad.id_ad)">
-          Modificar
-        </button>
-        <button mat-fab color="warn" (click)="deleteAd(ad.id_ad)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    </mat-card>
+      <app-user-Card *ngFor="let ad of ads" [ad]="ad" [onDeleteAd]="deleteAd" [onModifyAd]="modificarAnuncio" class="card-user">
+      </app-user-Card>
+    </div>
   </div>
+
 
 </div>

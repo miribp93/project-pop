@@ -5,31 +5,20 @@
     <p *ngIf=" ad.type_ad == 'PRODUCT'">Producto</p>
     <p *ngIf=" ad.type_ad == 'SERVICE'">Servicio</p>
 
-
-
-    <!-- <div class="image-container" *ngIf="ad?.photos?.length">
-      <img *ngFor="let photo of ad.photos" [src]="photo" alt="Imagen del producto" class="ad-photo"/>
-    </div> -->
-
     <div class="image-container">
       <ng-container *ngIf="ad?.photos?.length; else noPhotos">
-        <img *ngFor="let photo of ad.photos" [src]="photo" alt="Imagen del producto" class="ad-photo"/>
+        <img *ngFor="let photo of ad.photos" [src]="photo" alt="Imagen del producto" class="ad-photo" />
       </ng-container>
 
       <ng-template #noPhotos>
-        <img src="favicon.ico" alt="Imagen predeterminada" class="ad-photo"/>
+        <img src="favicon.ico" alt="Imagen predeterminada" class="ad-photo" />
       </ng-template>
     </div>
 
-
-
-
-    <!-- <img mat-card-image src='favicon.ico' alt="Foto del producto"> -->
     <mat-card-subtitle class="title">{{ ad.title }}</mat-card-subtitle>
     <p class="mt-3 text-center">{{ ad.price | currency: 'EUR':'symbol' }}</p>
     <p>Estado: {{ ad.condition }}</p>
   </mat-card-content>
-
 
 </mat-card>
 

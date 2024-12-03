@@ -1,12 +1,16 @@
 .card {
-  width: 100%;
-  height: 400px; /* Mantén la altura de la tarjeta */
-  align-items: center;
-  overflow: hidden;
-  display: flex; /* Asegurarte de que los elementos dentro de la tarjeta se comporten correctamente */
-  flex-direction: column;
-  justify-content: space-between; /* Asegura que los elementos estén distribuidos correctamente */
+ /* width: 100%; /* Permite que Flexbox maneje el tamaño */
+  height: 400px; /* Asegura que todas las tarjetas tengan la misma altura */
+  display: flex; /* Flexbox para alinear contenido */
+  flex-direction: column; /* Contenido apilado verticalmente */
+  align-items: center; /* Centra los elementos dentro de la tarjeta */
+  justify-content: space-between; /* Distribución uniforme del contenido interno */
+  background-color: rgba(79, 197, 220, 0.592);
+  border-radius: 10px; /* Bordes redondeados */
+ /* box-sizing: border-box; /* Asegura consistencia con el relleno */
 }
+
+
 
 .title {
   text-align: center;
@@ -27,29 +31,31 @@
   align-items: center; /* Centra las imágenes verticalmente */
 }
 
-img.ad-photo {
-  width: 100%; /* La imagen tomará todo el ancho disponible del contenedor */
-  height: 100%; /* La imagen tomará toda la altura disponible del contenedor */
-  object-fit: contain; /* Ajusta la imagen manteniendo la proporción sin distorsionarla */
-  display: block; /* Asegúrate de que la imagen no tenga márgenes */
-  margin: 0 auto; /* Centrar la imagen si es más pequeña que el contenedor */
+img.ad-photo, img[mat-card-image] {
+  width: 100%; /* Ajusta al ancho completo del contenedor */
+  height: 100%; /* Ajusta a la altura del contenedor */
+  object-fit: cover; /* Llena el espacio de forma uniforme */
+  border-radius: 8px; /* Opcional: bordes redondeados */
+  display: block;
+  margin: 0 auto; /* Centra la imagen */
 }
-
-/* Asegúrate de que las imágenes dentro de mat-card también se ajusten correctamente */
-img[mat-card-image] {
-  max-width: 100%; /* La imagen no excederá el ancho de la tarjeta */
-  max-height: 100%; /* La imagen no excederá la altura de la tarjeta */
-  height: auto; /* Mantener la proporción */
-  display: block; /* Asegúrate de que la imagen no tenga márgenes */
-  margin: 0 auto; /* Centrar la imagen si es más pequeña que la tarjeta */
+@media (max-width: 992px) {
+   .card {
+    flex: 1 1 calc(50% - 20px); /* Dos tarjetas por fila en tabletas */
+  }
 }
 
 @media (max-width: 576px) {
-  .card {
-    height: auto; /* Para pantallas pequeñas, la tarjeta puede ajustar su altura según el contenido */
+   .card {
+    flex: 1 1 100%; /* Una tarjeta por fila en móviles */
+    height: auto; /* Permite que la altura se ajuste al contenido */
   }
 
   .image-container {
-    height: 150px; /* Reducir la altura de la imagen en pantallas pequeñas */
+    height: 150px; /* Ajustar altura de las imágenes para pantallas pequeñas */
   }
+
+
+
 }
+

@@ -9,11 +9,12 @@ import { FormsModule } from '@angular/forms';
 import { Ad } from '../../interfaces/anuncio.interfaces';
 import { PageEvent } from '@angular/material/paginator';
 import { NotificationService } from '../../services/notification.service';
+import { UserAdCardComponent } from "../user-card/userCard.component";
 
 @Component({
   selector: 'app-userProfile',
   standalone: true,
-  imports: [CommonModule, FormsModule, MATERIAL_MODULES],
+  imports: [CommonModule, FormsModule, MATERIAL_MODULES, UserAdCardComponent],
   providers: [AdService],
   templateUrl: './userProfile.component.html',
   styleUrls: ['./userProfile.component.css'],
@@ -30,7 +31,9 @@ export class UserProfileComponent implements OnInit {
     private adService: AdService,
     private router: Router,
     private alert: NotificationService
-  ) {}
+  ) {  // Enlace explícito de los métodos para asegurar el contexto
+    this.modificarAnuncio = this.modificarAnuncio.bind(this);
+    this.deleteAd = this.deleteAd.bind(this);}
 
   public ads: Ad[] = []; // Lista completa de productos
   public paginatedProd: Ad[] = []; // Lista de productos paginados

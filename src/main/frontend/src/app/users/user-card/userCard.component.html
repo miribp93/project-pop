@@ -1,0 +1,30 @@
+<mat-card *ngIf="ad" class="user-ad-card" appearance="outlined">
+  <mat-card-content>
+    <div class="image-container">
+      <ng-container *ngIf="ad?.photos?.length; else noPhotos">
+        <img *ngFor="let photo of ad.photos" [src]="photo" alt="Imagen del producto" class="ad-photo" />
+      </ng-container>
+
+      <ng-template #noPhotos>
+        <img src="favicon.ico" alt="Imagen predeterminada" class="ad-photo" />
+      </ng-template>
+    </div>
+
+    <div class="info">
+      <p><strong>ID:</strong> {{ ad.id_ad }}</p>
+      <p><strong>Tipo:</strong> {{ ad.type_ad == 'PRODUCT' ? 'Producto' : 'Servicio' }}</p>
+      <p><strong>Nombre:</strong> {{ ad.title }}</p>
+      <p><strong>Precio:</strong> {{ ad.price | currency: 'EUR':'symbol' }}</p>
+    </div>
+  </mat-card-content>
+
+  <div class="buttons">
+    <button mat-icon-button color="primary" class="large-button" (click)="onModifyAd(ad.id_ad)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" class="large-button" (click)="onDeleteAd(ad.id_ad)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+</mat-card>

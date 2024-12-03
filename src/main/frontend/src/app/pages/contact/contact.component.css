@@ -3,8 +3,7 @@
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  /* background-image: radial-gradient(circle at 14.64% -11.24%, #fffff4 0, #f6fff0 8.33%, #ecffec 16.67%, #e1ffe8 25%, #d4fce4 33.33%, #c5f7e1 41.67%, #b5f2de 50%, #a4eddd 58.33%, #93e8dd 66.67%, #83e3de 75%, #74dee1 83.33%, #65dae5 91.67%, #59d6e9 100%); */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  border: 1px solid;
 }
 .full-width {
   width: 80%;

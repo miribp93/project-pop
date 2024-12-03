@@ -1,13 +1,13 @@
-<div class="anuncios-container text-center row g-4 pt-2 mt-2">
-  <h2>Anuncios de {{ categoria }} {{ tipoAd ? (tipoAd === 'PRODUCT' ? 'Productos' : 'Servicios') : '' }}</h2>
+<div class="container text-center row g-4 pt-2 mt-2">
+  <h4>{{ categoria }} {{ tipoAd ? (tipoAd === 'PRODUCT' ? 'Productos' : 'Servicios') : '' }}</h4>
 
 
   <div *ngIf="ads.length === 0">No hay anuncios disponibles para esta categoría.</div>
-  <mat-divider></mat-divider>
 
-  <div class="selector m-3">
+
+  <div class="container m-3">
     <mat-menu #ordenMenu="matMenu" class="custom-menu ">
-      <div style="display: flex; flex-direction: column; width: 100%;">
+      <div style="display: flex; flex-direction: column; width: 100%">
         <button mat-button (click)="ordenarAnuncios('fecha')">Fecha</button>
         <button mat-button (click)="ordenarAnuncios('precio')">Precio</button>
         <button mat-button (click)="ordenarAnuncios('nombre')">A-Z</button>
@@ -36,16 +36,3 @@
     aria-label="Select page">
   </mat-paginator>
 </div>
-
-
-
-<!--
- //Mostrar anuncio completo
-html
-Copiar código
-<div *ngIf="AdPorId">
-  <h2>{{ AdPorId.title }}</h2>
-  <p>{{ AdPorId.description }}</p>
-  <img *ngFor="let photo of AdPorId.photos" [src]="photo.photos" alt="Photo">
-</div>
- -->
