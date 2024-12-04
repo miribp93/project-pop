@@ -69,7 +69,7 @@ mat-paginator {
   position: absolute;
   width: 25%;
   top: 50%;
-  left: 25%;
+  left: 50%;
   transform: translate(-50%, -50%);
   color: black;
   font-size: 1.2rem;

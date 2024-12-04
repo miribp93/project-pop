@@ -12,6 +12,14 @@ export class AdService {
 
   constructor(private http: HttpClient) {} // Inyecta HttpClient
 
+
+   // Método de búsqueda de ejemplo
+   someSearchMethod(query: string): Observable<any> {
+    // Reemplaza esta URL con tu endpoint real de búsqueda
+    const url = `api/ad/search?keyword=${encodeURIComponent(query)}`;
+    return this.http.get<any>(url);
+  }
+
   // Método para obtener todos los anuncios
   getAllAds(): Observable<Ad[]> {
     return this.http.get<Ad[]>(`/api/ad/all`).pipe(

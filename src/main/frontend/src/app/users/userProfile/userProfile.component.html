@@ -63,6 +63,7 @@
 
       <mat-card-content>Id: {{ad.idAd}} - Nombre:{{ ad.title }} - Precio:{{ ad.price }} </mat-card-content>
 
+<<<<<<< Updated upstream
       <div class="buttons">
         <button mat-stroked-button color="primary" (click)="modificarAnuncio(ad.idAd)">
           Modificar
@@ -72,6 +73,15 @@
         </button>
       </div>
     </mat-card>
+=======
+      <app-user-Card
+  *ngFor="let ad of paginatedProd"
+  [ad]="ad"
+  [onDeleteAd]="deleteAd"
+  [onModifyAd]="modificarAnuncio"
+></app-user-Card>
+    </div>
+>>>>>>> Stashed changes
   </div>
 
 </div>

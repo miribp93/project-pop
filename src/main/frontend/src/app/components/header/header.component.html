@@ -4,6 +4,32 @@
 
   <span class="spacer"></span>
 
+<<<<<<< Updated upstream
+=======
+  <div class="search">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form class="d-flex" (submit)="onSearch()">
+          <div class="input-group">
+            <input
+              class="form-control form-control-lg"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              [(ngModel)]="searchQuery"
+              name="searchQuery">
+            <button class="btn btn-primary px-4" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+<span class="spacer"></span>
+>>>>>>> Stashed changes
   <!-- Botones de usuario (Login, Registro, Perfil, etc.) -->
   <div class="user-buttons m-3" *ngIf="!isSmallScreen">
 

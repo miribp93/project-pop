@@ -9,6 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { Ad } from '../../interfaces/anuncio.interfaces';
 import { PageEvent } from '@angular/material/paginator';
 import { NotificationService } from '../../services/notification.service';
+<<<<<<< Updated upstream
+=======
+import { UserAdCardComponent } from "../user-card/userCard.component";
+import { forkJoin, map } from 'rxjs';
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'app-userProfile',
@@ -143,15 +148,37 @@ export class UserProfileComponent implements OnInit {
     this.adService.getMyAds().subscribe(
       (ads) => {
         console.log('Datos recibidos de anuncios privados:', ads);
-        this.ads = ads;
-        this.totalLength = this.ads.length; // Total de productos
-        this.setPaginatedProducts(); // Establecer productos paginados
+
+        // Procesar cada anuncio para obtener sus fotos
+        const adRequests = ads.map((ad) =>
+          this.adService.getAdPhoto(ad.id_ad).pipe(
+            map((photos) => ({
+              ...ad,
+              photos: photos.length > 0 ? [photos[0]] : [] // Solo tomar la primera foto o array vacío si no hay fotos
+            }))
+          )
+        );
+
+        // Combinar todas las llamadas de fotos
+        forkJoin(adRequests).subscribe(
+          (adsWithPhotos) => {
+            this.ads = adsWithPhotos;
+            this.totalLength = this.ads.length; // Total de productos
+            this.setPaginatedProducts(); // Establecer productos paginados
+          },
+          (error) => console.error('Error al cargar fotos:', error)
+        );
       },
       (error) => console.error('Error en la carga de datos:', error)
     );
   }
 
+<<<<<<< Updated upstream
   userCreateAd(){
+=======
+
+  userCreateAd() {
+>>>>>>> Stashed changes
     this.router.navigate(['/usercreateads']);
   }
 

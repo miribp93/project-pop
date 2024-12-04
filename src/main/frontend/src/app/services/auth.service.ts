@@ -61,8 +61,17 @@ export class AuthService {
     // Actualizar el estado del usuario
     this.userSubject.next(null);
 
+<<<<<<< Updated upstream
     console.log('Vuelve pronto');
+=======
+
+
+  // Método para obtener el token actual
+  getAccessToken(): string | null {
+    return localStorage.getItem('token');
+>>>>>>> Stashed changes
   }
+
 
   // Registro de un nuevo usuario
   register(userData: any): Observable<User> {
