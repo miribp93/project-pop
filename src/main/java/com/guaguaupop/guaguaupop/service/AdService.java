@@ -258,6 +258,14 @@ public class AdService {
         return toGetAdCompleteDTO(ad);
     }
 
+    //BUSCAR ANUNCIOS POR KEYWORD
+    public List<GetAdSimpleDTO> searchAds(String keyword){
+        List<Ad> ads = adRepository.searchAdsByKeyword(keyword);
+        return ads.stream()
+                .map(this::toGetAdSimpleDTO)
+                .collect(Collectors.toList());
+    }
+
 
 
 

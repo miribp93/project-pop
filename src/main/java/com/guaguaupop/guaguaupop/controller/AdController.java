@@ -242,4 +242,17 @@ public class AdController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el anuncio: " + e.getMessage());
         }
     }
+
+    //BUSCAR ANUNCIOS POR KEYWORD
+    @GetMapping("/search")
+    public ResponseEntity<?> searchAds(
+            @RequestParam("keyword") String keyword){
+
+        try{
+            List<GetAdSimpleDTO> ads = adService.searchAds(keyword);
+            return ResponseEntity.ok(ads);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error inesperado.");
+        }
+    }
 }

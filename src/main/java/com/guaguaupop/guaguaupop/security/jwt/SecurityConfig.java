@@ -48,7 +48,8 @@ public class SecurityConfig {
                                 "/api/ad/type/{typeAd}/category/{category}",
                                 "/api/ad/complete/{idAd}",
                                 "/api/ad/photos/{idAd}",
-                                "/api/ad/photo/ad/{idAd}"
+                                "/api/ad/photo/ad/{idAd}",
+                                "/api/ad/search"
                                                         ).permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
@@ -74,8 +75,7 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(@NotNull CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedOrigins("http://guaguapop.com")
+                        .allowedOrigins("http://localhost:4200", "http://guaguapop.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

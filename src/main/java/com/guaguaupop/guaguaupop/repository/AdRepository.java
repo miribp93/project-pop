@@ -21,5 +21,8 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
     @Query("SELECT a FROM Ad a JOIN a.typeAd t WHERE t = :typeAd")
     List<Ad> findByTypeAd(@Param("typeAd") TypeAd typeAd);
 
+    @Query("SELECT a FROM Ad a WHERE LOWER(a.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(a.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Ad> searchAdsByKeyword(@Param("keyword") String keyword);
+
     List<Ad> findByTypeAdAndCategory(TypeAd typeAd, String category);
 }
