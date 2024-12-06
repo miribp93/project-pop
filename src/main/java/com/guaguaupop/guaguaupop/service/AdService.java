@@ -57,6 +57,7 @@ public class AdService {
                         .stream()
                         .map(this::toGetAdPhotosDTO)
                         .collect(Collectors.toList()))
+                .creator(userDTOConverter.convertUserToGetUserDTO(ad.getUser()))
                 .build();
     }
 
@@ -181,7 +182,6 @@ public class AdService {
                 .map(this::toGetAdSimpleDTO)
                 .collect(Collectors.toList());
     }
-
 
     // OBTENER DATOS COMPLETOS ANUNCIO
     public GetAdCompleteDTO getAdComplete(Long idAd){
