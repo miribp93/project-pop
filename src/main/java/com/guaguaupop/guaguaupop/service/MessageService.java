@@ -30,10 +30,10 @@ public class MessageService {
 
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        helper.setTo("miribp09@gmail.com");
+        helper.setTo("guaguapop01@gmail.com");
         helper.setFrom(new InternetAddress(email, name + " " + lastName));
         helper.setReplyTo(email);
-        helper.setSubject("Quiere contactar.");
+        helper.setSubject(name + " " + lastName + " " + "quiere contactar.");
         helper.setText("Email: " + email + "\nTeléfono: " + (phone != null ? phone.toString() : "No proporcionado") + "\nComentario: " + comment);
         javaMailSender.send(message);
     }
