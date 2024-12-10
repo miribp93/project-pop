@@ -23,12 +23,12 @@
   <!-- Botones de usuario (Login, Registro, Perfil, etc.) -->
   <div class="user-buttons m-3" *ngIf="!isSmallScreen">
 
-    <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="login" >LogIn</button>
-    <button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="register">Registrar</button>
-    <button *ngIf="isAuthenticated && userRole === 'BLOCKED'" mat-stroked-button color="primary" routerLink="login">LogIn</button>
-    <button *ngIf="isAuthenticated && userRole === 'USER'" mat-stroked-button color="primary" routerLink="profile">Mi Perfil</button>
-    <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mat-stroked-button color="primary" routerLink="admin">Administrador</button>
-    <button *ngIf="isAuthenticated" mat-stroked-button color="primary" (click)="logout()">LogOut</button>
+    <button *ngIf="!isAuthenticated" mat-flat-button color="primary" routerLink="login" >LogIn</button>
+    <button *ngIf="!isAuthenticated" mat-flat-button color="primary" routerLink="register">Registrar</button>
+    <button *ngIf="isAuthenticated && userRole === 'BLOCKED'" mat-flat-button color="primary" routerLink="login">LogIn</button>
+    <button *ngIf="isAuthenticated && userRole === 'USER'" mat-flat-button color="primary" routerLink="profile">Mi Perfil</button>
+    <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mat-flat-button color="primary" routerLink="admin">Administrador</button>
+    <button *ngIf="isAuthenticated" mat-flat-button color="primary" (click)="logout()">LogOut</button>
   </div>
 
   <!-- Botón menú hamburguesa para pantallas pequeñas -->
@@ -39,8 +39,8 @@
   <!-- Menú en pantallas pequeñas -->
   <mat-menu #mobileMenu="matMenu">
     <div style="display: flex; flex-direction: column; width: 100%;">
-    <button mat-button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="login">LogIn</button>
-    <button mat-button *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="register">Registrar</button>
+    <button mat-button *ngIf="!isAuthenticated" mat-flat-button color="primary" routerLink="login">LogIn</button>
+    <button mat-button *ngIf="!isAuthenticated" mat-flat-button color="primary" routerLink="register">Registrar</button>
 
     <!-- Botón Mi Perfil solo si está autenticado y no está bloqueado -->
     <button mat-button  *ngIf="isAuthenticated && userRole === 'USER'" routerLink="profile">Mi Perfil</button>

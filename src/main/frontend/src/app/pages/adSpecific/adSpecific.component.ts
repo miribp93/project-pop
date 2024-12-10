@@ -60,6 +60,8 @@ export class AdSpecificComponent implements OnInit {
           } else {
             this.anun = ad; // Asigna el anuncio
             this.anun.photos = photos || []; // Asigna las fotos obtenidas
+
+            console.log('Anuncio cargado:', this.anun);
           }
         },
         error: (err) => {

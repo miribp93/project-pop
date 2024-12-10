@@ -1,9 +1,10 @@
-<div class="container text-center row g-4 pt-2 mt-2">
+<div class=" text-center row g-4 pt-2 mt-2">
   <h4>{{ categoria }} {{ tipoAd ? (tipoAd === 'PRODUCT' ? 'Productos' : 'Servicios') : '' }}</h4>
 
   <div *ngIf="ads.length === 0">No hay anuncios disponibles para esta categoría.</div>
 
-  <div class="container m-3">
+  <!-- Contenedor flexbox para el boton ordenar -->
+  <div class="boton">
     <mat-menu #ordenMenu="matMenu" class="custom-menu">
       <div style="display: flex; flex-direction: column; width: 100%;">
         <button mat-button (click)="ordenarAnuncios('fecha')">Más reciente primero</button>
@@ -13,12 +14,13 @@
     </mat-menu>
 
     <div style="text-align: right;">
-      <button mat-raised-button [matMenuTriggerFor]="ordenMenu" class="ordenar-boton">
+      <button mat-flat-button [matMenuTriggerFor]="ordenMenu" class="ordenar-boton">
         Ordenar por <mat-icon>arrow_drop_down</mat-icon>
       </button>
     </div>
   </div>
 
+  <!-- Contenedor flexbox para los productos -->
   <div class="flex-container">
     <div *ngFor="let ad of paginaAds" class="producto-card">
       <app-card [ad]="ad"></app-card>

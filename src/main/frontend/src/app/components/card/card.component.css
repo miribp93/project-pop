@@ -1,11 +1,11 @@
 .card {
  /* width: 100%; /* Permite que Flexbox maneje el tamaño */
-  height: 400px; /* Asegura que todas las tarjetas tengan la misma altura */
+  height: 350px; /* Asegura que todas las tarjetas tengan la misma altura */
   display: flex; /* Flexbox para alinear contenido */
   flex-direction: column; /* Contenido apilado verticalmente */
   align-items: center; /* Centra los elementos dentro de la tarjeta */
   justify-content: space-between; /* Distribución uniforme del contenido interno */
-  background-color: rgba(79, 197, 220, 0.592);
+  background-color: #FAFAFA;
   border-radius: 10px; /* Bordes redondeados */
  /* box-sizing: border-box; /* Asegura consistencia con el relleno */
 }

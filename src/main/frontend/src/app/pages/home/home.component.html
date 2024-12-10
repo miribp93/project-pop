@@ -1,19 +1,20 @@
 <!-- Contenedor principal con overlay -->
 <div class="banner-container">
   <!-- Imagen de fondo -->
-  <img src="banner6.jpg" alt="banner" class="banner">
+  <img src="banner.jpg" alt="banner" class="banner">
 
   <!-- Overlay con texto -->
   <div class="overlay-text">
     <mat-card class="vende">
       <p class="m-3">¿No lo necesitas? ¡Otro peludo seguro que sí!</p>
-      <button mat-raised-button class="btn mb-3" (click)="vender()">Vende</button>
+      <button mat-flat-button class="btn mb-3" (click)="vender()">Vende</button>
       <a href="infoventa">¿Cómo funciona?</a>
     </mat-card>
   </div>
 </div>
 
-<div class="container m-3">
+<!-- Contenedor flexbox para el boton ordenar -->
+<div class="boton">
   <mat-menu #ordenMenu="matMenu" class="custom-menu">
     <div style="display: flex; flex-direction: column; width: 100%;">
       <button mat-button (click)="ordenarAnuncios('fecha')">Más reciente primero</button>
@@ -23,7 +24,7 @@
   </mat-menu>
 
   <div style="text-align: right;">
-    <button mat-raised-button [matMenuTriggerFor]="ordenMenu" class="ordenar-boton">
+    <button mat-flat-button [matMenuTriggerFor]="ordenMenu" class="ordenar-boton">
       Ordenar por <mat-icon>arrow_drop_down</mat-icon>
     </button>
   </div>
@@ -36,7 +37,9 @@
   </div>
 </div>
 
-<mat-paginator [length]="totalLength"
+<!-- Paginador -->
+<mat-paginator
+               [length]="totalLength"
                [pageSize]="pageSize"
                [pageIndex]="pageIndex"
                [pageSizeOptions]="[5, 10, 25, 100]"

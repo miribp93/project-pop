@@ -30,19 +30,34 @@
 
       <div class="carousel-container">
         <div class="image-container">
-          <!-- Mostramos solo la imagen con el índice activo -->
-          <img
-            *ngFor="let photo of anun.photos; let i = index"
-            [src]="photo"
-            alt="Imagen del producto"
-            class="ad-photo"
-            [class.active]="i === currentIndex"
-          />
+          <!-- Mostramos la imagen activa o la alternativa si no hay fotos -->
+          <ng-container *ngIf="anun.photos && anun.photos.length; else noImage">
+            <img
+              *ngFor="let photo of anun.photos; let i = index"
+              [src]="photo"
+              alt="Imagen del producto"
+              class="ad-photo"
+              [class.active]="i === currentIndex"
+            />
+          </ng-container>
+          <!-- Plantilla para imagen alternativa -->
+          <ng-template #noImage>
+            <img
+              src="favicon.ico"
+              alt="Imagen no disponible"
+              class="ad-photo"
+            />
+          </ng-template>
         </div>
         <!-- Botones de navegación -->
-        <button class="prev" (click)="changeImage(-1)">&#10094;</button>
-        <button class="next" (click)="changeImage(1)">&#10095;</button>
+        <button class="prev" (click)="changeImage(-1)" *ngIf="anun.photos && anun.photos.length">
+          &#10094;
+        </button>
+        <button class="next" (click)="changeImage(1)" *ngIf="anun.photos && anun.photos.length">
+          &#10095;
+        </button>
       </div>
+
 
 
 
@@ -53,19 +68,21 @@
           </mat-card-title>
 
           <mat-list>
-            <mat-list-item><span>ID Anuncio: </span>{{ anun.id_ad }}</mat-list-item>
-            <mat-list-item *ngIf="anun?.type_ad == 'PRODUCT'">Tipo: Producto</mat-list-item>
-            <mat-list-item *ngIf="anun?.type_ad == 'SERVICE'">Tipo: Servicio</mat-list-item>
-            <mat-list-item><span>Estado: </span>{{ anun.condition }}</mat-list-item>
-            <mat-list-item><span>Categoría: </span>{{ anun.category }}</mat-list-item>
-            <mat-list-item><span>Descripción: </span>{{ anun.description }}</mat-list-item>
-            <mat-list-item><span>Precio: </span>{{ anun.price | currency:'EUR':'symbol' }}</mat-list-item>
+            <p><b>Ref. </b>{{ anun.idAd }}</p>
+            <p *ngIf="anun?.type_ad == 'PRODUCT'"><b>Tipo: </b>Producto</p>
+            <p *ngIf="anun?.type_ad == 'SERVICE'"><b>Tipo: </b>Servicio</p>
+            <p><b>Estado: </b>{{ anun.condition }}</p>
+            <p><b>Categoría: </b>{{ anun.category }}</p>
+            <p ><b>Descripción: </b>{{ anun.description }}</p><br><br>
+            <p><b>Precio: </b>{{ anun.price | currency:'EUR':'symbol' }}</p>
           </mat-list>
 
           <div class="button-container">
-            <button mat-stroked-button color="warn" (click)="regresar()">Regresar</button>
+            <button mat-flat-button color="warn" (click)="regresar()">Regresar</button>
             <button mat-flat-button color="primary" (click)="comprar()">Comprar</button>
           </div>
+
+          <p><b>Vendido por: </b>{{ anun.creator?.username }}</p>
         </mat-card-content>
       </mat-card>
     </div>

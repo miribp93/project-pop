@@ -9,12 +9,15 @@ import { FormsModule } from '@angular/forms';
 import { Ad } from '../../interfaces/anuncio.interfaces';
 import { PageEvent } from '@angular/material/paginator';
 import { NotificationService } from '../../services/notification.service';
+import { forkJoin, map } from 'rxjs';
 import { UserAdCardComponent } from "../user-card/userCard.component";
+;
+
 
 @Component({
   selector: 'app-userProfile',
   standalone: true,
-  imports: [CommonModule, FormsModule, MATERIAL_MODULES, UserAdCardComponent],
+  imports: [CommonModule, FormsModule, MATERIAL_MODULES,UserAdCardComponent],
   providers: [AdService],
   templateUrl: './userProfile.component.html',
   styleUrls: ['./userProfile.component.css'],
@@ -31,9 +34,11 @@ export class UserProfileComponent implements OnInit {
     private adService: AdService,
     private router: Router,
     private alert: NotificationService
-  ) {  // Enlace explícito de los métodos para asegurar el contexto
+  ) {
+      // Enlace explícito de los métodos para asegurar el contexto
     this.modificarAnuncio = this.modificarAnuncio.bind(this);
-    this.deleteAd = this.deleteAd.bind(this);}
+    this.deleteAd = this.deleteAd.bind(this);
+  }
 
   public ads: Ad[] = []; // Lista completa de productos
   public paginatedProd: Ad[] = []; // Lista de productos paginados
@@ -49,7 +54,7 @@ export class UserProfileComponent implements OnInit {
         if (user && user.profile_photo) {
           this.photoPreview = user.profile_photo;
         } else {
-          this.loadProfilePhoto(); // Llamada explícita si no hay foto en los datos del usuario
+          this.loadProfilePhoto();  // Llamada explícita si no hay foto en los datos del usuario
         }
       },
       (error) => console.error('Error al cargar usuario:', error)
@@ -71,6 +76,7 @@ export class UserProfileComponent implements OnInit {
       (error) => console.error('Error al cargar la foto de perfil:', error)
     );
   }
+
 
   modificarDatos(): void {
     this.router.navigate(['/register'], { queryParams: { editMode: true } });
@@ -105,6 +111,7 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+
   uploadPhoto(): void {
     if (this.selectedFile) {
       const formData = new FormData();
@@ -126,47 +133,68 @@ export class UserProfileComponent implements OnInit {
             });
           }
         },
-        error: (err) =>
-          this.alert.show('Error al subir la foto de perfil: ' + err.message),
+        error: (err) => this.alert.show('Error al subir la foto de perfil: ' + err.message),
       });
     }
   }
+
 
   // Mostrar el formulario para seleccionar archivo
   selectFile(): void {
     this.isFileSelected = !this.isFileSelected;
   }
 
-  //METODSOS PARA ANUNCIOS
+
+//METODSOS PARA ANUNCIOS
 
   loadAnuncios(): void {
     this.adService.getMyAds().subscribe(
       (ads) => {
         console.log('Datos recibidos de anuncios privados:', ads);
-        this.ads = ads;
-        this.totalLength = this.ads.length; // Total de productos
-        this.setPaginatedProducts(); // Establecer productos paginados
+
+        // Procesar cada anuncio para obtener sus fotos
+        const adRequests = ads.map((ad) =>
+          this.adService.getAdPhoto(ad.id_ad).pipe(
+            map((photos) => ({
+              ...ad,
+              photos: photos.length > 0 ? [photos[0]] : [] // Solo tomar la primera foto o array vacío si no hay fotos
+            }))
+          )
+        );
+
+        // Combinar todas las llamadas de fotos
+        forkJoin(adRequests).subscribe(
+          (adsWithPhotos) => {
+            this.ads = adsWithPhotos;
+            this.totalLength = this.ads.length; // Total de productos
+            this.setPaginatedProducts(); // Establecer productos paginados
+          },
+          (error) => console.error('Error al cargar fotos:', error)
+        );
       },
       (error) => console.error('Error en la carga de datos:', error)
     );
   }
 
+
+
   userCreateAd() {
+
     this.router.navigate(['/usercreateads']);
   }
 
   modificarAnuncio(idAd: number): void {
-    this.router.navigate(['/usercreateads'], {
-      queryParams: { editMode: true, id: idAd },
-    });
+    this.router.navigate(['/usercreateads'], { queryParams: { editMode: true } });
     console.log(`Modificar anuncio ${idAd}`);
   }
 
   deleteAd(idAd: number): void {
+
     this.adService.deleteAd(idAd).subscribe(
       () => {
         this.alert.show('Anucio eliminado con exito');
         this.loadAnuncios();
+
       },
       (error) => console.error('Error al eliminar usuario:', error)
     );
@@ -186,3 +214,5 @@ export class UserProfileComponent implements OnInit {
     this.setPaginatedProducts(); // Actualizar los productos paginados
   }
 }
+
+

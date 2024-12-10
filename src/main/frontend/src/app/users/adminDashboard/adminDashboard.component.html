@@ -10,7 +10,7 @@
       <button mat-stroked-button color="primary" (click)="BlockUser(user)">
         {{ user.roles === 'BLOCKED' ? 'Desbloquear' : 'Bloquear' }}
       </button>
-      <button mat-stroked-button color="warn" (click)="deleteUserAdmin(user.id_user)">
+      <button mat-flat-button color="warn" (click)="deleteUserAdmin(user.id_user)">
         Eliminar Usuario
       </button>
     </div>

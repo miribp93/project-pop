@@ -122,7 +122,7 @@ export class AdService {
   //Actualizar anuncios
   updateAd(adId: number, adData: Ad, files: File[]): Observable<any> {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
     const formData = new FormData();
 
     // Agregar datos del anuncio como JSON
@@ -130,6 +130,8 @@ export class AdService {
 
     // Agregar fotos
     files.forEach((file) => formData.append('photos', file));
+
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     return this.http
       .put(`/api/ad/update/${adId}`, formData, { headers });

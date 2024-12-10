@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  background-color: #fafafa;
 
 }
 
@@ -13,6 +14,7 @@
   justify-content: center;
   gap: 15px;
   color: black;
+  background-color: #fafafa;
 
 }
 

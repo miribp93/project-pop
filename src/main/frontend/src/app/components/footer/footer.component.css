@@ -1,44 +1,53 @@
 .footer-toolbar {
   display: flex;
-  align-items: center; /* Alinea los elementos verticalmente */
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap; /* Permite que los elementos se ajusten en una nueva línea si es necesario */
-  padding: 10px;
-  width: 70%;
-  margin: 0 auto;
+  padding: 20px;
+  width: 100%;
+  background-color: #FAFAFA; /* Franja gris claro */
+  font-size: 12px; /* Letra más pequeña y uniforme */
+  color: #333; /* Texto oscuro */
+}
 
+.info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  width: 70%; /* Ocupa el 70% del ancho total */
+  text-align: center;
+}
+
+.info div ul {
+  list-style: none; /* Quita los puntos del ul */
+  padding: 0;
+}
+
+.info a {
+  text-decoration: none; /* Quita la línea de los enlaces */
+  color: inherit; /* Mantiene el color del texto del párrafo */
+  cursor: pointer;
+}
+
+.info a:hover {
+  color: #007bff; /* Cambia a un azul para indicar que es un enlace */
+  text-decoration: underline; /* Agrega subrayado al pasar el ratón */
+}
+
+.redes a {
+  margin: 0 10px;
 }
 
 .footer-toolbar span {
-  margin: 0 10px;
-}
+  margin-top: 20px;
+  font-size: 20px; /* Tamaño uniforme y pequeño */
 
-.footer-toolbar .spacer {
-  flex: 1; /* Espacio flexible que empuja los iconos a la derecha */
-}
-
-.footer-toolbar a {
-  margin: 0 10px;
 }
 
 /* Media queries para hacerlo responsive */
 @media (max-width: 768px) {
-  .footer-toolbar {
-    flex-direction: column; /* Cambia la dirección de los elementos a columna en pantallas pequeñas */
-    text-align: center; /* Centra el contenido */
-  }
-
-  .footer-toolbar .spacer {
-    display: none; /* Elimina el espacio flexible en pantallas pequeñas */
-  }
-
-  .footer-toolbar a {
-    margin: 5px 0; /* Ajusta el espacio entre los iconos */
-  }
-}
-
-@media (max-width: 480px) {
-  .footer-toolbar span {
-    font-size: 14px; /* Reduce el tamaño de la fuente en pantallas muy pequeñas */
+  .info {
+    grid-template-columns: 1fr; /* Cambia a una sola columna en pantallas pequeñas */
+    text-align: center;
   }
 }

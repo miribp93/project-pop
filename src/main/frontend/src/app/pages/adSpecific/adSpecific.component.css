@@ -4,6 +4,8 @@
   gap: 10px; /* Espaciado entre elementos */
   max-width: 80%; /* Ancho máximo opcional */
   margin: 0 auto; /* Centra el contenedor */
+  border: 1px solid;
+  border-radius: 10px;
 }
 
 .image-container {
@@ -48,9 +50,12 @@ mat-card-content {
 }
 
 .mat-list-item {
-  white-space: normal; /* Permite texto en múltiples líneas */
-  word-wrap: break-word; /* Asegura que las palabras largas no desborden */
-  overflow: visible; /* Asegura que el contenido sea visible */
+  white-space: normal; /* Permite que el texto se ajuste en múltiples líneas */
+  word-wrap: break-word; /* Evita que palabras largas desborden */
+  overflow: visible; /* Asegura que el contenido no se oculte */
+  text-overflow: clip; /* Desactiva puntos suspensivos */
+
+
 }
 
 mat-card-title,

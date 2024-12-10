@@ -37,12 +37,17 @@
 }
 
 /* Paginador */
+
 mat-paginator {
   display: flex;
   justify-content: center;
   margin-top: 20px;
   padding: 10px 0;
+
 }
+
+
+
 
 /* Estilos generales del contenedor del banner */
 .banner-container {
@@ -64,7 +69,7 @@ mat-paginator {
   position: absolute;
   width: 25%;
   top: 50%;
-  left: 25%;
+  left: 50%;
   transform: translate(-50%, -50%);
   color: black;
   font-size: 1.2rem;
@@ -87,13 +92,19 @@ mat-paginator {
   margin: 10px auto;
 }
 
+.boton {
+  width: 70%;
+  display: block;
+  margin: 10px auto;
+}
+
 /* Responsividad del overlay-text */
 @media (min-width: 768px) and (max-width: 1024px) {
   .overlay-text {
     width: 30%;
     height: auto;
     top: 50%; /* Centrado vertical */
-    left: 20%; /* Centrado horizontal */
+    left: 50%; /* Centrado horizontal */
     transform: translate(-50%, -50%);
   }
 }
@@ -104,7 +115,7 @@ mat-paginator {
     height: auto; /* Ajusta la altura según el contenido */
     margin-left: 20px;
     top: 50%; /* Centrado vertical */
-    left: 20%; /* Centrado horizontal */
+    left: 50%; /* Centrado horizontal */
     transform: translate(-50%, -50%);
   }
 }
