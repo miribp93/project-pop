@@ -267,38 +267,9 @@ public class UserController {
         }
     }
 
-
-    /*@PostMapping("/block/{id}")
-    public ResponseEntity<?> blockUser(@PathVariable Long id,
-        @RequestParam int durationMinutes) {
-
-        try { userService.blockUser(id, durationMinutes);
-        return ResponseEntity.ok("User blocked successfully for " +
-        durationMinutes + " minutes");
-        } catch (Exception e) {
-        return ResponseEntity.status(500).body("Error blocking user: " + e.getMessage());
-        }
-    }*/
-
-
-
-
 }
 
 
 
-    /*
-    @GetMapping("/myAds")
-    public ResponseEntity<Page<AdDTO>> myProducts(@AuthenticationPrincipal User user, Pageable pageable) {
-        Page<AdDTO> myProducts = (this.productService.findByUser(user, pageable))
-                .map(product -> adDTOConverter.convertToGetProduct(product, user));
-        return ResponseEntity.ok().body(myProducts);
-    }
 
-    @GetMapping("/products")
-    public ResponseEntity<Page<AdDTO>> otherProducts(@AuthenticationPrincipal User user, Pageable pageable) {
-        Page<AdDTO> products = (this.productService.findOthers(user, pageable))
-                .map(product -> adDTOConverter.convertToGetProduct(product, product.getUser()));
-        return ResponseEntity.ok().body(products);
-    }*/
 

@@ -49,7 +49,8 @@ public class SecurityConfig {
                                 "/api/ad/complete/{idAd}",
                                 "/api/ad/photos/{idAd}",
                                 "/api/ad/photo/ad/{idAd}",
-                                "/api/ad/search"
+                                "/api/ad/search",
+                                "/api/message/contact-form"
                                                         ).permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
