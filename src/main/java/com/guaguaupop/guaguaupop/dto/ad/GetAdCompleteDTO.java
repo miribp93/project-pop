@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 public class GetAdCompleteDTO {
 
-    @JsonProperty("id_photo")
+    @JsonProperty("id_ad")
     private Long idAd;
     private String title;
     private String description;

@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 333333
+      POSTGRES_DB: bbdd_proyecto_miri_lucas
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - guaguaupop
+
+  backend:
+    image: backend:1.0
+    container_name: spring-backend
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bbdd_proyecto_miri_lucas
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 333333
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - guaguaupop
+
+  frontend:
+    image: frontend:1.0
+    container_name: spring-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      - API_URL=http://backend:8080
+    networks:
+      - guaguaupop
+
+networks:
+  guaguaupop:
+    driver: bridge
+
+volumes:
+  postgres_data:
