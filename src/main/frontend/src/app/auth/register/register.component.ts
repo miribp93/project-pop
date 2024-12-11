@@ -110,13 +110,13 @@ export class RegisterComponent {
           this.loadUserData();
 
           // Hacer opcionales todos los campos menos los de lectura
-          this.registerForm.get('name')?.clearValidators();
-          this.registerForm.get('last_name1')?.clearValidators();
-          this.registerForm.get('last_name2')?.clearValidators();
-          this.registerForm.get('phone')?.clearValidators();
+          this.registerForm.get('name')?.setValidators([Validators.pattern('^[a-zA-Z ]+$')]);
+          this.registerForm.get('last_name1')?.setValidators([Validators.pattern('^[a-zA-Z ]+$')]);
+          this.registerForm.get('last_name2')?.setValidators([Validators.pattern('^[a-zA-Z ]*$')]);
+          this.registerForm.get('phone')?.setValidators([Validators.pattern('^[0-9]{9}$')]);
           this.registerForm.get('street')?.clearValidators();
-          this.registerForm.get('city')?.clearValidators();
-          this.registerForm.get('postal_code')?.clearValidators();
+          this.registerForm.get('city')?.setValidators([Validators.pattern('^[a-zA-Z ]+$')]);
+          this.registerForm.get('postal_code')?.setValidators([Validators.pattern('^[0-9]{5}$')]);
           this.registerForm.get('password')?.clearValidators();
           this.registerForm.get('password2')?.clearValidators();
 

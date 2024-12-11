@@ -18,7 +18,7 @@ export class UserAdComponent implements OnInit {
   adForm!: FormGroup;
   selectedFiles: File[] = [];
   editMode = false;
-  adId: number | null = null;
+  idAd: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -35,17 +35,18 @@ export class UserAdComponent implements OnInit {
       title: ['', Validators.required],
       description: ['', Validators.required],
       city: ['', Validators.required],
-      price: ['', [Validators.required, Validators.min(0)]],
+      price: ['', [Validators.required, Validators.min(0), Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),],],
+
       duration: [''],
       condition: [''],
     });
 
     this.route.queryParams.subscribe((params) => {
       this.editMode = params['editMode'] === 'true';
-      this.adId = params['id'] ? Number(params['id']) : null;
+      this.idAd = params['id'] ? Number(params['id']) : null;
 
-      if (this.editMode && this.adId) {
-        this.loadAdData(this.adId);
+      if (this.editMode && this.idAd) {
+        this.loadAdData(this.idAd);
       }
     });
   }
@@ -70,8 +71,8 @@ export class UserAdComponent implements OnInit {
       ...this.adForm.value,
     };
 
-    if (this.editMode && this.adId) {
-      this.updateAd(this.adId, adData, this.selectedFiles);
+    if (this.editMode && this.idAd) {
+      this.updateAd(this.idAd, adData, this.selectedFiles);
     } else {
       this.adService.createAd(adData, this.selectedFiles).subscribe({
         next: (response) => {
@@ -89,8 +90,8 @@ export class UserAdComponent implements OnInit {
     this.router.navigate(['/profile']);
   }
 
-  private loadAdData(adId: number): void {
-    this.adService.getAdComplete(adId).subscribe({
+  private loadAdData(idAd: number): void {
+    this.adService.getAdComplete(idAd).subscribe({
       next: (ad) => {
         if (ad) {
           this.adForm.patchValue(ad); // Rellena el formulario solo si ad no es undefined
@@ -107,8 +108,8 @@ export class UserAdComponent implements OnInit {
 
 
 
-  private updateAd(adId: number, adData: Ad, files: File[]): void {
-    this.adService.updateAd(adId, adData, files).subscribe({
+  private updateAd(idAd: number, adData: Ad, files: File[]): void {
+    this.adService.updateAd(idAd, adData, files).subscribe({
       next: () => {
         this.alert.show('Anuncio actualizado exitosamente');
         this.router.navigate(['/profile']);

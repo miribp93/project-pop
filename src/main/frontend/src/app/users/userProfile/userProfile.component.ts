@@ -176,15 +176,12 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
-
-
   userCreateAd() {
-
     this.router.navigate(['/usercreateads']);
   }
 
   modificarAnuncio(idAd: number): void {
-    this.router.navigate(['/usercreateads'], { queryParams: { editMode: true } });
+    this.router.navigate(['/usercreateads'], { queryParams: { editMode: true, id: idAd } });
     console.log(`Modificar anuncio ${idAd}`);
   }
 
