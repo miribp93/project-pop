@@ -1,7 +1,9 @@
 <mat-card *ngIf="ad; else noProduct" class="card" appearance="outlined" [routerLink]="['/adspecific', ad.id_ad]">
+  <div >
+    <p class="user-name">{{ad.creator?.username}}</p>
+  </div>
   <mat-card-content>
-
-    <div class="image-container">
+       <div class="image-container">
       <ng-container *ngIf="ad?.photos?.length; else noPhotos">
         <img *ngFor="let photo of ad.photos" [src]="photo" alt="Imagen del producto" class="ad-photo" />
       </ng-container>

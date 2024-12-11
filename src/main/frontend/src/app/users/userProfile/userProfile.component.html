@@ -1,56 +1,40 @@
-<div class="container">
-
+<div class="contenedor">
+  <!-- Perfil de usuario -->
   <div class="user-profile">
-    <div class="user-info">
-      <h4 class="text-center">Datos del Usuario</h4>
-      <p><strong>Nombre:</strong> {{ usuario?.name }}</p>
-      <p><strong>Apellido1:</strong> {{ usuario?.last_name1 }}</p>
-      <p><strong>Apellido2:</strong> {{ usuario?.last_name2 }}</p>
-      <p><strong>Email:</strong> {{ usuario?.email }}</p>
-      <p><strong>Ciudad:</strong> {{ usuario?.city }}</p>
-      <p><strong>Calle:</strong> {{ usuario?.street }}</p>
-      <p><strong>Teléfono:</strong> {{ usuario?.phone }}</p>
-      <p><strong>Nombre Usuario:</strong> {{ usuario?.username }}</p>
-
-      <div class="buttons">
-        <button mat-stroked-button color="accent" (click)="modificarDatos()">
-          Modificar Datos
-        </button>
-        <button mat-stroked-button color="warn" (click)="deleteUser()">
-          Baja cuenta
-        </button>
-      </div>
-    </div>
-
     <div class="photo-upload">
-      <h4 class="text-center">Foto de Perfil</h4>
+      <p class="text-center">{{usuario?.name}}</p>
       <div class="photo-card">
-        <!-- Si existe una foto, se muestra; si no, se muestra el mensaje "Sin Foto" -->
         <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo" />
         <p *ngIf="!photoPreview">Sin Foto</p>
       </div>
 
-      <!-- Mostrar el botón "Cambiar Foto" solo si hay una foto de perfil -->
       <div class="change-photo-button mt-3" *ngIf="photoPreview">
-        <button mat-raised-button color="primary" (click)="selectFile()">Cambiar Foto</button>
+        <button mat-button color="primary" (click)="selectFile()">Cambiar Foto</button>
       </div>
 
-      <!-- Formulario para subir una nueva foto, visible si no hay foto o si se seleccionó un archivo -->
       <div *ngIf="!photoPreview || isFileSelected">
         <form (ngSubmit)="uploadPhoto()" #photoForm="ngForm">
           <input type="file" (change)="onFileSelected($event)" name="photo" required />
-          <button mat-raised-button color="primary" type="submit" [disabled]="!selectedFile || !photoForm.form.valid">
+          <button mat-button color="primary" type="submit" [disabled]="!selectedFile || !photoForm.form.valid">
             Subir Foto
           </button>
         </form>
       </div>
-    </div>
 
+      <div class="buttons">
+        <button mat-button color="primary" (click)="modificarDatos()">
+          Modificar Datos
+        </button>
+        <button mat-button color="warn" (click)="deleteUser()">
+          Baja cuenta
+        </button>
+      </div>
+    </div>
   </div>
 
-
-  <div class="ads-section m-3">
-    <h4 class="text-center">Mis Anuncios</h4>
+  <!-- Anuncios -->
+  <div class="ads-section">
+    <h4 class="text-center">Tus Anuncios</h4>
 
     <div class="nav-bar button mb-3">
       <button mat-flat-button color="primary" class="buttons" (click)="userCreateAd()">
@@ -58,13 +42,9 @@
       </button>
     </div>
 
-
     <div class="flex-container">
-
       <app-user-Card *ngFor="let ad of ads" [ad]="ad" [onDeleteAd]="deleteAd" [onModifyAd]="modificarAnuncio" class="card-user">
       </app-user-Card>
     </div>
   </div>
-
-
 </div>

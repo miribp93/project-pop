@@ -68,10 +68,13 @@
           </mat-card-title>
 
           <mat-list>
-            <p><b>Ref. </b>{{ anun.idAd }}</p>
+            <p><b>Ref. </b>{{ anun.id_ad }}</p>
             <p *ngIf="anun?.type_ad == 'PRODUCT'"><b>Tipo: </b>Producto</p>
             <p *ngIf="anun?.type_ad == 'SERVICE'"><b>Tipo: </b>Servicio</p>
-            <p><b>Estado: </b>{{ anun.condition }}</p>
+            <p *ngIf="anun.type_ad == 'PRODUCT'">
+              <b>Estado:</b> {{ anun.condition ? anun.condition : 'No especificado' }}
+            </p>
+
             <p><b>Categoría: </b>{{ anun.category }}</p>
             <p ><b>Descripción: </b>{{ anun.description }}</p><br><br>
             <p><b>Precio: </b>{{ anun.price | currency:'EUR':'symbol' }}</p>

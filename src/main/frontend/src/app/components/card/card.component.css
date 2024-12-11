@@ -39,6 +39,12 @@ img.ad-photo, img[mat-card-image] {
   display: block;
   margin: 0 auto; /* Centra la imagen */
 }
+
+.user-name{
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: start;
+}
 @media (max-width: 992px) {
    .card {
     flex: 1 1 calc(50% - 20px); /* Dos tarjetas por fila en tabletas */

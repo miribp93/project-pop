@@ -6,7 +6,7 @@
   display: flex; /* Asegurarte de que los elementos dentro de la tarjeta se comporten correctamente */
   flex-direction: column;
   justify-content: space-between;
-  background-color: rgba(79, 197, 220, 0.592);
+  background-color: #FAFAFA;
 
 }
 .buttons button {
@@ -63,3 +63,8 @@ img[mat-card-image] {
     height: 150px; /* Reducir la altura de la imagen en pantallas pequeñas */
   }
 }
+
+
+
+
+

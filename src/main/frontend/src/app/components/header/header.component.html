@@ -26,7 +26,7 @@
     <button *ngIf="!isAuthenticated" mat-flat-button color="primary" routerLink="login" >LogIn</button>
     <button *ngIf="!isAuthenticated" mat-flat-button color="primary" routerLink="register">Registrar</button>
     <button *ngIf="isAuthenticated && userRole === 'BLOCKED'" mat-flat-button color="primary" routerLink="login">LogIn</button>
-    <button *ngIf="isAuthenticated && userRole === 'USER'" mat-flat-button color="primary" routerLink="profile">Mi Perfil</button>
+    <button *ngIf="isAuthenticated && userRole === 'USER'" mat-stroked-button color="" routerLink="profile"> {{ username || 'Mi Perfil' }}</button>
     <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mat-flat-button color="primary" routerLink="admin">Administrador</button>
     <button *ngIf="isAuthenticated" mat-flat-button color="primary" (click)="logout()">LogOut</button>
   </div>
@@ -43,7 +43,7 @@
     <button mat-button *ngIf="!isAuthenticated" mat-flat-button color="primary" routerLink="register">Registrar</button>
 
     <!-- Botón Mi Perfil solo si está autenticado y no está bloqueado -->
-    <button mat-button  *ngIf="isAuthenticated && userRole === 'USER'" routerLink="profile">Mi Perfil</button>
+    <button mat-button  *ngIf="isAuthenticated && userRole === 'USER'" routerLink="profile">{{ username || 'Mi Perfil' }}</button>
     <button mat-button *ngIf="isAuthenticated && userRole === 'MANAGER'"  routerLink="admin">Administrador</button>
     <button mat-button *ngIf="isAuthenticated"  (click)="logout()">LogOut</button>
 

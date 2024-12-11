@@ -11,7 +11,7 @@
     </div>
 
     <div class="info">
-      <p><strong>ID:</strong> {{ ad.id_ad }}</p>
+      <p><strong>Ref:</strong> {{ ad.id_ad }}</p>
       <p><strong>Tipo:</strong> {{ ad.type_ad == 'PRODUCT' ? 'Producto' : 'Servicio' }}</p>
       <p><strong>Nombre:</strong> {{ ad.title }}</p>
       <p><strong>Precio:</strong> {{ ad.price | currency: 'EUR':'symbol' }}</p>

@@ -29,19 +29,27 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,private alert: NotificationService
+    private route: ActivatedRoute,
+    private alert: NotificationService
   ) {
     this.registerForm = this.fb.group(
       {
-        name: ['', Validators.required],
-        last_name1: ['', Validators.required],
-        last_name2: [''],
+        name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      last_name1: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      last_name2: ['', Validators.pattern('^[a-zA-Z ]*$')],
         email: ['', [Validators.required, Validators.email]],
-        phone: ['', [Validators.required, Validators.pattern('^[0-9]{9,}$')]], // Permite al menos 9 dígitos
+        phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
         street: ['', Validators.required],
-        city: ['', Validators.required],
-        postal_code: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')],],
-        password: ['', [Validators.minLength(8)]], // Sin validación obligatoria por defecto
+        city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+        postal_code: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern('^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{8,}$')
+          ],
+        ],
         password2: [''],
         username: ['', Validators.required],
       },
@@ -50,6 +58,7 @@ export class RegisterComponent {
       }
     );
   }
+
 
   // Validador personalizado para comparar contraseñas
   matchPasswords(password: string, confirmPassword: string) {

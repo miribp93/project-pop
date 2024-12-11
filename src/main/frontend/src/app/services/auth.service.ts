@@ -101,10 +101,10 @@ export class AuthService {
     localStorage.removeItem('role');
     localStorage.removeItem('refreshToken');
 
-    this.userSubject.next(null);
-    console.log('Vuelve pronto');
-    // Redirigir al login
-    window.location.href = '/login';
+     this.userSubject.next(null);
+     console.log('Vuelve pronto');
+     // Redirigir al login
+     window.location.href = '/home';
   }
 
   // Método para obtener el token actual
@@ -319,8 +319,8 @@ export class AuthService {
   //Enviar email de contacto
   sendContactEmail(data: any): Observable<any> {
     return this.http
-    .delete<User>(`/api/user/contacto`, data) // Envía los datos del usuario
-    .pipe(catchError(this.handleError));
+      .delete<User>(`/api/user/contacto`, data) // Envía los datos del usuario
+      .pipe(catchError(this.handleError));
   }
 
   // Función para manejar errores de respuesta HTTP
