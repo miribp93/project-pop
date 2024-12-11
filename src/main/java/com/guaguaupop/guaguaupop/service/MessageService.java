@@ -26,6 +26,7 @@ public class MessageService {
         javaMailSender.send(message);
     }
 
+    // FORMULARIO DE CONTACTO
     public void sendContactForm(String name, String lastName, String email, Integer phone, String comment) throws MessagingException, UnsupportedEncodingException {
 
         MimeMessage message = javaMailSender.createMimeMessage();
@@ -37,4 +38,7 @@ public class MessageService {
         helper.setText("Email: " + email + "\nTeléfono: " + (phone != null ? phone.toString() : "No proporcionado") + "\nComentario: " + comment);
         javaMailSender.send(message);
     }
+
+    // USUARIO QUIERE CONTACTAR CON OTRO USUARIO
+
 }

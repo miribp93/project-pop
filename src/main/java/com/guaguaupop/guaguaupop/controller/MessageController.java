@@ -38,6 +38,9 @@ public class MessageController {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-
     }
+
+    // USUARIO QUIERE CONTACTAR CON OTRO USUARIO
+    //@PostMapping("/contact-user")
+
 }
