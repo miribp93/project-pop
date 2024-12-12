@@ -88,7 +88,7 @@ export class AdSpecificComponent implements OnInit {
       this.router.navigateByUrl('pay'); // Redirigir a la plataforma de pago si está logueado
     } else {
       this.router.navigate(['/login'], {
-        queryParams: { redirect: 'pay', productId: this.anun?.idAd },
+        queryParams: { redirect: 'pay', productId: this.anun?.id_ad },
       });
     }
   }

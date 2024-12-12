@@ -4,25 +4,74 @@
 
     <form id="contactForm" (ngSubmit)="paySucces()">
 
+      <!-- Selección del Método de Pago -->
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nombre</mat-label>
-          <input matInput type="text" id="nombre" name="nombre" [(ngModel)]="nombre" required>
+          <mat-label>Selecciona el método de pago</mat-label>
+          <mat-select [(value)]="metodoPago" name="metodoPago" required>
+            <mat-option value="efectivo">Pago en mano</mat-option>
+            <mat-option value="tarjeta">Pago con tarjeta</mat-option>
+            <mat-option value="bizum">Pago con Bizum</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
+      <!-- Formulario de Pago en Mano -->
+      <div *ngIf="metodoPago === 'efectivo'" class="form-group">
+        <p>Por favor, realice el pago en mano al recibir el producto.</p>
+      </div>
 
-      <div class="form-group">
+      <!-- Formulario de Pago con Tarjeta -->
+      <div *ngIf="metodoPago === 'tarjeta'" class="form-group">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Dirección</mat-label>
-          <input matInput type="text" id="dir" name="dir" [(ngModel)]="dir" required>
+          <mat-label>Nombre en la tarjeta</mat-label>
+          <input matInput type="text" name="nombreTarjeta" required>
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Numero de tarjeta</mat-label>
+          <input matInput type="text" name="numeroTarjeta" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Fecha de expiración</mat-label>
+          <input matInput type="month" name="fechaExpiracion" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Código de seguridad</mat-label>
+          <input matInput type="text" name="codigoSeguridad" required>
+        </mat-form-field>
+      </div>
+
+      <!-- Formulario de Pago con Bizum -->
+      <div *ngIf="metodoPago === 'bizum'" class="form-group">
+        <p>Por favor, realiza el pago a través de Bizum al siguiente número:</p>
+        <p><strong>+34 600 123 456</strong></p>
+      </div>
+
+      <!-- Información General (Nombre, Dirección) -->
+      <div *ngIf="metodoPago !== ''">
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" id="nombre" name="nombre" [(ngModel)]="nombre" required>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Dirección</mat-label>
+            <input matInput type="text" id="dir" name="dir" [(ngModel)]="dir" required>
+          </mat-form-field>
+        </div>
       </div>
 
       <div class="form-actions">
         <button mat-flat-button color="primary" type="submit">Pagar</button>
         <button mat-flat-button color="warn" type="button" (click)="cancelar()">Cancelar</button>
       </div>
+
     </form>
   </mat-card>
 </div>
