@@ -1,34 +1,33 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { MATERIAL_MODULES } from '../../components/material/material.component';
+import { AuthService, ContactForm } from '../../services/auth.service';
 import { NotificationService } from '../../services/notification.service';
+import { MATERIAL_MODULES } from '../../components/material/material.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [
-    MATERIAL_MODULES,
-    ReactiveFormsModule,
-  ],
+  imports: [MATERIAL_MODULES,ReactiveFormsModule,CommonModule],
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css'],
 })
 export class ContactComponent {
-onAdSubmit() {
-throw new Error('Method not implemented.');
-}
   contactForm: FormGroup;
 
-
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService,private alert: NotificationService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private alert: NotificationService
+  ) {
     this.contactForm = this.fb.group({
       nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
+      apellido: [''], // Opcional
       email: ['', [Validators.required, Validators.email]],
-      telefono: ['', Validators.required],
-      direccion: [''],
+      telefono: [''], // Opcional
+      direccion: [''], // Opcional
       comentario: ['', Validators.required],
     });
   }
@@ -39,11 +38,12 @@ throw new Error('Method not implemented.');
 
   enviar() {
     if (this.contactForm.valid) {
-      const formData = this.contactForm.value;
-      this.authService.sendContactEmail(formData).subscribe({
-        next: () => {
+      const formData: ContactForm = this.contactForm.value;
+      this.authService.contactForm(formData).subscribe({
+        next: (response: string) => {
           this.alert.show('Correo enviado con éxito');
           this.contactForm.reset();
+          this.router.navigate(['/']);
         },
         error: (err) => {
           console.error('Error al enviar el correo:', err);

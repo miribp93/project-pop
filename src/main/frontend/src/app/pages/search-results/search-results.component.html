@@ -1,0 +1,9 @@
+<div *ngIf="results.length > 0; else noResults" class="flex-container">
+  <div *ngFor="let ad of results" class="producto-card">
+    <app-card [ad]="ad"></app-card>
+  </div>
+</div>
+
+<ng-template #noResults>
+  <p>No se encontraron resultados para la búsqueda.</p>
+</ng-template>

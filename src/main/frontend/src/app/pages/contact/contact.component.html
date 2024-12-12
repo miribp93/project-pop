@@ -2,24 +2,24 @@
 
   <mat-card class="form-card">
     <h4>Formulario de Contacto</h4>
-    <form [formGroup]="contactForm" (ngSubmit)="onAdSubmit()">
+    <form [formGroup]="contactForm" (ngSubmit)="enviar()">
 
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nombre</mat-label>
-          <input matInput type="text"  formControlName="nombre" required>
+          <input matInput type="text" formControlName="nombre" required>
         </mat-form-field>
       </div>
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Apellido</mat-label>
-          <input matInput type="text"  formControlName="apellido" required>
+          <input matInput type="text" formControlName="apellido">
         </mat-form-field>
       </div>
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
-          <input matInput type="text"  formControlName="email" required>
+          <input matInput type="text" formControlName="email" required>
         </mat-form-field>
       </div>
 
@@ -28,24 +28,20 @@
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Telefono</mat-label>
-          <input matInput type="text"  formControlName="telefono" required>
+          <input matInput type="text" formControlName="telefono">
         </mat-form-field>
       </div>
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Direccion</mat-label>
-          <input matInput type="text"   formControlName="direccion" required>
+          <input matInput type="text" formControlName="direccion">
         </mat-form-field>
       </div>
 
       <div class="form-group">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Comentario</mat-label>
-          <textarea matInput
-                    style="height: 100px; width: 100%;"
-
-                    formControlName="comentario"
-                    required>
+          <textarea matInput style="height: 100px; width: 100%;" formControlName="comentario" required>
           </textarea>
         </mat-form-field>
       </div>

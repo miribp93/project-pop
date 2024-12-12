@@ -14,7 +14,7 @@ export class NotificationService {
 
   // Otros métodos si necesitas más personalización
   showSuccess(message: string): void {
-    this.show(message, 'OK', 3000);
+    this.show(message, 'OK', 5000);
   }
 
   showError(message: string): void {

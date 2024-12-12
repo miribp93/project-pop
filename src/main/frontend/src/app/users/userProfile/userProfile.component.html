@@ -12,14 +12,15 @@
         <button mat-button color="primary" (click)="selectFile()">Cambiar Foto</button>
       </div>
 
-      <div *ngIf="!photoPreview || isFileSelected">
+      <div *ngIf="!photoPreview || isFileSelected" class="upload-controls">
         <form (ngSubmit)="uploadPhoto()" #photoForm="ngForm">
-          <input type="file" (change)="onFileSelected($event)" name="photo" required />
+          <input type="file" (change)="onFileSelected($event)" name="photo" required class="file-input" />
           <button mat-button color="primary" type="submit" [disabled]="!selectedFile || !photoForm.form.valid">
             Subir Foto
           </button>
         </form>
       </div>
+
 
       <div class="buttons">
         <button mat-button color="primary" (click)="modificarDatos()">
@@ -35,16 +36,22 @@
   <!-- Anuncios -->
   <div class="ads-section">
     <h4 class="text-center">Tus Anuncios</h4>
-
     <div class="nav-bar button mb-3">
       <button mat-flat-button color="primary" class="buttons" (click)="userCreateAd()">
         Agregar Anuncio
       </button>
     </div>
-
     <div class="flex-container">
       <app-user-Card *ngFor="let ad of ads" [ad]="ad" [onDeleteAd]="deleteAd" [onModifyAd]="modificarAnuncio" class="card-user">
       </app-user-Card>
     </div>
   </div>
 </div>
+<mat-paginator
+  [length]="totalLength"
+  [pageSize]="pageSize"
+  [pageIndex]="pageIndex"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  (page)="onPageChange($event)"
+  aria-label="Select page">
+</mat-paginator>

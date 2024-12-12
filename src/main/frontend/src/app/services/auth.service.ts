@@ -8,6 +8,7 @@ import {
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { User, UserSession } from '../interfaces/user.interface';
+import { ContactForm } from '../interfaces/contactForm.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -101,10 +102,10 @@ export class AuthService {
     localStorage.removeItem('role');
     localStorage.removeItem('refreshToken');
 
-     this.userSubject.next(null);
-     console.log('Vuelve pronto');
-     // Redirigir al login
-     window.location.href = '/home';
+    this.userSubject.next(null);
+    console.log('Vuelve pronto');
+    // Redirigir al login
+    window.location.href = '/home';
   }
 
   // Método para obtener el token actual
@@ -133,6 +134,24 @@ export class AuthService {
         { headers, responseType: 'text' } // Cambiar el tipo de respuesta a texto
       )
       .pipe(catchError(this.handleError));
+  }
+
+  // Registro de un nuevo usuario
+  contactForm(formData: any): Observable<string> {
+    let params = new HttpParams()
+      .set('name', formData.nombre)
+      .set('email', formData.email)
+      .set('comment', formData.comentario);
+
+    // Agregar parámetros opcionales solo si existen
+    if (formData.apellido) {
+      params = params.set('lastName', formData.apellido);
+    }
+    if (formData.telefono) {
+      params = params.set('phone', formData.telefono);
+    }
+
+    return this.http.post(`api/message/contact-form`, null, { params, responseType: 'text' });
   }
 
   //Restablecer contraseña
@@ -316,13 +335,6 @@ export class AuthService {
       );
   }
 
-  //Enviar email de contacto
-  sendContactEmail(data: any): Observable<any> {
-    return this.http
-      .delete<User>(`/api/user/contacto`, data) // Envía los datos del usuario
-      .pipe(catchError(this.handleError));
-  }
-
   // Función para manejar errores de respuesta HTTP
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('Error:', error);
@@ -346,3 +358,4 @@ export class AuthService {
     return null;
   }
 }
+export { ContactForm };

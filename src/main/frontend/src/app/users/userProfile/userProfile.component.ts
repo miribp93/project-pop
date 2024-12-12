@@ -124,12 +124,16 @@ export class UserProfileComponent implements OnInit {
             this.photoPreview = response.photoUrl;
             this.isFileSelected = false;
 
+            // Restablecer el archivo seleccionado para ocultar el botón "Seleccionar archivo"
+            this.selectedFile = null; // Limpiar el archivo seleccionado
+
             // Recargar el usuario para obtener la foto actualizada
             this.authService.getCurrentUser().subscribe((user) => {
               this.usuario = user;
               this.photoPreview = user.profile_photo;
 
-              location.reload();
+              // No es necesario recargar la página, solo actualizamos el estado
+              // location.reload(); // Remover esta línea, ya que no es necesario recargar la página
             });
           }
         },
@@ -137,6 +141,7 @@ export class UserProfileComponent implements OnInit {
       });
     }
   }
+
 
 
   // Mostrar el formulario para seleccionar archivo

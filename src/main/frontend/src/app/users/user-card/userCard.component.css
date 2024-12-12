@@ -1,6 +1,6 @@
 .user-ad-card {
   width: 100%;
-  height: 400px; /* Mantén la altura de la tarjeta */
+  height: 450px; /* Mantén la altura de la tarjeta */
   align-items: center;
   overflow: hidden;
   display: flex; /* Asegurarte de que los elementos dentro de la tarjeta se comporten correctamente */
@@ -14,7 +14,7 @@
 }
 
 .info{
- margin: 0 auto;
+ margin: 10px auto;
 }
 
 

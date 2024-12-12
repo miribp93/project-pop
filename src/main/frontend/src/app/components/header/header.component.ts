@@ -21,21 +21,49 @@ export class HeaderComponent implements OnInit {
   userRole = 'guest';       // Define el rol del usuario ('guest' como valor por defecto)
   isSmallScreen = false;    // Define si la pantalla es pequeña
   username: string | null = null;
+  photoPreview: string | null = null; // Para almacenar la foto de perfil
 
   constructor(private authService: AuthService, private router: Router) {}
 
-
-
   ngOnInit(): void {
+    // Suscripción al user$ para saber si el usuario está autenticado
     this.authService.user$.subscribe(userSession => {
       this.isAuthenticated = !!userSession;
       this.userRole = userSession?.roles[0] || 'guest';
       this.username = userSession?.username || null;
+
+      // Obtener la foto de perfil utilizando el servicio AuthService
+      if (userSession?.token) {
+        this.authService.getProfilePhoto().subscribe(
+          (photoBlob) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              this.photoPreview = reader.result as string; // Convertimos el Blob en URL de imagen
+            };
+            reader.readAsDataURL(photoBlob); // Leemos el Blob como URL
+          },
+          (error) => {
+            console.error('Error al cargar la foto de perfil', error);
+          }
+        );
+      }
     });
 
-    this.checkScreenSize(); // Check the screen size on initialization
-
+    this.checkScreenSize(); // Verifica el tamaño de la pantalla al iniciar
   }
+  onSearch(term: string, event: Event): void {
+    event.preventDefault(); // Prevenir el reinicio de la página
+    console.log(`Buscando el término: ${term}`);
+
+    if (!term.trim()) {
+      console.warn('El término de búsqueda está vacío.');
+      return; // No realizar búsquedas vacías
+    }
+
+    // Redirigir a la página de resultados con el término de búsqueda
+    this.router.navigate(['/search-result'], { queryParams: { keyword: term } });
+  }
+
 
   // Escucha el evento de redimensionamiento de ventana para actualizar el tamaño de pantalla
   @HostListener('window:resize', ['$event'])
@@ -47,7 +75,6 @@ export class HeaderComponent implements OnInit {
   checkScreenSize(): void {
     this.isSmallScreen = window.innerWidth < 768;
   }
-
 
   // Cierra sesión y redirige a la página principal
   logout(): void {

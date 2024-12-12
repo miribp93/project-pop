@@ -79,7 +79,7 @@ export class AdService {
     );
   }
 
-  //Metodo para
+
   // Método para obtener la foto de perfil obtener los anuncios de cada usuario
   getMyAds(): Observable<Ad[]> {
     const token = localStorage.getItem('token');
@@ -145,6 +145,11 @@ export class AdService {
     return this.http
       .delete<void>(`/api/ad/delete-my-ad/${id}`, { headers })
       .pipe(catchError(this.handleError));
+  }
+
+  searchAds(term: string): Observable<any[]> {
+    const url = `api/ad/search?keyword=${encodeURIComponent(term)}`;
+    return this.http.get<any[]>(url); // Ajusta el tipo según tu API
   }
 
   // Función para manejar errores de respuesta HTTP

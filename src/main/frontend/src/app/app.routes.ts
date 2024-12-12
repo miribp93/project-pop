@@ -14,6 +14,7 @@ import { ResetPasswordComponent } from './auth/resetPassword/resetPassword.compo
 import { ForgotPasswordComponent } from './auth/forgotPassword/forgotPassword.component';
 import { UserAdComponent } from './users/userAd/userAd.component';
 import { InfoFunctionComponent } from './components/info-function/info-function.component';
+import { SearchResultsComponent } from './pages/search-results/search-results.component';
 
 export const routes: Routes = [
   {
@@ -34,7 +35,8 @@ export const routes: Routes = [
       { path: 'admin', component: AdminDashboardComponent },
       { path: 'forgotpass', component: ForgotPasswordComponent },
       { path: 'usercreateads', component: UserAdComponent },
-      { path: 'infoventa',  component: InfoFunctionComponent}
+      { path: 'infoventa',  component: InfoFunctionComponent},
+      { path: 'search-result', component: SearchResultsComponent },
     ],
   },
 ];

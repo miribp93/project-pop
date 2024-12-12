@@ -4,32 +4,34 @@
 
   <span class="spacer"></span>
 
-  <div class="search">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form class="d-flex">
-                <div class="input-group">
-                    <input class="form-control form-control-lg" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-primary px-4" type="submit">
-                            <i class="bi bi-search"></i>
-                        </button>
-                </div>
-            </form>
-        </div>
+  <form class="d-flex" (submit)="onSearch(searchInput.value, $event)">
+
+    <div class="input-group">
+      <input #searchInput class="form-control form-control-lg" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-primary px-4" type="submit">
+        <i class="bi bi-search"></i>
+      </button>
     </div>
-</div>
+  </form>
+
 
 <span class="spacer"></span>
   <!-- Botones de usuario (Login, Registro, Perfil, etc.) -->
   <div class="user-buttons m-3" *ngIf="!isSmallScreen">
-
-    <button *ngIf="!isAuthenticated" mat-flat-button color="primary" routerLink="login" >LogIn</button>
+    <button *ngIf="!isAuthenticated" mat-flat-button color="primary" routerLink="login">LogIn</button>
     <button *ngIf="!isAuthenticated" mat-flat-button color="primary" routerLink="register">Registrar</button>
     <button *ngIf="isAuthenticated && userRole === 'BLOCKED'" mat-flat-button color="primary" routerLink="login">LogIn</button>
-    <button *ngIf="isAuthenticated && userRole === 'USER'" mat-stroked-button color="" routerLink="profile"> {{ username || 'Mi Perfil' }}</button>
+
+    <!-- Botón Mi Perfil con foto de perfil pequeña -->
+    <button *ngIf="isAuthenticated && userRole === 'USER'" mat-button color="" routerLink="profile">
+      <img *ngIf="photoPreview" [src]="photoPreview" alt="Foto de perfil" class="profile-photo-small" />
+      {{ username || 'Mi Perfil' }}
+    </button>
+
     <button *ngIf="isAuthenticated && userRole === 'MANAGER'" mat-flat-button color="primary" routerLink="admin">Administrador</button>
     <button *ngIf="isAuthenticated" mat-flat-button color="primary" (click)="logout()">LogOut</button>
   </div>
+
 
   <!-- Botón menú hamburguesa para pantallas pequeñas -->
   <button mat-icon-button *ngIf="isSmallScreen" [matMenuTriggerFor]="mobileMenu">

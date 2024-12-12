@@ -37,6 +37,27 @@
   flex-grow: 1;
 }
 
+.profile-button {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espacio entre la imagen y el texto */
+}
+
+.profile-photo-small {
+  width: 24px; /* Tamaño pequeño de la imagen */
+  height: 24px; /* Tamaño pequeño de la imagen */
+  border-radius: 50%; /* Hace la imagen circular */
+  margin-right: 8px; /* Espacio entre la imagen y el texto */
+}
+
+.profile-image {
+  width: 24px; /* Ajusta el tamaño según sea necesario */
+  height: 24px;
+  border-radius: 50%; /* Hace la imagen redonda */
+  object-fit: cover; /* Ajusta la imagen al contenedor */
+}
+
+
 /* Botones de usuario */
 .user-buttons {
   display: flex;
