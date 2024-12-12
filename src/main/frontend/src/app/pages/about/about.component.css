@@ -1,15 +1,19 @@
 /* Contenedor principal */
 .container {
-  max-width: 80%; /* El contenedor no se expandirá más allá de 1100px */
+  max-width: 60%; /* El contenedor no se expandirá más allá de 1100px */
   margin: 0 auto; /* Centra el contenedor horizontalmente */
   padding: 0 20px; /* Añade espacio a los lados para evitar que el contenido toque los bordes */
   box-sizing: border-box; /* Incluye el padding en el cálculo del tamaño total */
 }
 
 /* Estilos para el encabezado */
-h3, h4 {
+h3, h4,h6{
   margin-bottom: 20px;
   text-align: center;
+}
+
+h4{
+  margin-top: 30px;
 }
 
 /* Estilos para los párrafos */
@@ -24,4 +28,22 @@ div p {
 mat-divider {
   margin: 20px 0;
   border-top: 1px solid #ccc; /* Color de la línea de la división */
+}
+.grid{
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+}
+
+.equipo{
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2rem;
+}
+.modelos img {
+  max-width: 100%; /* La imagen no superará el ancho del contenedor */
+  max-height: 300px; /* Limita la altura máxima de las imágenes a 300px */
+
 }
