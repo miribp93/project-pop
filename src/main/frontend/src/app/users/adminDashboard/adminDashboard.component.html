@@ -1,17 +1,34 @@
 <h3 class="text-center mt-3">Perfil Administrador</h3>
-<h4 class="text-center">Todos Los usuarios</h4>
+
+<div class="btn-listar">
+  <button mat-stroked-button color="primary" (click)="toggleView(true)">Listar Usuarios</button>
+  <button mat-stroked-button color="accent" (click)="toggleView(false)">Listar Anuncios</button>
+</div>
+
 <mat-divider></mat-divider>
 
-<div class="container">
+<div *ngIf="showUsers" class="container">
+  <h4 class="text-center">Todos Los Usuarios</h4>
   <div *ngFor="let user of pagedUsers" class="user-details">
-    <p>{{user.id_user}}{{ user.username }} - Rol: {{ user.roles }} - {{ user.name }} - {{ user.email }}</p>
+    <p><strong>Id Usuario:</strong> 00{{ user.id_user }} - <strong>Usuario:</strong> {{ user.username }} - <strong>Rol:</strong> {{ user.roles }} - <strong>Email:</strong> {{ user.email }}</p>
     <div class="user-actions">
-      <!-- Verifica el rol del usuario para decidir el texto del botón -->
       <button mat-stroked-button color="primary" (click)="BlockUser(user)">
-        {{ user.roles === 'BLOCKED' ? 'Desbloquear' : 'Bloquear' }}
+        {{ user.roles == 'BLOCKED' ? 'Desbloquear' : 'Bloquear' }}
       </button>
       <button mat-flat-button color="warn" (click)="deleteUserAdmin(user.id_user)">
         Eliminar Usuario
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!showUsers" class="container">
+  <h4 class="text-center">Todos Los Anuncios</h4>
+  <div *ngFor="let ad of pagedAds" class="ad-details">
+    <p><strong>Id Anuncio:</strong> 00{{ ad.id_ad }} - <strong>Título:</strong> {{ ad.title }} - <strong>Propietario:</strong> {{ ad.creator.username }}</p>
+    <div class="ad-actions">
+      <button mat-flat-button color="warn" (click)="deleteAd(ad.id_ad)">
+        Eliminar Anuncio
       </button>
     </div>
   </div>
@@ -24,4 +41,3 @@
                (page)="onPageChange($event)"
                aria-label="Select page">
 </mat-paginator>
-

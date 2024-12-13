@@ -83,6 +83,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   deleteUser(): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este anuncio?')) {
     if (this.usuario) {
       this.authService.deleteUser().subscribe(
         () => {
@@ -93,6 +94,7 @@ export class UserProfileComponent implements OnInit {
       );
     }
   }
+}
 
   logout(): void {
     this.authService.logout();

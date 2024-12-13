@@ -6,7 +6,7 @@
   padding: 20px;
 }
 
-.user-details {
+.user-details, .ad-details {
   border: 1px solid #ddd;
   padding: 15px;
   border-radius: 8px;
@@ -17,7 +17,7 @@
 }
 
 /* Ajustes a los botones */
-.user-actions {
+.user-actions, .ad-actions {
   display: flex;
   gap: 8px; /* Espacio entre los botones */
   align-items: center;
@@ -31,18 +31,25 @@ button {
   min-width: auto; /* Ancho mínimo adaptado */
 }
 
+.btn-listar{
+  display: flex;
+  gap: 20px;
+  justify-content: start;
+  margin: 15px auto;
+}
+
 /* Responsividad para pantallas pequeñas */
 @media (max-width: 767px) {
   .container {
     grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
   }
 
-  .user-details {
+  .user-details, .ad-details{
     flex-direction: column; /* Ordena en columna en pantallas pequeñas */
     align-items: flex-start;
   }
 
-  .user-actions {
+  .user-actions, .ad-actions {
     align-self: flex-end; /* Alinea los botones a la derecha */
     margin-top: 10px;
   }
