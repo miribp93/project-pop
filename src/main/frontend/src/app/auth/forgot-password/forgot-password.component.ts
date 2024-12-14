@@ -8,14 +8,14 @@ import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-forgotPassword',
-  templateUrl: './forgotPassword.component.html',
+  templateUrl: './forgot-password.component.html',
   standalone :true,
   imports:  [
     MATERIAL_MODULES,
     CommonModule,
     FormsModule
   ],
-  styleUrls: ['./forgotPassword.component.css'],
+  styleUrls: ['./forgot-password.component.css'],
 })
 export class ForgotPasswordComponent {
   email = '';

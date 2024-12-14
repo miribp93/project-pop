@@ -16,8 +16,8 @@ import { AdService } from '../../services/ad.service';
     MATERIAL_MODULES,
     CommonModule,
   ],
-  templateUrl: './adminDashboard.component.html',
-  styleUrls: ['./adminDashboard.component.css']
+  templateUrl: './admin-dashboard.component.html',
+  styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
   users: User[] = [];

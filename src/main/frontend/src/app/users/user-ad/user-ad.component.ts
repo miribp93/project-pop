@@ -11,8 +11,8 @@ import { NotificationService } from '../../services/notification.service';
   selector: 'app-userAd',
   standalone: true,
   imports: [MATERIAL_MODULES, CommonModule, ReactiveFormsModule],
-  templateUrl: './userAd.component.html',
-  styleUrls: ['./userAd.component.css'],
+  templateUrl: './user-ad.component.html',
+  styleUrls: ['./user-ad.component.css'],
 })
 export class UserAdComponent implements OnInit {
   adForm!: FormGroup;

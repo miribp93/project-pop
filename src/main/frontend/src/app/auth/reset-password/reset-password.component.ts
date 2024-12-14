@@ -15,8 +15,8 @@ import { NotificationService } from '../../services/notification.service';
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  templateUrl: './resetPassword.component.html',
-  styleUrls: ['./resetPassword.component.css'],
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.css'],
   imports: [MATERIAL_MODULES,ReactiveFormsModule,CommonModule]
 })
 export class ResetPasswordComponent {

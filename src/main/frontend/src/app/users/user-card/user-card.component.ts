@@ -5,13 +5,13 @@ import { MATERIAL_MODULES } from '../../components/material/material.component';
 
 @Component({
   selector: 'app-user-Card',
-  templateUrl: './userCard.component.html',
+  templateUrl: './user-card.component.html',
   standalone: true,
   imports: [
     MATERIAL_MODULES,
     CommonModule,
   ],
-  styleUrls: ['./userCard.component.css'],
+  styleUrls: ['./user-card.component.css'],
 })
 export class UserAdCardComponent implements OnInit, OnDestroy {
   @Input() ad: Ad | undefined;

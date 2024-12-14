@@ -10,7 +10,7 @@ import { Ad } from '../../interfaces/anuncio.interfaces';
 import { PageEvent } from '@angular/material/paginator';
 import { NotificationService } from '../../services/notification.service';
 import { forkJoin, map } from 'rxjs';
-import { UserAdCardComponent } from "../user-card/userCard.component";
+import { UserAdCardComponent } from "../user-card/user-card.component";
 ;
 
 
@@ -19,8 +19,8 @@ import { UserAdCardComponent } from "../user-card/userCard.component";
   standalone: true,
   imports: [CommonModule, FormsModule, MATERIAL_MODULES,UserAdCardComponent],
   providers: [AdService],
-  templateUrl: './userProfile.component.html',
-  styleUrls: ['./userProfile.component.css'],
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
   usuario: User | null = null;
