@@ -12,8 +12,16 @@ h3, h4,h6{
   text-align: center;
 }
 
+h6 {
+  text-align: left;
+}
+
 h4{
   margin-top: 30px;
+}
+
+p {
+  margin-top: 10px;
 }
 
 /* Estilos para los párrafos */
@@ -43,7 +51,16 @@ mat-divider {
   gap: 2rem;
 }
 .modelos img {
-  max-width: 100%; /* La imagen no superará el ancho del contenedor */
-  max-height: 300px; /* Limita la altura máxima de las imágenes a 300px */
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  }
 
+.icono{
+  width: 34px;
+  height: 34px;
 }
+
+
+
+

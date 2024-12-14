@@ -119,6 +119,10 @@ button.next {
   right: 10px;
 }
 
+.precio{
+  font-size: 1.3rem;
+}
+
 /* Media query para pantallas pequeñas */
 @media (max-width: 768px) {
   .container {

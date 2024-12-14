@@ -74,7 +74,7 @@
 
             <p><b>Categoría: </b>{{ anun.category }}</p>
             <p ><b>Descripción: </b>{{ anun.description }}</p><br><br>
-            <p><b>Precio: </b>{{ anun.price | currency:'EUR':'symbol' }}</p>
+            <p class="precio"><b>Precio: </b>{{ anun.price | currency:'EUR':'symbol' }}</p>
           </mat-list>
 
           <div class="button-container">
@@ -82,7 +82,7 @@
             <button mat-flat-button color="primary" (click)="comprar()">Comprar</button>
           </div>
 
-          <p><b>Vendido por: </b>{{ anun.creator?.username }}</p>
+          <p class="mt-2"><b>Vendido por: </b>{{ anun.creator?.username }}</p>
         </mat-card-content>
       </mat-card>
     </div>
