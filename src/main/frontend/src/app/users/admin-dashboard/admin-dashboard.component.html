@@ -27,7 +27,7 @@
   <div *ngFor="let ad of pagedAds" class="ad-details">
     <p><strong>Id Anuncio:</strong> 00{{ ad.id_ad }} - <strong>Título:</strong> {{ ad.title }} - <strong>Propietario:</strong> {{ ad.creator.username }}</p>
     <div class="ad-actions">
-      <button mat-flat-button color="warn" (click)="deleteAd(ad.id_ad)">
+      <button mat-flat-button color="warn" (click)="deleteAdAdmin(ad.id_ad)">
         Eliminar Anuncio
       </button>
     </div>

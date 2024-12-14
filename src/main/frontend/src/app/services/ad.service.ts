@@ -5,8 +5,8 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { Ad } from '../interfaces/anuncio.interfaces'; // Revisa que esta ruta sea válida
-import { environments } from '../../environments/environments'; // Revisa que esta ruta sea válida
+import { Ad } from '../interfaces/anuncio.interfaces';
+import { environments } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -70,6 +70,8 @@ export class AdService {
       })
     );
   }
+
+  //Metodo para recuperar foto de anuncio por id
   getAdPhoto(id: number): Observable<string[]> {
     return this.http.get<{ photos: string }[]>(`/api/ad/photos/${id}`).pipe(
       map(
@@ -147,6 +149,17 @@ export class AdService {
       .pipe(catchError(this.handleError));
   }
 
+  // Método para eliminar un anuncio como administrador
+  deleteAdAdmin(id: number): Observable<void> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http
+      .delete<void>(`/api/ad/delete/${id}`, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  //Metodo de busqueda de anuncios
   searchAds(term: string): Observable<any[]> {
     const url = `api/ad/search?keyword=${encodeURIComponent(term)}`;
     return this.http.get<any[]>(url); // Ajusta el tipo según tu API

@@ -119,9 +119,9 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  deleteAd(id_ad: number): void {
+  deleteAdAdmin(id_ad: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este anuncio?')) {
-      this.adService.deleteAd(id_ad).subscribe(
+      this.adService.deleteAdAdmin(id_ad).subscribe(
         () => {
           this.alert.show('Anuncio eliminado con éxito');
           this.ads = this.ads.filter(ad => ad.id_ad !== id_ad);
