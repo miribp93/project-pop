@@ -31,7 +31,7 @@
       <div class="carousel-container">
         <div class="image-container">
           <!-- Mostramos la imagen activa o la alternativa si no hay fotos -->
-          <ng-container *ngIf="anun.photos && anun.photos.length; else noImage">
+          <ng-container *ngIf=" anun?.photos?.length ; else noImage">
             <img
               *ngFor="let photo of anun.photos; let i = index"
               [src]="photo"
@@ -42,13 +42,10 @@
           </ng-container>
           <!-- Plantilla para imagen alternativa -->
           <ng-template #noImage>
-            <img
-              src="favicon.ico"
-              alt="Imagen no disponible"
-              class="ad-photo"
-            />
+            <img src="assets/logo.jpg" alt="Imagen no disponible" class="ad-photo" />
           </ng-template>
         </div>
+
         <!-- Botones de navegación -->
         <button class="prev" (click)="changeImage(-1)" *ngIf="anun.photos && anun.photos.length">
           &#10094;

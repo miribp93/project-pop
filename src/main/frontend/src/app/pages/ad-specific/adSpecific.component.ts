@@ -17,7 +17,7 @@ import { MATERIAL_MODULES } from '../../components/material/material.component';
   providers: [AdService],
 })
 export class AdSpecificComponent implements OnInit {
-  public anun?: Ad; // Contiene los datos del anuncio
+  public anun?: Ad | undefined; // Contiene los datos del anuncio
   public isLoading: boolean = true; // Controla el spinner
   public errorMessage: string = ''; // Mensaje de error para el usuario
 

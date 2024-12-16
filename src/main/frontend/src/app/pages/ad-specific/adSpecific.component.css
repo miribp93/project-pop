@@ -91,7 +91,8 @@ mat-card-title,
 .ad-photo {
   width: 100%; /* Ajustar para que se ajuste al contenedor */
   height: auto;
-  display: none; /* Escondemos las imágenes por defecto */
+  border-radius: 20%;
+ /* Escondemos las imágenes por defecto */
 }
 
 .ad-photo.active {
