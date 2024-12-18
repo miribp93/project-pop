@@ -103,32 +103,9 @@
 
 ---
 
-## 4. Módulo de Servicios (services)
+## 4. Módulo de Usuarios (users)
 
-### Historia de Usuario 10: Autenticación del Usuario
-**Como** sistema,  
-**quiero** autenticar las solicitudes de los usuarios,  
-**para** que pueda asegurarme de que solo los usuarios registrados accedan a sus datos.
-
-**Criterios de Aceptación:**
-- El sistema debe verificar el token de autenticación en cada solicitud relevante.
-- Si el token es válido, permitir el acceso a los datos. Si no lo es, denegar el acceso y redirigir al usuario a la página de login.
-
-### Historia de Usuario 11: Crear un Anuncio
-**Como** usuario,  
-**quiero** crear un anuncio,  
-**para** que otros usuarios puedan ver mi producto o servicio.
-
-**Criterios de Aceptación:**
-- El formulario para crear un anuncio debe permitir ingresar título, descripción, imágenes y precio.
-- Debe validar que los campos necesarios estén completos antes de enviarlos.
-- El anuncio debe aparecer en la página de inicio y ser visible para otros usuarios.
-
----
-
-## 5. Módulo de Usuarios (users)
-
-### Historia de Usuario 12: Administrar Anuncios como Administrador
+### Historia de Usuario 10: Administrar Anuncios como Administrador
 **Como** administrador,  
 **quiero** gestionar los anuncios de los usuarios,  
 **para** que pueda aprobar, bloquear o eliminar anuncios inapropiados.
@@ -139,7 +116,7 @@
 - Debe haber opciones para aprobar, bloquear o eliminar anuncios y usuarios.
 - Cada cambio debe reflejarse inmediatamente en el sistema.
 
-### Historia de Usuario 13: Ver Perfil de Usuario
+### Historia de Usuario 11: Ver Perfil de Usuario
 **Como** usuario,  
 **quiero** ver mi perfil,  
 **para** que pueda gestionar mis datos personales y anuncios.

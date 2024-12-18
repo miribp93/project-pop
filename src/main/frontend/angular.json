@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "proyectopruebas2": {
+    "guaguapop": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "proyectopruebas2:build:production"
+              "buildTarget": "guaguapop:build:production"
             },
             "development": {
-              "buildTarget": "proyectopruebas2:build:development"
+              "buildTarget": "guaguapop:build:development"
             }
           },
           "defaultConfiguration": "development"
