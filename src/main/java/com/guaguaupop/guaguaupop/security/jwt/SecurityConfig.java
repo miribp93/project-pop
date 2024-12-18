@@ -34,7 +34,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+       /* http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/api/user/register",
@@ -50,22 +50,38 @@ public class SecurityConfig {
                                 "/api/ad/photos/{idAd}",
                                 "/api/ad/photo/ad/{idAd}",
                                 "/api/ad/search",
-                                "/api/message/contact-form"
+                                "/api/message/contact-form",
+                                "/",
+                                "/home",
+                                "/adspecific/**",
+                                "/adfilter/**",
+                                "/about",
+                                "/contacto",
+                                "/login",
+                                "/register",
+                                "/resetpass",
+                                "/pay",
+                                "/profile",
+                                "/admin",
+                                "/forgotpass",
+                                "/usercreateads",
+                                "/infoventa",
+                                "/search-result"
                                                         ).permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(sessionManagement->sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(withDefaults()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .cors(withDefaults()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);*/
 
-        /*http
+        http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/api/**"
-                        ).authenticated()
+                        /*.requestMatchers("/api/**"
+                        ).authenticated()*/
                         .anyRequest().permitAll())
                 .exceptionHandling(exceptionHandling->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(sessionManagement->sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(withDefaults()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);*/
+                .cors(withDefaults()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -76,7 +92,7 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(@NotNull CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200", "http://guaguapop.com")
+                        .allowedOrigins("http://localhost:4200", "http://guaguapop.com", "http://localhost:8080")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
