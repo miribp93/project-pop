@@ -20,5 +20,10 @@ body {
   justify-content: center !important;
 }
 
+.btn-primary{
+  background-color: #005cbb !important;
+  border-color: #005cbb !important ;
+}
+
 
 

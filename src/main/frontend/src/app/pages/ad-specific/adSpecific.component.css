@@ -92,7 +92,7 @@ mat-card-title,
   width: 100%; /* Ajustar para que se ajuste al contenedor */
   height: auto;
   border-radius: 20%;
- /* Escondemos las imágenes por defecto */
+  display: none;/* Escondemos las imágenes por defecto */
 }
 
 .ad-photo.active {

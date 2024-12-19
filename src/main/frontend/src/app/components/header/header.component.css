@@ -89,6 +89,10 @@
   }
 }
 
+.input-group{
+  width: 500px;
+}
+
 /* Estilos para la barra de búsqueda */
 .search {
 
@@ -100,7 +104,7 @@
 /* Asegurarse de que el formulario de búsqueda tenga un tamaño adecuado */
 .search form {
   width: 100%;
-  max-width: 500px; /* Ajusta el valor según el tamaño que desees */
+  max-width: 800px; /* Ajusta el valor según el tamaño que desees */
 }
 
 /* Estilos para pantallas pequeñas o medianas */
