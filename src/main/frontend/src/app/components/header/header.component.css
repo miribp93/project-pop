@@ -53,6 +53,15 @@
   max-width: 800px; /* Ajusta el valor según el tamaño que desees */
 }
 
+.profile-photo-small {
+  width: 30px; /* Ajusta el ancho de la imagen */
+  height: 30px; /* Ajusta la altura de la imagen */
+  border-radius: 50%; /* Hace que la imagen tenga bordes redondeados */
+  object-fit: cover; /* Asegura que la imagen no se deforme */
+  margin-right: 10px; /* Añade espacio entre la imagen y el texto */
+}
+
+
 /* Estilos para pantallas pequeñas y tablets (<= 1024px) */
 @media (max-width: 1023px) {
 
