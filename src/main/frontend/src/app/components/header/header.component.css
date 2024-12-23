@@ -5,7 +5,6 @@
   justify-content: space-between;
   padding: 0 20px;
   background-color: #fafafa;
-
 }
 
 /* Barra de navegación (en pantallas grandes) */
@@ -15,7 +14,6 @@
   gap: 15px;
   color: black;
   background-color: #fafafa;
-
 }
 
 /* Estilos del logo */
@@ -37,48 +35,29 @@
   flex-grow: 1;
 }
 
-.profile-button {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* Espacio entre la imagen y el texto */
-}
-
-.profile-photo-small {
-  width: 24px; /* Tamaño pequeño de la imagen */
-  height: 24px; /* Tamaño pequeño de la imagen */
-  border-radius: 50%; /* Hace la imagen circular */
-  margin-right: 8px; /* Espacio entre la imagen y el texto */
-}
-
-.profile-image {
-  width: 24px; /* Ajusta el tamaño según sea necesario */
-  height: 24px;
-  border-radius: 50%; /* Hace la imagen redonda */
-  object-fit: cover; /* Ajusta la imagen al contenedor */
-}
-
-
-/* Botones de usuario */
+/* Estilos para los botones de usuario */
 .user-buttons {
   display: flex;
   gap: 10px;
 }
 
-.mat-menu-item {
-  width: 100%; /* Asegurar que cada botón ocupe toda la línea */
-  text-align: left;
-  margin-bottom: 5px; /* Espaciado entre botones */
+/* Estilos para la barra de búsqueda */
+.search {
+  flex-grow: 1; /* Permite que el buscador ocupe el espacio disponible */
+  max-width: 900px; /* Ajusta el tamaño máximo del contenedor de búsqueda */
+  width: 100%; /* Ajustado a 100% para que ocupe el ancho completo del contenedor */
 }
 
-/* Estilos para pantallas pequeñas */
-@media (max-width: 850px) {
-  .nav-bar {
-    display: none; /* Ocultar barra de navegación en pantallas pequeñas */
-  }
+.search form {
+  width: 100%;
+  max-width: 800px; /* Ajusta el valor según el tamaño que desees */
+}
 
-  .top-bar .user-buttons {
-    display: none; /* Ocultar botones de usuario en pantallas pequeñas */
-  }
+/* Estilos para pantallas pequeñas y tablets (<= 1024px) */
+@media (max-width: 1023px) {
+
+
+
 
   .logo {
     display: none; /* Ocultar el logo en pantallas pequeñas */
@@ -87,27 +66,26 @@
   .logo-small {
     display: block; /* Mostrar el logo pequeño en pantallas pequeñas */
   }
+
+  /* Mostrar el botón del menú hamburguesa en pantallas pequeñas */
+  button[mat-icon-button] {
+    display: block;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  /* Asegurarse de que el menú hamburguesa esté visible en tablets */
+  .hamburger-menu {
+    display: block; /* Mostrar el botón en pantallas de tamaño tablet */
+  }
+
+  /* Alinear los elementos a la izquierda en dispositivos móviles y tablets */
+  .top-bar {
+    justify-content: flex-start;
+  }
 }
 
-.input-group{
-  width: 500px;
-}
-
-/* Estilos para la barra de búsqueda */
-.search {
-
-  flex-grow: 1; /* Permite que el buscador ocupe el espacio disponible */
-  max-width: 900px; /* Ajusta el tamaño máximo del contenedor de búsqueda */
-  width: 600%;
-}
-
-/* Asegurarse de que el formulario de búsqueda tenga un tamaño adecuado */
-.search form {
-  width: 100%;
-  max-width: 800px; /* Ajusta el valor según el tamaño que desees */
-}
-
-/* Estilos para pantallas pequeñas o medianas */
+/* Estilos para pantallas más pequeñas (menores de 768px) */
 @media (max-width: 768px) {
   .search {
     display: none; /* Ocultar el campo de búsqueda en pantallas medianas o más pequeñas */

@@ -7,7 +7,7 @@
   <form class="d-flex" (submit)="onSearch(searchInput.value, $event)">
 
     <div class="input-group">
-      <input #searchInput class="form-control" type="search" placeholder="Search" aria-label="Search">
+      <input #searchInput class="form-control " type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-primary px-4" type="submit">
         <i class="bi bi-search"></i>
       </button>
@@ -34,15 +34,15 @@
 
 
   <!-- Botón menú hamburguesa para pantallas pequeñas -->
-  <button mat-icon-button *ngIf="isSmallScreen" [matMenuTriggerFor]="mobileMenu">
+  <button mat-icon-button *ngIf="isSmallScreen" [matMenuTriggerFor]="mobileMenu" class="hamburger-menu">
     <mat-icon>menu</mat-icon>
   </button>
 
   <!-- Menú en pantallas pequeñas -->
   <mat-menu #mobileMenu="matMenu">
     <div style="display: flex; flex-direction: column; width: 100%;">
-    <button mat-button *ngIf="!isAuthenticated" mat-stroked-button  routerLink="login">LogIn</button>
-    <button mat-button *ngIf="!isAuthenticated" mat-flat-button  routerLink="register">Registrar</button>
+    <button mat-button *ngIf="!isAuthenticated" mat-button  routerLink="login">LogIn</button>
+    <button mat-button *ngIf="!isAuthenticated" mat-button  routerLink="register">Registrar</button>
 
     <!-- Botón Mi Perfil solo si está autenticado y no está bloqueado -->
     <button mat-button  *ngIf="isAuthenticated && userRole === 'USER'" routerLink="profile">{{ username || 'Mi Perfil' }}</button>

@@ -6,6 +6,7 @@ export interface Creator {
 }
 
 export interface Ad {
+  id?: number
   idAd?: number;
   id_ad: number;               // Opcional durante la creación
   category: string;
