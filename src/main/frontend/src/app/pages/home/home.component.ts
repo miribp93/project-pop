@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
 
   vender(): void {
     if (this.authService.isAuthenticated()) {
-      this.router.navigateByUrl('profile');
+      this.router.navigateByUrl('/profile');
     } else {
       // Redirigir al login con queryParams indicando el producto y la ruta de redirección
       this.router.navigate(['/login'], {});
