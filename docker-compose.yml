@@ -1,6 +1,6 @@
 services:
   app:
-    image: guaguaupop:0.0.6
+    image: guaguaupop:0.0.7
     build:
       context: .
     ports:
