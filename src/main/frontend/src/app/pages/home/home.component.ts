@@ -96,4 +96,8 @@ export class HomeComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.setPaginatedProducts(); // Actualizar los productos paginados
   }
+
+  about(): void {
+        this.router.navigateByUrl('/about');
+  }
 }

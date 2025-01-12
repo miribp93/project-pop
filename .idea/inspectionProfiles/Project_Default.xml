@@ -4,7 +4,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="12">
+          <list size="15">
             <item index="0" class="java.lang.String" itemvalue="mat-raised-button" />
             <item index="1" class="java.lang.String" itemvalue="*ngIf" />
             <item index="2" class="java.lang.String" itemvalue="(change)" />
@@ -17,6 +17,9 @@
             <item index="9" class="java.lang.String" itemvalue="mat-menu-item" />
             <item index="10" class="java.lang.String" itemvalue="[matMenuTriggerFor]" />
             <item index="11" class="java.lang.String" itemvalue="mat-stroked-button" />
+            <item index="12" class="java.lang.String" itemvalue="[routerLink]" />
+            <item index="13" class="java.lang.String" itemvalue="routerLinkActive" />
+            <item index="14" class="java.lang.String" itemvalue="[routerLinkActive]" />
           </list>
         </value>
       </option>

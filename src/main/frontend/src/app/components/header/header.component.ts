@@ -79,6 +79,6 @@ export class HeaderComponent implements OnInit {
   // Cierra sesión y redirige a la página principal
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/']); // Redirige a la página de inicio
+    this.router.navigate(['/home']); // Redirige a la página de inicio
   }
 }
