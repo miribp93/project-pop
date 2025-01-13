@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+.link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer; /* Esta línea hace que el cursor cambie a una mano */
+}
 
 h3, h4 {
   margin-bottom: 20px;
