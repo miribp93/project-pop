@@ -102,10 +102,10 @@ export class AuthService {
     localStorage.removeItem('role');
     localStorage.removeItem('refreshToken');
 
-    this.userSubject.next(null);
+   this.userSubject.next(null);
     console.log('Vuelve pronto');
     // Redirigir al login
-    window.location.href = '/home';
+   // window.location.href = '/home';
   }
 
   // Método para obtener el token actual

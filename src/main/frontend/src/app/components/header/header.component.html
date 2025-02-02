@@ -54,12 +54,16 @@
     <button mat-button routerLink="/about">Acerca de nosotros</button>
     <button mat-button routerLink="/contacto">Contáctanos</button>
 
-    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Perros' }">Perros</button>
-    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Gatos' }">Gatos</button>
-    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Aves' }">Aves</button>
-    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Reptiles' }">Reptiles</button>
-    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Animales Exoticos' }">Animales Exoticos</button>
-    <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Otros' }">Otros Animales</button>
+     <!-- Submenú desplegable para categorías -->
+     <button mat-menu-item [matMenuTriggerFor]="categoriesMenu">Categorías</button>
+     <mat-menu #categoriesMenu="matMenu">
+       <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Perros' }">Perros</button>
+       <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Gatos' }">Gatos</button>
+       <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Aves' }">Aves</button>
+       <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Reptiles' }">Reptiles</button>
+       <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Animales Exoticos' }">Animales Exoticos</button>
+       <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ categoria: 'Otros' }">Otros Animales</button>
+     </mat-menu>
   </div>
   </mat-menu>
 </mat-toolbar>
@@ -85,4 +89,6 @@
   <button mat-button [routerLink]="'/adfilter'" [queryParams]="{ tipo: 'SERVICE' }">Servicios</button>
   <button mat-button routerLink="/about">Acerca de nosotros</button>
   <button mat-button routerLink="/contacto">Contáctanos</button>
+  <button mat-button routerLink="/adoption">Adopciones</button>
+
 </mat-toolbar>

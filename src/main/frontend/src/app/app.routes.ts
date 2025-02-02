@@ -15,6 +15,8 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { UserAdComponent } from './users/user-ad/user-ad.component';
 import { InfoFunctionComponent } from './components/info-function/info-function.component';
 import { SearchResultsComponent } from './pages/search-results/search-results.component';
+import { AdoptionsComponent } from './pages/adoptions/adoptions.component';
+
 
 export const routes: Routes = [
   {
@@ -27,6 +29,7 @@ export const routes: Routes = [
       { path: 'adfilter', component: AdFilterComponent },
       { path: 'about', component: AboutComponent },
       { path: 'contacto', component: ContactComponent },
+      { path: 'adoption', component: AdoptionsComponent },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'resetpass', component: ResetPasswordComponent },

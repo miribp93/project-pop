@@ -1,0 +1,14 @@
+/* Contenedor principal */
+.container {
+  max-width: 80%; /* El contenedor no se expandirá más allá de 1100px */
+  margin: 0 auto; /* Centra el contenedor horizontalmente */
+  padding: 0 20px; /* Añade espacio a los lados para evitar que el contenido toque los bordes */
+  box-sizing: border-box; /* Incluye el padding en el cálculo del tamaño total */
+}
+
+h3{
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+

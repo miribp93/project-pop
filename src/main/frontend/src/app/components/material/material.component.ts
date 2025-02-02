@@ -32,7 +32,8 @@ export const MATERIAL_MODULES = [
   MatProgressSpinnerModule,
   MatSelectModule,
   MatSidenavModule,
-  MatTabsModule
+  MatTabsModule,
+
 
 
 
