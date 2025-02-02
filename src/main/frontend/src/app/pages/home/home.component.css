@@ -15,6 +15,12 @@
   max-width: 300px; /* Limita el ancho máximo de las tarjetas */
 }
 
+.vende a {
+  text-decoration: none; /* Quita la línea de los enlaces */
+  color: inherit; /* Mantiene el color del texto del párrafo */
+  cursor: pointer;
+}
+
 /* Pantalla de tablet */
 @media (min-width: 576px) {
   .producto-card {
@@ -84,6 +90,7 @@ mat-paginator {
   background-color: #f1f2f7d3;
   padding: 20px;
   border-radius: 10px;
+
 }
 
 .btn {

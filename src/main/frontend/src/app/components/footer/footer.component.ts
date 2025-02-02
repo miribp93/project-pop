@@ -31,4 +31,17 @@ export class FooterComponent {
     }
   }
 
+  infoventa(): void {
+      this.router.navigateByUrl('/infoventa');
+  }
+
+  contacto(): void {
+      this.router.navigateByUrl('/contacto');
+  }
+
+  about(): void {
+        this.router.navigateByUrl('/about');
+  }
+
+
 }
